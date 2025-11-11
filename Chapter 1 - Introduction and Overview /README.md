@@ -1,8 +1,6 @@
 # Data Structures - Chapter 1: Complete Study Guide
 ## Introduction and Overview
-
 ---
-
 ## TABLE OF CONTENTS
 
 1. [Introduction](#11-introduction)
