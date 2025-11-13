@@ -114,7 +114,7 @@ FIELDS (Single elementary unit of information)
 
 ### Primary Keys
 
-**Primary Key (K)**: A field that uniquely identifies a record
+**Primary Key (K)**: A Primary Key is a field that uniquely identifies a record (no two records can have the same key).
 
 **Key Values**: Actual values in the primary key field (k₁, k₂, k₃...)
 
@@ -181,6 +181,12 @@ This textbook focuses on data stored in **main (primary) memory** where:
 
 **Data Structure** = A logical or mathematical model for organizing data
 
+It’s like a blueprint or model that tells the computer:
+
+1. how data is arranged,
+2. how data is connected, and
+3. how we can use or change that data
+
 ### Choosing a Data Structure
 
 Consider two factors:
@@ -245,9 +251,19 @@ DATA STRUCTURES
 
 ### 1. ARRAYS
 
-**Linear Array**: A list of finite number (n) of similar data elements
+An array is a list of data items that are all the same type, arranged in a specific order.
+
+Think of it like a row of boxes, where each box stores one value, and each box has a number 
+
+(index) so you can find it easily.
+
+**Linear Array**: A linear array is a list containing a fixed number (n) of similar elements, 
+
+arranged one after another.
 
 **Notations for Arrays**:
+
+There are different ways to write array elements:
 
 1. **Subscript notation**: A₁, A₂, A₃, ..., Aₙ
 
@@ -281,11 +297,17 @@ Index | Value
 
 **One-Dimensional Array**: Each element referenced by ONE subscript
 
+🧠 Think of it as one row of data.
+
 **Two-Dimensional Array**: Each element referenced by TWO subscripts
 - Called **matrices** in mathematics
 - Called **tables** in business applications
 
+🧠 Think of it as rows and columns, like an Excel sheet.
+
 **Multi-Dimensional Arrays**: Elements referenced by multiple subscripts
+
+🧠 Think of it like a cube of data instead of a flat table.
 
 #### Example 1.3 - Two-Dimensional Array
 
