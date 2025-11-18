@@ -2,60 +2,54 @@
 
 ## Table of Contents
 
-- 1. [Introduction](#introduction)
-    - Key Concepts
-
-- 2. [Mathematical Notations and Functions](#mathematical-notations)
-    - 2.1 Floor and Ceiling Functions
-    - 2.2 Remainder Function and Modular Arithmetic
-    - 2.3 Integer and Absolute Value Functions
-    - 2.4 Summation Symbol (Σ)
-    - 2.5 Factorial Function
-    - 2.6 Permutations
-    - 2.7 Exponents and Logarithms
-
-- 3. [Algorithmic Notations](#algorithmic-notations)
-    - 3.1 Algorithm Format
-    - 3.2 Example: Finding Largest Element
-    - 3.3 C Implementations
-    - 3.4 Algorithm Conventions
-
-- 4. [Control Structures](#control-structures)
-    - 4.1 Sequence Logic
-    - 4.2 Selection Logic
-    - 4.3 Iteration Logic
-
-- 5. [Complexity of Algorithms](#complexity-of-algorithms)
-    - 5.1 Definition and Measurement
-    - 5.2 Cases in Complexity Analysis
-    - 5.3 Example: Linear Search
-    - 5.4 Big O and Growth Rates
-
-- 6. [Other Asymptotic Notations](#asymptotic-notations)
-    - 6.1 Omega (Ω)
-    - 6.2 Theta (Θ)
-    - 6.3 Little o (o)
-    - 6.4 Summary
-
-- 7. [Subalgorithms](#subalgorithms)
-    - 7.1 Definition and Purpose
-    - 7.2 Subalgorithm Format
-    - 7.3 Types of Subalgorithms
-    - 7.4 Function vs Procedure Conversion
-
-- 8. [Variables and Data Types](#variables-data-types)
-    - 8.1 Four Basic Data Types
-    - 8.2 Data Type Interpretation Example
-    - 8.3 Local and Global Variables
-    - 8.4 Communication Between Modules
-
-- 9. [Solved Problems](#solved-problems)
-    - Problem 2.1 through 2.16 (Worked examples)
-
-- 10. [Practice Exercises](#practice-exercises)
-    - Supplementary Problems
-    - Programming Problems
-    - Multiple Choice Questions
+1. [Introduction](#introduction)
+   - [Key Concepts](#key-concepts)
+2. [Mathematical Notations and Functions](#mathematical-notations)
+   - [2.1 Floor and Ceiling Functions](#21-floor-and-ceiling-functions)
+   - [2.2 Remainder Function and Modular Arithmetic](#22-remainder-function-and-modular-arithmetic)
+   - [2.3 Integer and Absolute Value Functions](#23-integer-and-absolute-value-functions)
+   - [2.4 Summation Symbol (Σ)](#24-summation-symbol-σ)
+   - [2.5 Factorial Function](#25-factorial-function)
+   - [2.6 Permutations](#26-permutations)
+   - [2.7 Exponents and Logarithms](#27-exponents-and-logarithms)
+3. [Algorithmic Notations](#algorithmic-notations)
+   - [3.1 Algorithm Format](#31-algorithm-format)
+   - [3.2 Example: Finding Largest Element](#32-algorithm-example-finding-largest-element)
+   - [3.3 C Implementation](#33-c-implementation)
+   - [3.4 Algorithm Conventions](#34-algorithm-conventions)
+4. [Control Structures](#control-structures)
+   - [4.1 Sequence Logic](#41-sequence-logic)
+   - [4.2 Selection Logic](#42-selection-logic-conditional-structures)
+   - [4.3 Iteration Logic](#43-iteration-logic-repetitive-structures)
+5. [Complexity of Algorithms](#complexity-of-algorithms)
+   - [5.1 Definition and Measurement](#51-definition-and-measurement)
+   - [5.2 Cases in Complexity Analysis](#52-cases-in-complexity-analysis)
+   - [5.3 Example: Linear Search](#53-example-linear-search)
+   - [5.4 Rate of Growth and Big O Notation](#54-rate-of-growth-and-big-o-notation)
+6. [Other Asymptotic Notations](#asymptotic-notations)
+   - [6.1 Omega Notation (Ω)](#61-omega-notation-ω)
+   - [6.2 Theta Notation (Θ)](#62-theta-notation-θ)
+   - [6.3 Little Oh Notation (o)](#63-little-oh-notation-o)
+   - [6.4 Summary of Notations](#64-summary-of-notations)
+7. [Subalgorithms](#subalgorithms)
+   - [7.1 Definition and Purpose](#71-definition-and-purpose)
+   - [7.2 Subalgorithm Format](#72-subalgorithm-format)
+   - [7.3 Types of Subalgorithms](#73-types-of-subalgorithms)
+   - [7.4 Function vs. Procedure Conversion](#74-function-vs-procedure-conversion)
+8. [Variables and Data Types](#variables-data-types)
+   - [8.1 Four Basic Data Types](#81-four-basic-data-types)
+   - [8.2 Data Type Interpretation Example](#82-data-type-interpretation-example)
+   - [8.3 Local and Global Variables](#83-local-and-global-variables)
+   - [8.4 Communication Between Modules](#84-communication-between-modules)
+9. [Solved Problems](#solved-problems)
+   - [Problem 2.1: Floor and Ceiling Functions](#problem-21-floor-and-ceiling-functions)
+   - [Problem 2.2: Modular Arithmetic](#problem-22-modular-arithmetic)
+   - [Problem 2.3: Permutations](#problem-23-permutations)
+   - *(See section for Problems 2.4–2.16)*
+10. [Practice Exercises](#practice-exercises)
+   - [Supplementary Problems](#supplementary-problems)
+   - [Programming Problems](#programming-problems)
+   - [Multiple Choice Questions & Answers](#multiple-choice-questions--answers)
 
 
 ---
@@ -79,31 +73,35 @@ This chapter establishes the foundational concepts needed for studying data stru
 
 ```mermaid
 flowchart TB
-    %% Main module with three submodules and their detailed children
-    classDef mainModule fill:#f3f4f6,stroke:#111,stroke-width:1px;
-    classDef subModule fill:#ffffff,stroke:#0366d6,stroke-width:1px;
+    %% Hierarchical program organization
+    classDef root fill:#f3f4f6,stroke:#111,stroke-width:1px,color:#000,font-weight:600;
+    classDef module fill:#ffffff,stroke:#0366d6,stroke-width:1px,color:#000;
+    classDef detail fill:#ffffff,stroke:#888,color:#000;
 
-    Main["Main Module"]:::mainModule
-    Sub1["Submodule 1"]:::subModule
-    Sub2["Submodule 2"]:::subModule
-    Sub3["Submodule 3"]:::subModule
+    Main["1 • Main Module"]:::root
+    SubA["2 • Submodule A"]:::module
+    SubB["3 • Submodule B"]:::module
+    SubC["4 • Submodule C"]:::module
 
-    D1["Detailed\nSubmodules"]
-    D2["Detailed\nSubmodules"]
-    D3["Detailed\nSubmodules"]
+    DetA["a) Detail A"]:::detail
+    DetB["b) Detail B"]:::detail
+    DetC["c) Detail C"]:::detail
 
-    Main --> Sub1
-    Main --> Sub2
-    Main --> Sub3
+    Main --> SubA
+    Main --> SubB
+    Main --> SubC
 
-    Sub1 --> D1
-    Sub2 --> D2
-    Sub3 --> D3
+    SubA --> DetA
+    SubB --> DetB
+    SubC --> DetC
 
-    %% Add small notes to show data/ control flow
-    Note1[["High-level control\nand data flow"]]
-    Note1 -.-> Main
+    linkStyle default stroke:#64748b,stroke-width:1.5px
 ```
+
+**Legend (hierarchy):**
+- **1 Main:** top-level module
+- **2–4 Submodule A–C:** main components called by `Main`
+- **a–c Details:** internal detailed modules for each submodule
 
 ---
 
@@ -390,27 +388,33 @@ Step 5. [Repeat loop] Go to Step 2
 
 ```mermaid
 flowchart TD
-    %% Clear, step-labeled flowchart for finding largest element
-    classDef decision fill:#fff7cc,stroke:#d69e00
-    classDef action fill:#ecfdf5,stroke:#059669
-    classDef io fill:#eef2ff,stroke:#7c3aed
+    %% Flowchart for Algorithm 2.1 (Largest Element)
+    classDef terminal fill:#ffffff,stroke:#111,color:#000,font-weight:600;
+    classDef process fill:#ecfdf5,stroke:#059669,color:#000;
+    classDef decision fill:#fff7cc,stroke:#d69e00,color:#000;
+    classDef io fill:#eef2ff,stroke:#7c3aed,color:#000;
 
-    Start(["Start"]) --> Init["Initialize:\nK = 1\nLOC = 1\nMAX = DATA[1]"]:::action
-    Init --> Check{"K > N?"}:::decision
-    Check -- Yes --> Output["Write LOC, MAX\nStop"]:::io
-    Check -- No --> Compare{"MAX < DATA[K]?"}:::decision
-    Compare -- Yes --> Update["LOC = K\nMAX = DATA[K]"]:::action --> Inc["K = K + 1"]:::action --> Check
-    Compare -- No --> Inc
-    %% safety: show loopback explicitly
-    Inc --> Check
+    Start((Start)):::terminal --> Init["1 • Init: K=1, LOC=1, MAX=DATA[1]"]:::process
+    Init --> Guard{"2 • Is K > N?"}:::decision
+    Guard -- Yes --> Output["5 • Output LOC, MAX"]:::io --> End((Stop)):::terminal
+    Guard -- No --> Compare{"3 • Is DATA[K] > MAX?"}:::decision
+    Compare -- Yes --> Update["4 • Update LOC, MAX"]:::process --> Increment["Increment K"]:::process --> Guard
+    Compare -- No --> Increment
+    Increment --> Guard
+
+    linkStyle default stroke:#64748b,stroke-width:1.5px
 ```
+
+**Legend (Algorithm 2.1):**
+- **1 Init:** set `K`, `LOC`, `MAX`
+- **2 Test:** loop termination check (`K > N`)
+- **3 Compare:** is DATA[K] larger than `MAX`?
+- **4 Update:** update `MAX` and `LOC`
+- **5 Output:** write `LOC` and `MAX` and stop
 
 ### 3.3 C Implementation
 
 ```c
-#include <stdio.h>
-#include <conio.h>
-
 void main() {
     int DATA[10] = {22, 65, 1, 99, 32, 17, 74, 49, 33, 2};
     int N, LOC, MAX, K;
@@ -510,14 +514,16 @@ Three types of logic/flow of control:
 
 ```mermaid
 flowchart LR
-    %% Sequence logic: simple left-to-right modules
-    classDef seq fill:#f8fafc,stroke:#0f172a
-    A["Module A"]:::seq --> B["Module B"]:::seq --> C["Module C"]:::seq
-    subgraph SeqNote["Sequence (executed in order)"]
-        direction LR
-        A --> B --> C
-    end
+    %% Sequence logic with explicit start/stop terminals
+    classDef terminal fill:#ffffff,stroke:#111,color:#000,font-weight:600;
+    classDef process fill:#f8fafc,stroke:#0f172a,color:#000;
+
+    Start((Start)):::terminal --> Step1["1 • Module A"]:::process --> Step2["2 • Module B"]:::process --> Step3["3 • Module C"]:::process --> End((Exit)):::terminal
+
+    linkStyle default stroke:#64748b,stroke-width:1.5px
 ```
+
+**Legend (sequence):** 1 → 2 → 3 (executed in order)
 
 **Example**:
 ```
@@ -544,13 +550,16 @@ If condition, then:
 
 ```mermaid
 flowchart TD
-    %% Single-alternative selection logic
-    classDef decision fill:#fff7cc,stroke:#d69e00
-    classDef module fill:#f0f9ff,stroke:#0369a1
-    Cond{"Condition?"}:::decision
-    Cond -- Yes --> A["Module A"]:::module
-    Cond -- No --> Continue(("Continue"))
-    A --> Continue
+    %% Single-alternative selection logic with explicit flow
+    classDef terminal fill:#ffffff,stroke:#111,color:#000,font-weight:600;
+    classDef decision fill:#fff7cc,stroke:#d69e00,color:#000;
+    classDef process fill:#f0f9ff,stroke:#0369a1,color:#000;
+
+    Start((Start)):::terminal --> Cond{"Evaluate condition?"}:::decision
+    Cond -- Yes --> ModuleA["Run Module A"]:::process --> End((Continue)):::terminal
+    Cond -- No --> End
+
+    linkStyle default stroke:#64748b,stroke-width:1.5px
 ```
 
 **Example**:
@@ -576,13 +585,15 @@ Else:
 ```mermaid
 flowchart TD
     %% Double-alternative selection logic (If/Else)
-    classDef decision fill:#fff7cc,stroke:#d69e00
-    classDef module fill:#f0f9ff,stroke:#0369a1
-    Cond2{"Condition?"}:::decision
-    Cond2 -- Yes --> A2["Module A"]:::module
-    Cond2 -- No --> B2["Module B"]:::module
-    A2 --> Continue2(("Continue"))
-    B2 --> Continue2
+    classDef terminal fill:#ffffff,stroke:#111,color:#000,font-weight:600;
+    classDef decision fill:#fff7cc,stroke:#d69e00,color:#000;
+    classDef process fill:#f0f9ff,stroke:#0369a1,color:#000;
+
+    Start((Start)):::terminal --> Cond{"Evaluate condition?"}:::decision
+    Cond -- Yes --> ModuleYes["Run Module A"]:::process --> End((Continue)):::terminal
+    Cond -- No --> ModuleNo["Run Module B"]:::process --> End
+
+    linkStyle default stroke:#64748b,stroke-width:1.5px
 ```
 
 **Example**:
@@ -691,10 +702,16 @@ Repeat for K = R to S by T:
 
 ```mermaid
 flowchart TD
-    Start["K = R"] --> Check{Is K > S?}
-    Check -- No --> Body["Module (body of loop)"]
-    Body --> Inc["K = K + T"] --> Check
-    Check -- Yes --> End((Continue))
+    %% Repeat-for loop
+    classDef terminal fill:#ffffff,stroke:#111,color:#000,font-weight:600;
+    classDef process fill:#f8fafc,stroke:#0f172a,color:#000;
+    classDef decision fill:#fff7cc,stroke:#d69e00,color:#000;
+
+    Start((Start)):::terminal --> Init["Initialize: K = R"]:::process --> Guard{"Is K > S?"}:::decision
+    Guard -- Yes --> End((Continue)):::terminal
+    Guard -- No --> Body["Run Module"]:::process --> Increment["Set K := K + T"]:::process --> Guard
+
+    linkStyle default stroke:#64748b,stroke-width:1.5px
 ```
 
 **Example**:
@@ -719,10 +736,16 @@ Repeat while condition:
 
 ```mermaid
 flowchart TD
-    Cond{Condition?}
-    Cond -- Yes --> Body["Module (body of loop)"]
-    Body --> Cond
-    Cond -- No --> End((Continue))
+    %% Repeat-while loop
+    classDef terminal fill:#ffffff,stroke:#111,color:#000,font-weight:600;
+    classDef process fill:#f8fafc,stroke:#0f172a,color:#000;
+    classDef decision fill:#fff7cc,stroke:#d69e00,color:#000;
+
+    Start((Start)):::terminal --> Guard{"Condition true?"}:::decision
+    Guard -- No --> End((Continue)):::terminal
+    Guard -- Yes --> Body["Run Module"]:::process --> Update["Update loop variables"]:::process --> Guard
+
+    linkStyle default stroke:#64748b,stroke-width:1.5px
 ```
 
 **Important Requirements**:
@@ -1107,26 +1130,6 @@ float MEAN(int T1, int T2, int T3) {
     AVE = (T1 + T2 + T3)/3;
     return(AVE);
 }
-```
-
-**Output**:
-```
-Enter the values of A, B and C: 22 36 8
-The average of 22, 36 and 8 is: 22.00
-```
-
----
-
-#### Type 2: Procedure Subalgorithm
-
-**Characteristic**: Can return **multiple values** to the calling algorithm.
-
-**Example**: Procedure to Switch Values
-
-**Procedure 2.6**: SWITCH(AAA, BBB)
-```
-1. Set TEMP := AAA, AAA := BBB and BBB := TEMP
-2. Return
 ```
 
 **Usage in Algorithm**:
