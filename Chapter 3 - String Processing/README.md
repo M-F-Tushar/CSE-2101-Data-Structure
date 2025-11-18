@@ -312,9 +312,9 @@ graph TD
     end
     
     subgraph "Method 2: Length Prefix"
-        L1[55 | Data...]
-        L2[18 | Data...]
-        L3[21 | Data...]
+        L1[55 &#124; Data...]
+        L2[18 &#124; Data...]
+        L3[21 &#124; Data...]
     end
     
     style S1 fill:#ffe66d
@@ -2737,7 +2737,10 @@ graph LR
         Q{Pattern Length?}
         Q -->|Short| BF[Brute Force<br/>Simple & Fast]
         Q -->|Medium| KMP[KMP<br/>Balanced]
-        Q -->|Long| BM[Boyer-Moore<br/>Optimal
+        Q -->|Long| BM[Boyer-Moore<br/>Optimal]
+    end
+```
+
 ### Storage Methods Comparison
 
 ```
