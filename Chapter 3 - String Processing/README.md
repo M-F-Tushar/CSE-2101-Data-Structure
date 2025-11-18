@@ -5,7 +5,7 @@
 2. [Basic Terminology](#2-basic-terminology)
 3. [Storing Strings](#3-storing-strings)
 4. [Character Data Type](#4-character-data-type)
-    ↑    ↑    ↑
+5. [Strings as ADT](#5-strings-as-adt)
 6. [String Operations](#6-string-operations)
 7. [Word/Text Processing](#7-wordtext-processing)
 8. [Pattern Matching Algorithms](#8-pattern-matching-algorithms)
@@ -26,6 +26,19 @@
 - **String vs Word**: Computer science uses "string" for character sequences
 - **Alternative terms**: String processing, string manipulation, text editing
 
+```mermaid
+graph LR
+    A[Early Computers] -->|Focus| B[Numerical Processing]
+    C[Modern Computers] -->|Focus| D[Character Processing]
+    D --> E[Word Processing]
+    D --> F[Text Manipulation]
+    D --> G[Pattern Matching]
+    
+    style A fill:#ffcccc
+    style C fill:#ccffcc
+    style D fill:#4ecdc4,color:#fff
+```
+
 ---
 
 ## 2. Basic Terminology
@@ -37,6 +50,18 @@ Every programming language includes:
 Alphabet:  A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 Digits:    0 1 2 3 4 5 6 7 8 9
 Special:   + - / * ( ) , . $ = ' □ (blank space)
+```
+
+```mermaid
+graph TD
+    A[Character Set] --> B[Alphabet]
+    A --> C[Digits]
+    A --> D[Special Characters]
+    B --> B1[A-Z: 26 characters]
+    C --> C1[0-9: 10 digits]
+    D --> D1[Operators & Symbols]
+    
+    style A fill:#4ecdc4,color:#fff
 ```
 
 ### String Definition
@@ -57,6 +82,19 @@ Strings are enclosed in single quotation marks:
 
 -> **Important**: The blank space [space] is a character and counts toward length!
 
+```mermaid
+flowchart LR
+    S1["'THE END'"] --> L1[Length = 7]
+    S2["'TO BE OR NOT TO BE'"] --> L2[Length = 18]
+    S3["''"] --> L3[Length = 0]
+    S4["'12'"] --> L4[Length = 2]
+    
+    style S1 fill:#ffe66d
+    style S2 fill:#ffe66d
+    style S3 fill:#ffcccc
+    style S4 fill:#ffe66d
+```
+
 ### Concatenation
 The operation of joining two strings S1 and S2 is denoted: **S1//S2**
 
@@ -67,6 +105,18 @@ The operation of joining two strings S1 and S2 is denoted: **S1//S2**
 ```
 
 **Property**: LENGTH(S1//S2) = LENGTH(S1) + LENGTH(S2)
+
+```mermaid
+graph LR
+    A['THE'] --> C['THEEND']
+    B['END'] --> C
+    D['THE'] --> F['THE END']
+    E[' '] --> F
+    G['END'] --> F
+    
+    style C fill:#51cf66,color:#fff
+    style F fill:#51cf66,color:#fff
+```
 
 ### Substrings
 
@@ -93,6 +143,20 @@ S = 'TO BE OR NOT TO BE'
 'TO BE'      -> substring (property: length <= length of S)
 ```
 
+```mermaid
+graph TD
+    S[String S] --> X[Prefix X]
+    S --> Y[Substring Y]
+    S --> Z[Suffix Z]
+    
+    X --> X1[Initial Substring:<br/>X is empty]
+    Z --> Z1[Terminal Substring:<br/>Z is empty]
+    Y --> Y1[General Substring:<br/>X and Z not empty]
+    
+    style S fill:#4ecdc4,color:#fff
+    style Y fill:#ffe66d
+```
+
 ### Storage Representation
 
 **Byte**: Unit equal to number of bits needed to represent a character
@@ -102,11 +166,40 @@ S = 'TO BE OR NOT TO BE'
 
 **Byte-addressable machine**: Computer that can access individual bytes
 
+```mermaid
+graph LR
+    A[Character Encoding] --> B[6-bit: 64 chars]
+    A --> C[7-bit ASCII: 128 chars]
+    A --> D[8-bit EBCDIC: 256 chars]
+    
+    C --> C1[Most Common<br/>for English]
+    D --> D1[Standard Today]
+    
+    style C fill:#51cf66,color:#fff
+    style D fill:#4ecdc4,color:#fff
+```
+
 ---
 
 ## 3. Storing Strings
 
 ### Three Main Storage Structures
+
+```mermaid
+graph TB
+    A[String Storage Methods] --> B[Fixed-Length Structures]
+    A --> C[Variable-Length with Fixed Maximum]
+    A --> D[Linked Storage]
+    
+    B --> B1[✓ Easy access O&#40;1&#41;<br/>✗ Wasted space]
+    C --> C1[✓ Flexible within limit<br/>✓ Less waste]
+    D --> D1[✓ Fully dynamic<br/>✗ Slower access O&#40;n&#41;]
+    
+    style A fill:#4ecdc4,color:#fff
+    style B fill:#ff6b6b,color:#fff
+    style C fill:#ffe66d
+    style D fill:#51cf66,color:#fff
+```
 
 #### 3.1 Fixed-Length Structures
 
@@ -134,6 +227,22 @@ Memory Storage (80 chars per record):
 ( [space] represents blank space padding)
 ```
 
+```mermaid
+graph TD
+    subgraph "Fixed-Length Storage - 80 Characters"
+        R1[Record 1: /*PROGRAM PRINTING...■■■■■■]
+        R2[Record 2: void main&#40;&#41;■■■■■■■■■■■■■■■■■■■]
+        R3[Record 3: {■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■]
+    end
+    
+    R1 -.-> A1[Actual: 55 chars]
+    R1 -.-> P1[Padding: 25 chars]
+    
+    style R1 fill:#ffcccc
+    style R2 fill:#ffcccc
+    style R3 fill:#ffcccc
+```
+
 **Advantages:**
 1. [OK] Easy access to any record
 2. [OK] Easy updating within record length limit
@@ -154,6 +263,26 @@ POINT Array:
 Advantage: Records need not be consecutive in memory
 ```
 
+```mermaid
+graph LR
+    subgraph "Pointer Array"
+        P1[Index 1] --> M1[Memory 200]
+        P2[Index 2] --> M2[Memory 280]
+        P3[Index 3] --> M3[Memory 360]
+        P4[Index 4] --> M4[Memory 440]
+    end
+    
+    M1 -.-> D1[/*PROGRAM PRINTING...]
+    M2 -.-> D2[void main&#40;&#41;]
+    M3 -.-> D3[int J, K;]
+    M4 -.-> D4[scanf...]
+    
+    style P1 fill:#4ecdc4
+    style P2 fill:#4ecdc4
+    style P3 fill:#4ecdc4
+    style P4 fill:#4ecdc4
+```
+
 #### 3.2 Variable-Length with Fixed Maximum
 
 **Two Methods:**
@@ -172,6 +301,28 @@ POINT Array:
    1      55      /*PROGRAM PRINTING...
    2      18      void main()
    3      21      {int J, K;
+```
+
+```mermaid
+graph TD
+    subgraph "Method 1: Sentinel Markers"
+        S1[Record 1: Data...$$]
+        S2[Record 2: Data...$$]
+        S3[Record 3: Data...$$]
+    end
+    
+    subgraph "Method 2: Length Prefix"
+        L1[55 | Data...]
+        L2[18 | Data...]
+        L3[21 | Data...]
+    end
+    
+    style S1 fill:#ffe66d
+    style S2 fill:#ffe66d
+    style S3 fill:#ffe66d
+    style L1 fill:#51cf66,color:#fff
+    style L2 fill:#51cf66,color:#fff
+    style L3 fill:#51cf66,color:#fff
 ```
 
 **Visual Comparison:**
@@ -200,6 +351,32 @@ Four Characters per Node:
 [To b] -> [e or] -> [ not] -> [ to ] -> [be, ] -> [that] -> ...
 ```
 
+```mermaid
+graph LR
+    subgraph "Single Character Nodes"
+        N1[T] --> N2[o]
+        N2 --> N3[□]
+        N3 --> N4[b]
+        N4 --> N5[e]
+        N5 --> N6[...]
+    end
+    
+    subgraph "Four Character Nodes"
+        M1[To b] --> M2[e or]
+        M2 --> M3[ not]
+        M3 --> M4[ to ]
+        M4 --> M5[be, ]
+        M5 --> M6[...]
+    end
+    
+    style N1 fill:#ffcccc
+    style N2 fill:#ffcccc
+    style N3 fill:#ffcccc
+    style M1 fill:#51cf66,color:#fff
+    style M2 fill:#51cf66,color:#fff
+    style M3 fill:#51cf66,color:#fff
+```
+
 **Example: "To be or not to be, that is the question"**
 ```
 Single Character Nodes:
@@ -218,6 +395,24 @@ Four Character Nodes:
 - [X] Extra space for links
 - [X] No direct character access
 
+```mermaid
+graph TD
+    A[Linked Storage] --> B[Advantages]
+    A --> C[Disadvantages]
+    
+    B --> B1[✓ Dynamic Size]
+    B --> B2[✓ Easy Insert/Delete]
+    B --> B3[✓ No Fixed Limit]
+    
+    C --> C1[✗ Extra Space for Links]
+    C --> C2[✗ Sequential Access Only]
+    C --> C3[✗ No Random Access]
+    
+    style A fill:#4ecdc4,color:#fff
+    style B fill:#51cf66,color:#fff
+    style C fill:#ff6b6b,color:#fff
+```
+
 ---
 
 ## 4. Character Data Type
@@ -235,6 +430,22 @@ Denoted by quotation marks:
 1. **Static**: Fixed length before execution
 2. **Semistatic**: Variable length ≤ maximum
 3. **Dynamic**: Fully variable length
+
+```mermaid
+graph TD
+    A[String Variables in C] --> B[Static]
+    A --> C[Semistatic]
+    A --> D[Dynamic]
+    
+    B --> B1[Fixed size<br/>char str[20]]
+    C --> C1[Max size limit<br/>strlen ≤ max]
+    D --> D1[Fully variable<br/>malloc/realloc]
+    
+    style A fill:#4ecdc4,color:#fff
+    style B fill:#ffcccc
+    style C fill:#ffe66d
+    style D fill:#51cf66,color:#fff
+```
 
 **C Declaration Examples:**
 ```c
@@ -261,6 +472,23 @@ char int[20];        // Keyword
 char my name[40];    // Contains space
 ```
 
+```mermaid
+flowchart TD
+    Start{Valid Variable Name?}
+    Start -->|Check| A{Starts with<br/>letter or _?}
+    A -->|No| Invalid1[✗ Invalid]
+    A -->|Yes| B{Contains only<br/>letters, digits, _?}
+    B -->|No| Invalid2[✗ Invalid]
+    B -->|Yes| C{Is it a<br/>keyword?}
+    C -->|Yes| Invalid3[✗ Invalid]
+    C -->|No| Valid[✓ Valid]
+    
+    style Invalid1 fill:#ff6b6b,color:#fff
+    style Invalid2 fill:#ff6b6b,color:#fff
+    style Invalid3 fill:#ff6b6b,color:#fff
+    style Valid fill:#51cf66,color:#fff
+```
+
 ---
 
 ## 5. Strings as ADT
@@ -278,6 +506,24 @@ char my name[40];    // Contains space
 | `DELETE(str, i, m)` | Deletes m chars from position i | String |
 | `INSERT(str1, str2, i)` | Inserts str2 at position i | String |
 | `COMPARE(str1, str2)` | Compares strings | Integer |
+
+```mermaid
+mindmap
+  root((String ADT<br/>Operations))
+    Access
+      GETCHAR
+      PUTCHAR
+    Analysis
+      LENGTH
+      POS
+      COMPARE
+    Construction
+      CONCAT
+      SUBSTRING
+    Modification
+      INSERT
+      DELETE
+```
 
 ### Implementation Methods
 
@@ -297,6 +543,23 @@ S1 = 'JANICE'
 [J, A, N, I, C, E, \0, ...]
                    ↑
                    NULL terminator
+```
+
+```mermaid
+graph TD
+    subgraph "Method 1: Length Prefix"
+        M1A[6] --> M1B[J A N I C E]
+    end
+    
+    subgraph "Method 2: NULL Terminator"
+        M2A[J A N I C E] --> M2B[\0]
+    end
+    
+    M1A -.Length.-> M1C[O&#40;1&#41; to get length]
+    M2B -.Terminator.-> M2C[O&#40;n&#41; to get length]
+    
+    style M1A fill:#4ecdc4,color:#fff
+    style M2B fill:#ffe66d
 ```
 
 **Comparison:**
@@ -335,6 +598,22 @@ SUBSTRING(S, 4, 7) = 'BE OR N'
 SUBSTRING('THE END', 4, 4) = '[space]END'
 ```
 
+```mermaid
+sequenceDiagram
+    participant S as String S
+    participant F as SUBSTRING Function
+    participant R as Result
+    
+    S->>F: 'TO BE OR NOT TO BE'
+    Note over F: Position: 4<br/>Length: 7
+    F->>F: Extract chars 4-10
+    F->>R: 'BE OR N'
+    
+    Note over S,R: Original: T O □ B E □ O R □ N O T □ T O □ B E
+    Note over S,R: Position: 1 2 3 4 5 6 7 8 9 10...
+    Note over S,R: Extract:      [4 5 6 7 8 9 10]
+```
+
 **C Implementation:**
 ```c
 char *SUBSTR(char *STR, int i, int j) {
@@ -361,6 +640,15 @@ SUBSTRING(S, 4, 7):
           Result: 'BE OR N'
 ```
 
+```mermaid
+flowchart LR
+    A[TO BE OR NOT] --> B{Position 4<br/>Length 7}
+    B --> C[Extract:<br/>BE OR N]
+    
+    style A fill:#4ecdc4,color:#fff
+    style C fill:#51cf66,color:#fff
+```
+
 ### 6.2 INDEX (Pattern Matching)
 
 **Format**: `INDEX(text, pattern)`
@@ -374,6 +662,22 @@ T = 'HIS FATHER IS THE PROFESSOR'
 INDEX(T, 'THE')  = 7   ✓ Found at position 7
 INDEX(T, 'THEN') = 0   ✗ Not found
 INDEX(T, ' THE') = 14  ✓ With space, position 14
+```
+
+```mermaid
+flowchart TD
+    Start([INDEX&#40;T, P&#41;]) --> Init[K = 1]
+    Init --> Loop{K ≤ MAX?}
+    Loop -->|No| NotFound[Return 0]
+    Loop -->|Yes| Compare[Compare P<br/>with T[K...K+r-1]]
+    Compare --> Match{Full Match?}
+    Match -->|Yes| Found[Return K]
+    Match -->|No| Inc[K = K + 1]
+    Inc --> Loop
+    
+    style Start fill:#4ecdc4
+    style Found fill:#51cf66,color:#fff
+    style NotFound fill:#ff6b6b,color:#fff
 ```
 
 **Visual Search:**
@@ -427,6 +731,19 @@ S1 // S2 = 'MARKTWAIN'
 S1 // ' ' // S2 = 'MARK TWAIN'
 ```
 
+```mermaid
+graph LR
+    A[MARK] --> C[MARKTWAIN]
+    B[TWAIN] --> C
+    
+    D[MARK] --> F[MARK TWAIN]
+    E[' '] --> F
+    G[TWAIN] --> F
+    
+    style C fill:#51cf66,color:#fff
+    style F fill:#4ecdc4,color:#fff
+```
+
 **Visual Process:**
 ```
 [MARK] // [TWAIN] = MARKTWAIN
@@ -470,6 +787,15 @@ M A R C   T W A I N
 1 2 3 4 5 6 7 8 9 10  → Length = 10
 ```
 
+```mermaid
+flowchart LR
+    S1[COMPUTER] --> L1[Count = 8]
+    S2[MARC TWAIN] --> L2[Count = 10<br/>includes space]
+    
+    style L1 fill:#51cf66,color:#fff
+    style L2 fill:#4ecdc4,color:#fff
+```
+
 **C Implementation:**
 ```c
 #include <string.h>
@@ -484,6 +810,23 @@ int len = strlen(S1);  // len = 8
 
 ### Core Operations
 
+```mermaid
+graph TD
+    A[Text Processing] --> B[INSERT]
+    A --> C[DELETE]
+    A --> D[REPLACE]
+    
+    B --> B1[Add at position]
+    C --> C1[Remove portion]
+    D --> D1[Find & swap]
+    
+    B1 --> E[Split → Insert → Join]
+    C1 --> F[Keep prefix & suffix]
+    D1 --> G[DELETE → INSERT]
+    
+    style A fill:#4ecdc4,color:#fff
+```
+
 #### 7.1 INSERTION
 
 **Format**: `INSERT(text, position, string)`
@@ -497,6 +840,24 @@ INSERT('ABCDEFG', 3, 'XYZ') = 'ABXYZCDEFG'
 
 INSERT('ABCDEFG', 6, 'XYZ') = 'ABCDEXYZFG'
                         ↑ Insert here
+```
+
+```mermaid
+stateDiagram-v2
+    [*] --> Original: ABCDEFG
+    Original --> Split: Position 3
+    Split --> Prefix: AB
+    Split --> Suffix: CDEFG
+    Prefix --> Insert: Add XYZ
+    Suffix --> Insert
+    Insert --> Result: ABXYZCDEFG
+    Result --> [*]
+    
+    note right of Split
+        Split at position K
+        Prefix: chars 1 to K-1
+        Suffix: chars K to end
+    end note
 ```
 
 **Visual Process:**
@@ -518,6 +879,20 @@ Result: A B X Y Z C D E F G
 ```
 INSERT(T, K, S) = 
     SUBSTRING(T, 1, K-1) // S // SUBSTRING(T, K, LENGTH(T)-K+1)
+```
+
+```mermaid
+flowchart TD
+    A[INSERT Operation] --> B[Extract Prefix<br/>1 to K-1]
+    A --> C[New String S]
+    A --> D[Extract Suffix<br/>K to end]
+    B --> E[Concatenate All]
+    C --> E
+    D --> E
+    E --> F[Result]
+    
+    style A fill:#4ecdc4,color:#fff
+    style F fill:#51cf66,color:#fff
 ```
 
 **Breakdown:**
@@ -542,6 +917,26 @@ DELETE('ABCDEFG', 2, 4) = 'AFG'
            Position 2, Delete 4 chars (B,C,D,E)
 ```
 
+```mermaid
+stateDiagram-v2
+    [*] --> Original: ABCDEFG
+    Original --> Identify: DELETE pos 4, len 2
+    Identify --> Keep1: ABC
+    Identify --> Remove: DE
+    Identify --> Keep2: FG
+    Keep1 --> Combine
+    Remove --> Discard
+    Keep2 --> Combine
+    Combine --> Result: ABCFG
+    Result --> [*]
+    
+    note right of Remove
+        Remove L chars
+        from position K
+        Range: K to K+L-1
+    end note
+```
+
 **Visual Process:**
 ```
 Original: A B C D E F G
@@ -556,6 +951,19 @@ DELETE(4, 2):
 ```
 DELETE(T, K, L) = 
     SUBSTRING(T, 1, K-1) // SUBSTRING(T, K+L, LENGTH(T)-K-L+1)
+```
+
+```mermaid
+flowchart LR
+    A[DELETE Operation] --> B[Keep Prefix<br/>1 to K-1]
+    A --> C[Remove Middle<br/>K to K+L-1]
+    A --> D[Keep Suffix<br/>K+L to end]
+    B --> E[Join Prefix+Suffix]
+    D --> E
+    E --> F[Result]
+    
+    style C fill:#ff6b6b,color:#fff
+    style F fill:#51cf66,color:#fff
 ```
 
 **Special Case:**
@@ -585,6 +993,27 @@ REPLACE('XABYABZ', 'BA', 'C') = 'XABYABZ'
                                 Pattern not found, no change
 ```
 
+```mermaid
+sequenceDiagram
+    participant T as Text
+    participant I as INDEX
+    participant D as DELETE
+    participant In as INSERT
+    participant R as Result
+    
+    T->>I: Find 'AB' position
+    I->>T: K = 2
+    T->>D: DELETE(T, 2, 2)
+    D->>T: 'XYABZ'
+    T->>In: INSERT(T, 2, 'C')
+    In->>R: 'XCYABZ'
+    
+    Note over T,R: REPLACE('XABYABZ', 'AB', 'C')
+    Note over T,R: Step 1: Find at position 2
+    Note over T,R: Step 2: Delete 'AB'
+    Note over T,R: Step 3: Insert 'C'
+```
+
 **Implementation Steps:**
 ```
 1. K := INDEX(T, P1)        Find position
@@ -608,6 +1037,20 @@ Step 3: Insert 'C' at position 2
 Result: XCYABZ
 ```
 
+```mermaid
+flowchart TD
+    Start([REPLACE&#40;T,P1,P2&#41;]) --> Find[K = INDEX&#40;T,P1&#41;]
+    Find --> Check{K = 0?}
+    Check -->|Yes| NoChange[Return T unchanged]
+    Check -->|No| Del[T = DELETE&#40;T,K,LENGTH&#40;P1&#41;&#41;]
+    Del --> Ins[T = INSERT&#40;T,K,P2&#41;]
+    Ins --> Done[Return T]
+    
+    style Start fill:#4ecdc4
+    style Done fill:#51cf66,color:#fff
+    style NoChange fill:#ffe66d
+```
+
 ### Algorithm 3.1: Delete All Occurrences
 
 **Purpose**: Delete every occurrence of pattern P in text T
@@ -619,6 +1062,20 @@ Algorithm DELETE_ALL(T, P):
    a. T := DELETE(T, K, LENGTH(P))
    b. K := INDEX(T, P)
 3. OUTPUT T
+```
+
+```mermaid
+flowchart TD
+    Start([DELETE_ALL&#40;T,P&#41;]) --> Find[K = INDEX&#40;T,P&#41;]
+    Find --> Loop{K ≠ 0?}
+    Loop -->|No| Output[OUTPUT T]
+    Loop -->|Yes| Del[T = DELETE&#40;T,K,LENGTH&#40;P&#41;&#41;]
+    Del --> Find
+    Output --> End([End])
+    
+    style Start fill:#4ecdc4
+    style Del fill:#ff6b6b,color:#fff
+    style Output fill:#51cf66,color:#fff
 ```
 
 **Example Execution:**
@@ -638,6 +1095,26 @@ Iteration 3:
   STOP
 
 Output: XYZ
+```
+
+```mermaid
+stateDiagram-v2
+    [*] --> State1: T='XABYABZ'
+    State1 --> State2: DELETE 'AB' at pos 1
+    State2 --> State3: T='XYABZ'
+    State3 --> State4: DELETE 'AB' at pos 3
+    State4 --> Final: T='XYZ'
+    Final --> [*]: No more 'AB'
+    
+    note right of State1
+        Initial text
+        Find 'AB' at position 1
+    end note
+    
+    note right of State3
+        After first deletion
+        Find 'AB' at position 3
+    end note
 ```
 
 **Important Case:**
@@ -664,6 +1141,25 @@ Algorithm REPLACE_ALL(T, P, Q):
 3. OUTPUT T
 ```
 
+```mermaid
+flowchart TD
+    Start([REPLACE_ALL&#40;T,P,Q&#41;]) --> Find[K = INDEX&#40;T,P&#41;]
+    Find --> Loop{K ≠ 0?}
+    Loop -->|No| Output[OUTPUT T]
+    Loop -->|Yes| Check{LENGTH&#40;Q&#41;<br/>< LENGTH&#40;P&#41;?}
+    Check -->|Yes| Safe[T = REPLACE&#40;T,P,Q&#41;]
+    Check -->|No| Danger[⚠️ May not terminate!]
+    Safe --> Find
+    Danger --> Infinite[Infinite Loop]
+    Output --> End([End])
+    
+    style Start fill:#4ecdc4
+    style Danger fill:#ff6b6b,color:#fff
+    style Infinite fill:#ff6b6b,color:#fff
+    style Safe fill:#51cf66,color:#fff
+    style Output fill:#51cf66,color:#fff
+```
+
 **⚠️ WARNING**: This may not terminate!
 
 **Safe Case:**
@@ -685,6 +1181,22 @@ Iteration 3: XABBBY  (infinite loop!)
 ...never terminates because P is substring of Q
 ```
 
+```mermaid
+graph TD
+    A[REPLACE_ALL Safety] --> B{LENGTH&#40;Q&#41; vs LENGTH&#40;P&#41;}
+    B -->|Q < P| C[✓ Safe - Always terminates]
+    B -->|Q = P| D[✓ Safe - String doesn't grow]
+    B -->|Q > P| E[⚠️ Dangerous]
+    
+    E --> F{Is P substring of Q?}
+    F -->|Yes| G[✗ Infinite Loop!]
+    F -->|No| H[✓ May be safe]
+    
+    style C fill:#51cf66,color:#fff
+    style D fill:#51cf66,color:#fff
+    style G fill:#ff6b6b,color:#fff
+```
+
 **Safe Condition**: Algorithm terminates if `LENGTH(Q) < LENGTH(P)`
 
 ---
@@ -696,6 +1208,20 @@ Given:
 - Pattern P (length r)
 - Text T (length s)
 Find: Does P appear in T? If yes, where?
+
+```mermaid
+graph LR
+    A[Pattern Matching Problem] --> B[Input]
+    A --> C[Output]
+    
+    B --> B1[Pattern P<br/>length r]
+    B --> B2[Text T<br/>length s]
+    
+    C --> C1[Position K<br/>if found]
+    C --> C2[0 if not found]
+    
+    style A fill:#4ecdc4,color:#fff
+```
 
 ### 8.1 First Algorithm (Brute Force)
 
@@ -713,6 +1239,24 @@ W₂ = T[2]T[3]T[4]T[5]
 W₁₇ = T[17]T[18]T[19]T[20]
 
 MAX = s - r + 1 = 20 - 4 + 1 = 17 substrings
+```
+
+```mermaid
+flowchart LR
+    T[Text: aabbbabb] --> W1[W₁: aabb]
+    T --> W2[W₂: abbb]
+    T --> W3[W₃: bbba]
+    T --> W4[W₄: bbab]
+    T --> W5[W₅: babb ✓]
+    
+    P[Pattern: bab] -.compare.-> W1
+    P -.compare.-> W2
+    P -.compare.-> W3
+    P -.compare.-> W4
+    P -.match!.-> W5
+    
+    style W5 fill:#51cf66,color:#fff
+    style P fill:#4ecdc4,color:#fff
 ```
 
 **Algorithm 3.3: Pattern Matching (Brute Force)**
@@ -740,6 +1284,24 @@ OUTPUT: INDEX (position of P in T, or 0)
    INDEX := 0
 
 7. EXIT
+```
+
+```mermaid
+flowchart TD
+    Start([Algorithm 3.3<br/>Brute Force]) --> Init[K=1<br/>MAX=S-R+1]
+    Init --> OuterLoop{K ≤ MAX?}
+    OuterLoop -->|No| Fail[INDEX = 0<br/>Not Found]
+    OuterLoop -->|Yes| InnerLoop[L = 1 to R]
+    InnerLoop --> Compare{P[L] =<br/>T[K+L-1]?}
+    Compare -->|No| NextK[K = K+1]
+    Compare -->|Yes| CheckL{L = R?}
+    CheckL -->|No| InnerLoop
+    CheckL -->|Yes| Success[INDEX = K<br/>Found!]
+    NextK --> OuterLoop
+    
+    style Start fill:#4ecdc4
+    style Success fill:#51cf66,color:#fff
+    style Fail fill:#ff6b6b,color:#fff
 ```
 
 **Detailed Example:**
@@ -776,6 +1338,28 @@ P:           b a b
          ✓ MATCH at position 5
 ```
 
+```mermaid
+gantt
+    title Brute Force Pattern Matching Execution
+    dateFormat X
+    axisFormat %s
+    
+    section K=1
+    Compare a≠b: 0, 1
+    
+    section K=2
+    Compare a≠b: 1, 2
+    
+    section K=3
+    b=b, b=b, b≠a: 2, 5
+    
+    section K=4
+    b=b, b=b, a≠b: 5, 8
+    
+    section K=5
+    b=b, a=a, b=b MATCH!: crit, 8, 11
+```
+
 ### Complexity Analysis
 
 **Best Case:**
@@ -798,6 +1382,16 @@ Maximum when r = (n+1)/4
 C(n) = (n+1)²/8 = O(n²)
 ```
 
+```mermaid
+xychart-beta
+    title "Brute Force Complexity Analysis"
+    x-axis "Input Size (n)" [10, 20, 30, 40, 50]
+    y-axis "Comparisons" 0 --> 3000
+    line "Best Case O(r)" [3, 3, 3, 3, 3]
+    line "Average Case" [50, 200, 450, 800, 1250]
+    line "Worst Case O(n²)" [100, 400, 900, 1600, 2500]
+```
+
 **Complexity**: **O(n²)** where n = r + s
 
 ### 8.2 Second Algorithm (KMP-style)
@@ -816,6 +1410,22 @@ Q₃ = 'aab'
 Q₄ = 'aaba' (complete pattern)
 ```
 
+```mermaid
+graph LR
+    Q0[Q₀: Empty] --> Q1[Q₁: a]
+    Q1 --> Q2[Q₂: aa]
+    Q2 --> Q3[Q₃: aab]
+    Q3 --> Q4[Q₄: aaba]
+    Q4 --> P[P: Complete Match!]
+    
+    style Q0 fill:#ffcccc
+    style Q1 fill:#ffe66d
+    style Q2 fill:#ffe66d
+    style Q3 fill:#ffe66d
+    style Q4 fill:#4ecdc4,color:#fff
+    style P fill:#51cf66,color:#fff
+```
+
 **State Transition Table:**
 ```
 |     | a  | b  | x  |
@@ -832,6 +1442,22 @@ Legend:
 - x: Any character not in P
 ```
 
+```mermaid
+graph TD
+    subgraph "State Transition Table for P='aaba'"
+        T["
+        ┌─────┬────┬────┬────┐
+        │State│ a  │ b  │ x  │
+        ├─────┼────┼────┼────┤
+        │ Q₀  │ Q₁ │ Q₀ │ Q₀ │
+        │ Q₁  │ Q₂ │ Q₀ │ Q₀ │
+        │ Q₂  │ Q₂ │ Q₃ │ Q₀ │
+        │ Q₃  │ P  │ Q₀ │ Q₀ │
+        └─────┴────┴────┴────┘
+        "]
+    end
+```
+
 **State Transition Graph:**
 ```
         a         a         b         a
@@ -839,6 +1465,47 @@ Legend:
     ↑        │        │        │
     │b       │b       │a       │b
     └────────┴────────┴────────┘
+```
+
+```mermaid
+stateDiagram-v2
+    [*] --> Q0: Start
+    Q0 --> Q1: a
+    Q0 --> Q0: b, x
+    
+    Q1 --> Q2: a
+    Q1 --> Q0: b, x
+    
+    Q2 --> Q2: a
+    Q2 --> Q3: b
+    Q2 --> Q0: x
+    
+    Q3 --> P: a
+    Q3 --> Q0: b, x
+    
+    P --> [*]: Match Found!
+    
+    note right of Q0
+        Empty state
+        No match yet
+    end note
+    
+    note right of Q1
+        Matched: 'a'
+    end note
+    
+    note right of Q2
+        Matched: 'aa'
+    end note
+    
+    note right of Q3
+        Matched: 'aab'
+    end note
+    
+    note right of P
+        Complete pattern!
+        'aaba' matched
+    end note
 ```
 
 **Example Execution:**
@@ -851,6 +1518,32 @@ States: Q₀ → Q₁ → Q₀ → Q₀ → Q₁ → Q₂ → Q₃ → P
 Chars:     a    b    c    a    a    b    a    c
 
 Position 8 - 4 = 4 ✓ Pattern found at index 4
+```
+
+```mermaid
+sequenceDiagram
+    participant T as Text
+    participant S as State Machine
+    participant R as Result
+    
+    T->>S: Read 'a'
+    S->>S: Q₀ → Q₁
+    T->>S: Read 'b'
+    S->>S: Q₁ → Q₀
+    T->>S: Read 'c'
+    S->>S: Q₀ → Q₀
+    T->>S: Read 'a'
+    S->>S: Q₀ → Q₁
+    T->>S: Read 'a'
+    S->>S: Q₁ → Q₂
+    T->>S: Read 'b'
+    S->>S: Q₂ → Q₃
+    T->>S: Read 'a'
+    S->>S: Q₃ → P
+    S->>R: Match at position 4
+    
+    Note over T,R: Text: a b c a a b a c a
+    Note over T,R: Pattern 'aaba' found at position 4
 ```
 
 **Visual State Transitions:**
@@ -883,6 +1576,23 @@ OUTPUT: INDEX
 7. EXIT
 ```
 
+```mermaid
+flowchart TD
+    Start([Algorithm 3.4<br/>KMP Style]) --> Init[K=1, S₁=Q₀]
+    Init --> Loop{Sₖ≠P AND<br/>K≤N?}
+    Loop -->|No| Check{Sₖ = P?}
+    Loop -->|Yes| Read[Read Tₖ]
+    Read --> Transition[Sₖ₊₁ = F&#40;Sₖ,Tₖ&#41;]
+    Transition --> Inc[K = K+1]
+    Inc --> Loop
+    Check -->|Yes| Found[INDEX = K-LENGTH&#40;P&#41;]
+    Check -->|No| NotFound[INDEX = 0]
+    
+    style Start fill:#4ecdc4
+    style Found fill:#51cf66,color:#fff
+    style NotFound fill:#ff6b6b,color:#fff
+```
+
 **Complexity**: **O(n)** where n = LENGTH(T)
 
 **Comparison:**
@@ -891,6 +1601,30 @@ OUTPUT: INDEX
 |-------------|------------|-------------|
 | Brute Force | O(n²)      | Polynomial  |
 | KMP-style   | O(n)       | Linear      |
+```
+
+```mermaid
+xychart-beta
+    title "Algorithm Comparison: Brute Force vs KMP"
+    x-axis "Text Length (n)" [10, 20, 30, 40, 50, 100]
+    y-axis "Operations" 0 --> 10000
+    line "Brute Force O(n²)" [100, 400, 900, 1600, 2500, 10000]
+    line "KMP O(n)" [10, 20, 30, 40, 50, 100]
+```
+
+```mermaid
+graph TD
+    A[Pattern Matching<br/>Algorithm Selection] --> B{Pattern Length}
+    B -->|Short<br/>&#40;< 5 chars&#41;| C[Brute Force<br/>Simple & Fast]
+    B -->|Medium<br/>&#40;5-20 chars&#41;| D{Text Length}
+    B -->|Long<br/>&#40;> 20 chars&#41;| E[KMP or<br/>Boyer-Moore]
+    
+    D -->|Short| C
+    D -->|Long| E
+    
+    style A fill:#4ecdc4,color:#fff
+    style C fill:#ffe66d
+    style E fill:#51cf66,color:#fff
 ```
 
 ---
@@ -919,6 +1653,24 @@ Length 0: Λ (empty string)
 Total: 11 substrings
 ```
 
+```mermaid
+graph TD
+    W[W = 'ABCD'] --> L4[Length 4: ABCD]
+    W --> L3[Length 3: ABC, BCD]
+    W --> L2[Length 2: AB, BC, CD]
+    W --> L1[Length 1: A, B, C, D]
+    W --> L0[Length 0: Λ]
+    
+    L4 --> T[Total: 11 substrings]
+    L3 --> T
+    L2 --> T
+    L1 --> T
+    L0 --> T
+    
+    style W fill:#4ecdc4,color:#fff
+    style T fill:#51cf66,color:#fff
+```
+
 c) **Initial Substrings:**
 ```
 ABCD  (entire string)
@@ -926,6 +1678,17 @@ ABC   (first 3)
 AB    (first 2)
 A     (first 1)
 Λ     (empty)
+```
+
+```mermaid
+flowchart LR
+    S[ABCD] --> I1[ABCD]
+    S --> I2[ABC]
+    S --> I3[AB]
+    S --> I4[A]
+    S --> I5[Λ]
+    
+    style S fill:#4ecdc4,color:#fff
 ```
 
 ### Problem 3.2: Character Representation
@@ -941,6 +1704,25 @@ Analysis:
 2⁸ = 256 (EBCDIC, common)
 
 Answer: Minimum 6 bits, typically 7 or 8 bits
+```
+
+```mermaid
+graph LR
+    A[48 Characters] --> B{Bits Needed}
+    B --> C[2⁵=32 ✗]
+    B --> D[2⁶=64 ✓]
+    B --> E[2⁷=128 ASCII]
+    B --> F[2⁸=256 EBCDIC]
+    
+    C --> C1[Insufficient]
+    D --> D1[Minimum]
+    E --> E1[Standard]
+    F --> F1[Common]
+    
+    style C fill:#ff6b6b,color:#fff
+    style D fill:#51cf66,color:#fff
+    style E fill:#4ecdc4,color:#fff
+    style F fill:#4ecdc4,color:#fff
 ```
 
 ### Problem 3.8: String Operations
@@ -973,6 +1755,18 @@ b) SUBSTRING(T, 10, 5)
    Result: 'F BEA'
 ```
 
+```mermaid
+flowchart TD
+    S["S = 'JOHN PAUL JONES'"] --> Op1[SUBSTRING&#40;S,4,8&#41;]
+    Op1 --> R1["Result: 'N PAUL J'"]
+    
+    T["T = 'A THING OF BEAUTY...'"] --> Op2[SUBSTRING&#40;T,10,5&#41;]
+    Op2 --> R2["Result: 'F BEA'"]
+    
+    style R1 fill:#51cf66,color:#fff
+    style R2 fill:#51cf66,color:#fff
+```
+
 ### Problem 3.10: INDEX Function
 
 ```
@@ -987,6 +1781,24 @@ T = 'A THING OF BEAUTY IS A JOY FOREVER'
 d) INDEX(T, 'A') = 1  (first 'A')
 e) INDEX(T, ' A') = 21  (space before 'A')
 f) INDEX(T, 'THE') = 0  (not in text)
+```
+
+```mermaid
+graph TD
+    S["S = 'JOHN PAUL JONES'"] --> I1["INDEX&#40;S,'JO'&#41; = 1 ✓"]
+    S --> I2["INDEX&#40;S,'JOY'&#41; = 0 ✗"]
+    S --> I3["INDEX&#40;S,' JO'&#41; = 10 ✓"]
+    
+    T["T = 'A THING OF BEAUTY...'"] --> I4["INDEX&#40;T,'A'&#41; = 1 ✓"]
+    T --> I5["INDEX&#40;T,' A'&#41; = 21 ✓"]
+    T --> I6["INDEX&#40;T,'THE'&#41; = 0 ✗"]
+    
+    style I1 fill:#51cf66,color:#fff
+    style I2 fill:#ff6b6b,color:#fff
+    style I3 fill:#51cf66,color:#fff
+    style I4 fill:#51cf66,color:#fff
+    style I5 fill:#51cf66,color:#fff
+    style I6 fill:#ff6b6b,color:#fff
 ```
 
 ### Problem 3.11: Concatenation
@@ -1008,6 +1820,19 @@ c) SUBSTRING(S, 11, 5) // ',' // SUBSTRING(S, 1, 9)
 d) SUBSTRING(T, 28, 3) // 'GIVEN'
    = 'FOR' // 'GIVEN'
    = 'FORGIVEN'
+```
+
+```mermaid
+flowchart LR
+    A['THE'] --> C1['THEEND']
+    B['END'] --> C1
+    
+    D['THE'] --> C2['THE END']
+    E[' '] --> C2
+    F['END'] --> C2
+    
+    style C1 fill:#ffe66d
+    style C2 fill:#51cf66,color:#fff
 ```
 
 ### Problem 3.12: INSERT Operations
@@ -1038,6 +1863,34 @@ f) Change to 'The student is very ill today.'
    INSERT(INSERT(T, 19, ' TODAY'), 15, 'VERY ')
 ```
 
+```mermaid
+stateDiagram-v2
+    [*] --> Original: AAAAA
+    Original --> Insert1: INSERT at pos 1
+    Insert1 --> Result1: BBBAAAAA
+    
+    Original --> Insert2: INSERT at pos 3
+    Insert2 --> Result2: AABBBAAA
+    
+    Original --> Insert3: INSERT at pos 6
+    Insert3 --> Result3: AAAAABBB
+    
+    note right of Insert1
+        Insert 'BBB' before position 1
+        Prepend to string
+    end note
+    
+    note right of Insert2
+        Insert 'BBB' at position 3
+        Split: AA + BBB + AAA
+    end note
+    
+    note right of Insert3
+        Insert 'BBB' at position 6
+        Append to string
+    end note
+```
+
 ### Problem 3.13: DELETE and REPLACE
 
 ```
@@ -1056,6 +1909,24 @@ c) REPLACE('AAABBB', 'AA', 'BB')
 d) REPLACE('JOHN PAUL JONES', 'PAUL', 'DAVID')
    JOHN [PAUL] JONES → Replace 'PAUL' with 'DAVID'
    Result: 'JOHN DAVID JONES'
+```
+
+```mermaid
+flowchart TD
+    subgraph "DELETE Operations"
+        D1["DELETE&#40;'AAABBB',2,2&#41;"] --> DR1["'ABBB'"]
+        D2["DELETE&#40;'JOHN PAUL JONES',6,5&#41;"] --> DR2["'JOHN JONES'"]
+    end
+    
+    subgraph "REPLACE Operations"
+        R1["REPLACE&#40;'AAABBB','AA','BB'&#41;"] --> RR1["'BBABBB'"]
+        R2["REPLACE&#40;'JOHN PAUL JONES','PAUL','DAVID'&#41;"] --> RR2["'JOHN DAVID JONES'"]
+    end
+    
+    style DR1 fill:#51cf66,color:#fff
+    style DR2 fill:#51cf66,color:#fff
+    style RR1 fill:#4ecdc4,color:#fff
+    style RR2 fill:#4ecdc4,color:#fff
 ```
 
 ### Problem 3.18: Pattern Matching Complexity
@@ -1116,6 +1987,34 @@ d) P = 'aaa', T = 'abaabbaaabbbaaaabbbb'
    INDEX = 7
 ```
 
+```mermaid
+gantt
+    title Problem 3.18(d): Pattern Matching Execution
+    dateFormat X
+    axisFormat %s
+    
+    section K=1
+    W₁ 2 comps: 0, 2
+    
+    section K=2
+    W₂ 1 comp: 2, 3
+    
+    section K=3
+    W₃ 3 comps: 3, 6
+    
+    section K=4
+    W₄ 2 comps: 6, 8
+    
+    section K=5
+    W₅ 1 comp: 8, 9
+    
+    section K=6
+    W₆ 1 comp: 9, 10
+    
+    section K=7
+    W₇ MATCH 3 comps: crit, 10, 13
+```
+
 ### Problem 3.20: State Table Construction
 
 **Question**: Create table for P = 'aaabb'
@@ -1130,6 +2029,22 @@ Q₂ = aa
 Q₃ = aaa
 Q₄ = aaab
 Q₅ = aaabb (P)
+```
+
+```mermaid
+graph LR
+    Q0[Q₀: Λ] --> Q1[Q₁: a]
+    Q1 --> Q2[Q₂: aa]
+    Q2 --> Q3[Q₃: aaa]
+    Q3 --> Q4[Q₄: aaab]
+    Q4 --> Q5[Q₅: aaabb]
+    
+    style Q0 fill:#ffcccc
+    style Q1 fill:#ffe66d
+    style Q2 fill:#ffe66d
+    style Q3 fill:#ffe66d
+    style Q4 fill:#4ecdc4,color:#fff
+    style Q5 fill:#51cf66,color:#fff
 ```
 
 **State Transition Table:**
@@ -1154,6 +2069,39 @@ Q₀ ───→ Q₁ ───→ Q₂ ───→ Q₃ ───→ Q₄ ─
  └──────┴───────┴───────────────┘
 ```
 
+```mermaid
+stateDiagram-v2
+    [*] --> Q0
+    Q0 --> Q1: a
+    Q0 --> Q0: b, x
+    
+    Q1 --> Q2: a
+    Q1 --> Q0: b, x
+    
+    Q2 --> Q3: a
+    Q2 --> Q0: b, x
+    
+    Q3 --> Q3: a
+    Q3 --> Q4: b
+    Q3 --> Q0: x
+    
+    Q4 --> Q1: a
+    Q4 --> P: b
+    Q4 --> Q0: x
+    
+    P --> [*]: Success!
+    
+    note right of Q3
+        On 'a': Stay at Q₃
+        Still have 'aaa'
+    end note
+    
+    note right of Q4
+        On 'a': Go to Q₁
+        Partial match restart
+    end note
+```
+
 **Explanation of transitions:**
 - From Q₃ on 'a': Stay at Q₃ (still have 'aaa')
 - From Q₄ on 'a': Go to Q₁ (partial match 'aaaba' → restart with 'a')
@@ -1170,6 +2118,19 @@ Q₃ = aba
 Q₄ = abab
 Q₅ = ababa
 Q₆ = ababab (P)
+```
+
+```mermaid
+flowchart LR
+    Q0[Q₀] -->|a| Q1[Q₁]
+    Q1 -->|b| Q2[Q₂]
+    Q2 -->|a| Q3[Q₃]
+    Q3 -->|b| Q4[Q₄]
+    Q4 -->|a| Q5[Q₅]
+    Q5 -->|b| Q6[Q₆ - P]
+    
+    style Q0 fill:#ffcccc
+    style Q6 fill:#51cf66,color:#fff
 ```
 
 **State Transition Table:**
@@ -1193,6 +2154,40 @@ Q₀ ───→ Q₁ ───→ Q₂ ───→ Q₃ ───→ Q₄ ─
  ↑      ↓       │       │       │       │
  │b     └a──────┘b      │a      │b      │a
  └──────────────────────┴───────┴───────┘
+```
+
+```mermaid
+stateDiagram-v2
+    [*] --> Q0
+    Q0 --> Q1: a
+    Q0 --> Q0: b
+    
+    Q1 --> Q1: a
+    Q1 --> Q2: b
+    
+    Q2 --> Q3: a
+    Q2 --> Q0: b
+    
+    Q3 --> Q1: a
+    Q3 --> Q4: b
+    
+    Q4 --> Q5: a
+    Q4 --> Q0: b
+    
+    Q5 --> Q1: a
+    Q5 --> P: b
+    
+    P --> [*]: Match!
+    
+    note right of Q1
+        On 'a': Loop at Q₁
+        Consecutive a's
+    end note
+    
+    note right of Q3
+        On 'a': Back to Q₁
+        Restart partial match
+    end note
 ```
 
 **Key Features:**
@@ -1243,6 +2238,22 @@ SUBSTRING(S,1,5): TO BE
 */
 ```
 
+```mermaid
+flowchart TD
+    Start([SUBSTR Function]) --> Input[Input: STR, i, j]
+    Input --> Init[Initialize m=0]
+    Init --> Loop[for k = i-1 to i+j-2]
+    Loop --> Copy[STRRES[m] = STR[k]]
+    Copy --> Inc[m++]
+    Inc --> Check{More chars?}
+    Check -->|Yes| Loop
+    Check -->|No| Term[Add '\0']
+    Term --> Return[Return STRRES]
+    
+    style Start fill:#4ecdc4
+    style Return fill:#51cf66,color:#fff
+```
+
 #### Program 2: INDEX Function
 
 ```c
@@ -1289,6 +2300,27 @@ INDEX(T,'THE'): 15
 INDEX(T,'THEN'): 0
 INDEX(T,' THE '): 14
 */
+```
+
+```mermaid
+flowchart TD
+    Start([INDEX Function]) --> OuterLoop[for m in text]
+    OuterLoop --> SetFlag[flag = 1]
+    SetFlag --> InnerLoop[for n in pattern]
+    InnerLoop --> Compare{STR1[m+n]<br/>== STR2[n]?}
+    Compare -->|No| SetFalse[flag = 0, break]
+    Compare -->|Yes| NextChar[Continue]
+    NextChar --> InnerLoop
+    SetFalse --> CheckFlag{flag == 1?}
+    InnerLoop --> CheckFlag
+    CheckFlag -->|Yes| Found[return m+1]
+    CheckFlag -->|No| NextPos[m++]
+    NextPos --> OuterLoop
+    OuterLoop --> NotFound[return 0]
+    
+    style Start fill:#4ecdc4
+    style Found fill:#51cf66,color:#fff
+    style NotFound fill:#ff6b6b,color:#fff
 ```
 
 #### Program 3: String Concatenation
@@ -1455,6 +2487,24 @@ REPLACE('XABYABZ','BA','C'): XABYABZ
 */
 ```
 
+```mermaid
+graph TD
+    subgraph "Program 4 Function Dependencies"
+        Main[Main Program] --> Ins[INSERT]
+        Main --> Del[DELETE]
+        Main --> Rep[REPLACE]
+        
+        Ins --> Sub[SUBSTR]
+        Del --> Sub
+        Rep --> Idx[INDEX_STR]
+        Rep --> Del
+        Rep --> Ins
+    end
+    
+    style Main fill:#4ecdc4,color:#fff
+    style Sub fill:#ffe66d
+```
+
 #### Program 5: Pattern Matching (Brute Force)
 
 ```c
@@ -1584,6 +2634,25 @@ Text contains 'THE' 4 times
 */
 ```
 
+```mermaid
+flowchart TD
+    Start([COUNT_WORD]) --> Prep[Prepare patterns:<br/>BEG, MID, END]
+    Prep --> Loop[For each line K]
+    Loop --> CheckBeg{Word at<br/>beginning?}
+    CheckBeg -->|Yes| Inc1[count++]
+    CheckBeg -->|No| CheckEnd{Word at<br/>end?}
+    Inc1 --> CheckEnd
+    CheckEnd -->|Yes| Inc2[count++]
+    CheckEnd -->|No| CheckMid[Check middle]
+    Inc2 --> CheckMid
+    CheckMid --> MoreLines{More lines?}
+    MoreLines -->|Yes| Loop
+    MoreLines -->|No| Return[Return count]
+    
+    style Start fill:#4ecdc4
+    style Return fill:#51cf66,color:#fff
+```
+
 ---
 
 ## Summary Tables
@@ -1605,6 +2674,23 @@ Text contains 'THE' 4 times
 | Replace         | Custom (REPLACE)         | O(n)       |
 ```
 
+```mermaid
+graph TD
+    subgraph "String Operations Complexity"
+        A[Operations] --> B[O&#40;1&#41;]
+        A --> C[O&#40;n&#41;]
+        A --> D[O&#40;mn&#41;]
+        
+        C --> C1[strlen<br/>strcpy<br/>strcat]
+        C --> C2[INSERT<br/>DELETE<br/>REPLACE]
+        D --> D1[strstr<br/>Pattern Match]
+    end
+    
+    style B fill:#51cf66,color:#fff
+    style C fill:#ffe66d
+    style D fill:#ff6b6b,color:#fff
+```
+
 ### Pattern Matching Comparison
 
 ```
@@ -1617,6 +2703,14 @@ Text contains 'THE' 4 times
 
 where: m = pattern length, n = text length, σ = alphabet size
 ```
+
+```mermaid
+graph LR
+    subgraph "Algorithm Selection Guide"
+        Q{Pattern Length?}
+        Q -->|Short| BF[Brute Force<br/>Simple & Fast]
+        Q -->|Medium| KMP[KMP<br/>Balanced]
+        Q -->|Long| BM[Boyer-Moore<br/>Optimal
 
 ### Storage Methods Comparison
 
