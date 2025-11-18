@@ -508,21 +508,33 @@ flowchart TD
 | `COMPARE(str1, str2)` | Compares strings | Integer |
 
 ```mermaid
-mindmap
-  root((String ADT<br/>Operations))
-    Access
-      GETCHAR
-      PUTCHAR
-    Analysis
-      LENGTH
-      POS
-      COMPARE
-    Construction
-      CONCAT
-      SUBSTRING
-    Modification
-      INSERT
-      DELETE
+flowchart TD
+        Root(("String ADT\nOperations"))
+        Root --> Access[Access]
+        Root --> Analysis[Analysis]
+        Root --> Build[Construction]
+        Root --> Modify[Modification]
+
+        Access --> GETCHAR
+        Access --> PUTCHAR
+
+        Analysis --> LENGTH
+        Analysis --> POS
+        Analysis --> COMPARE
+
+        Build --> CONCAT
+        Build --> SUBSTRING
+
+        Modify --> INSERT
+        Modify --> DELETE
+
+        classDef root fill:#4ecdc4,stroke:#1d7874,color:#fff,font-weight:600;
+        classDef group fill:#eef2ff,stroke:#312e81,color:#111;
+        classDef op fill:#ffffff,stroke:#94a3b8,color:#111;
+
+        class Root root;
+        class Access,Analysis,Build,Modify group;
+        class GETCHAR,PUTCHAR,LENGTH,POS,COMPARE,CONCAT,SUBSTRING,INSERT,DELETE op;
 ```
 
 ### Implementation Methods
@@ -1383,13 +1395,21 @@ C(n) = (n+1)²/8 = O(n²)
 ```
 
 ```mermaid
-xychart-beta
-    title "Brute Force Complexity Analysis"
-    x-axis "Input Size (n)" [10, 20, 30, 40, 50]
-    y-axis "Comparisons" 0 --> 3000
-    line "Best Case O(r)" [3, 3, 3, 3, 3]
-    line "Average Case" [50, 200, 450, 800, 1250]
-    line "Worst Case O(n²)" [100, 400, 900, 1600, 2500]
+flowchart LR
+    Start["Brute Force Complexity"] --> Best["Best: O(r) comparisons\n(found immediately)"]
+    Start --> Avg["Average: grows with n\n(depends on overlaps)"]
+    Start --> Worst["Worst: O(n^2) comparisons\n(r substrings × r chars)"]
+
+    Avg --> NoteAvg[Example: 50→1250 comparisons]
+    Worst --> NoteWorst[Example: all 'a' text → quadratic]
+
+    classDef head fill:#4ecdc4,stroke:#155e75,color:#fff,font-weight:600;
+    classDef case fill:#ffffff,stroke:#475569,color:#111;
+    classDef note fill:#fef9c3,stroke:#a16207,color:#111;
+
+    class Start head;
+    class Best,Avg,Worst case;
+    class NoteAvg,NoteWorst note;
 ```
 
 **Complexity**: **O(n²)** where n = r + s
@@ -1604,12 +1624,19 @@ flowchart TD
 ```
 
 ```mermaid
-xychart-beta
-    title "Algorithm Comparison: Brute Force vs KMP"
-    x-axis "Text Length (n)" [10, 20, 30, 40, 50, 100]
-    y-axis "Operations" 0 --> 10000
-    line "Brute Force O(n²)" [100, 400, 900, 1600, 2500, 10000]
-    line "KMP O(n)" [10, 20, 30, 40, 50, 100]
+flowchart TD
+    Compare["Pattern Matching Options"] --> BF["Brute Force\nComplexity: O(n^2)\nGood for tiny inputs"]
+    Compare --> KMP["KMP / Automata\nComplexity: O(n)\nBest for long texts"]
+    BF --> BFExample["Example workload: n=100 → ~10k ops"]
+    KMP --> KMPExample["Example workload: n=100 → ~100 ops"]
+
+    classDef head fill:#4ecdc4,stroke:#155e75,color:#fff,font-weight:600;
+    classDef option fill:#ffffff,stroke:#475569,color:#111;
+    classDef note fill:#fef9c3,stroke:#a16207,color:#111;
+
+    class Compare head;
+    class BF,KMP option;
+    class BFExample,KMPExample note;
 ```
 
 ```mermaid
@@ -2711,7 +2738,6 @@ graph LR
         Q -->|Short| BF[Brute Force<br/>Simple & Fast]
         Q -->|Medium| KMP[KMP<br/>Balanced]
         Q -->|Long| BM[Boyer-Moore<br/>Optimal
-
 ### Storage Methods Comparison
 
 ```
