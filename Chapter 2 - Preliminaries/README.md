@@ -1,16 +1,62 @@
 # Chapter 2: Preliminaries - Complete Study Guide
 
 ## Table of Contents
-1. [Introduction](#introduction)
-2. [Mathematical Notations and Functions](#mathematical-notations)
-3. [Algorithmic Notations](#algorithmic-notations)
-4. [Control Structures](#control-structures)
-5. [Complexity of Algorithms](#complexity-of-algorithms)
-6. [Asymptotic Notations](#asymptotic-notations)
-7. [Subalgorithms](#subalgorithms)
-8. [Variables and Data Types](#variables-data-types)
-9. [Solved Problems](#solved-problems)
-10. [Practice Exercises](#practice-exercises)
+
+- 1. [Introduction](#introduction)
+    - Key Concepts
+
+- 2. [Mathematical Notations and Functions](#mathematical-notations)
+    - 2.1 Floor and Ceiling Functions
+    - 2.2 Remainder Function and Modular Arithmetic
+    - 2.3 Integer and Absolute Value Functions
+    - 2.4 Summation Symbol (Σ)
+    - 2.5 Factorial Function
+    - 2.6 Permutations
+    - 2.7 Exponents and Logarithms
+
+- 3. [Algorithmic Notations](#algorithmic-notations)
+    - 3.1 Algorithm Format
+    - 3.2 Example: Finding Largest Element
+    - 3.3 C Implementations
+    - 3.4 Algorithm Conventions
+
+- 4. [Control Structures](#control-structures)
+    - 4.1 Sequence Logic
+    - 4.2 Selection Logic
+    - 4.3 Iteration Logic
+
+- 5. [Complexity of Algorithms](#complexity-of-algorithms)
+    - 5.1 Definition and Measurement
+    - 5.2 Cases in Complexity Analysis
+    - 5.3 Example: Linear Search
+    - 5.4 Big O and Growth Rates
+
+- 6. [Other Asymptotic Notations](#asymptotic-notations)
+    - 6.1 Omega (Ω)
+    - 6.2 Theta (Θ)
+    - 6.3 Little o (o)
+    - 6.4 Summary
+
+- 7. [Subalgorithms](#subalgorithms)
+    - 7.1 Definition and Purpose
+    - 7.2 Subalgorithm Format
+    - 7.3 Types of Subalgorithms
+    - 7.4 Function vs Procedure Conversion
+
+- 8. [Variables and Data Types](#variables-data-types)
+    - 8.1 Four Basic Data Types
+    - 8.2 Data Type Interpretation Example
+    - 8.3 Local and Global Variables
+    - 8.4 Communication Between Modules
+
+- 9. [Solved Problems](#solved-problems)
+    - Problem 2.1 through 2.16 (Worked examples)
+
+- 10. [Practice Exercises](#practice-exercises)
+    - Supplementary Problems
+    - Programming Problems
+    - Multiple Choice Questions
+
 
 ---
 
@@ -29,13 +75,34 @@ This chapter establishes the foundational concepts needed for studying data stru
 **Algorithm**: A finite step-by-step list of well-defined instructions for solving a particular problem.
 
 **Hierarchical Program Organization**:
-```
-Main Module
-    ↓
-Submodule 1    Submodule 2    Submodule 3
-    ↓              ↓              ↓
-Detailed        Detailed       Detailed
-Submodules     Submodules     Submodules
+
+
+```mermaid
+flowchart TB
+    %% Main module with three submodules and their detailed children
+    classDef mainModule fill:#f3f4f6,stroke:#111,stroke-width:1px;
+    classDef subModule fill:#ffffff,stroke:#0366d6,stroke-width:1px;
+
+    Main["Main Module"]:::mainModule
+    Sub1["Submodule 1"]:::subModule
+    Sub2["Submodule 2"]:::subModule
+    Sub3["Submodule 3"]:::subModule
+
+    D1["Detailed\nSubmodules"]
+    D2["Detailed\nSubmodules"]
+    D3["Detailed\nSubmodules"]
+
+    Main --> Sub1
+    Main --> Sub2
+    Main --> Sub3
+
+    Sub1 --> D1
+    Sub2 --> D2
+    Sub3 --> D3
+
+    %% Add small notes to show data/ control flow
+    Note1[["High-level control\nand data flow"]]
+    Note1 -.-> Main
 ```
 
 ---
@@ -319,28 +386,23 @@ Step 5. [Repeat loop] Go to Step 2
 ```
 
 **Flowchart**:
-```
-       START
-         ↓
-    K = 1, LOC = 1
-    MAX = DATA[1]
-         ↓
-      K = K + 1
-         ↓
-    ┌───────────┐
-    │ Is K > N? │──Yes→ Write: LOC, MAX → STOP
-    └───────────┘
-         ↓ No
-  ┌──────────────────┐
-  │MAX < DATA[K]?    │
-  └──────────────────┘
-    Yes ↓          ↓ No
-   LOC = K         │
-   MAX = DATA[K]   │
-        ↓          ↓
-        └──────────┘
-             ↓
-        (Loop back to K = K + 1)
+
+
+```mermaid
+flowchart TD
+    %% Clear, step-labeled flowchart for finding largest element
+    classDef decision fill:#fff7cc,stroke:#d69e00
+    classDef action fill:#ecfdf5,stroke:#059669
+    classDef io fill:#eef2ff,stroke:#7c3aed
+
+    Start(["Start"]) --> Init["Initialize:\nK = 1\nLOC = 1\nMAX = DATA[1]"]:::action
+    Init --> Check{"K > N?"}:::decision
+    Check -- Yes --> Output["Write LOC, MAX\nStop"]:::io
+    Check -- No --> Compare{"MAX < DATA[K]?"}:::decision
+    Compare -- Yes --> Update["LOC = K\nMAX = DATA[K]"]:::action --> Inc["K = K + 1"]:::action --> Check
+    Compare -- No --> Inc
+    %% safety: show loopback explicitly
+    Inc --> Check
 ```
 
 ### 3.3 C Implementation
@@ -444,12 +506,17 @@ Three types of logic/flow of control:
 **Description**: Modules execute in order unless instructed otherwise.
 
 **Flowchart**:
-```
-    Module A
-        ↓
-    Module B
-        ↓
-    Module C
+
+
+```mermaid
+flowchart LR
+    %% Sequence logic: simple left-to-right modules
+    classDef seq fill:#f8fafc,stroke:#0f172a
+    A["Module A"]:::seq --> B["Module B"]:::seq --> C["Module C"]:::seq
+    subgraph SeqNote["Sequence (executed in order)"]
+        direction LR
+        A --> B --> C
+    end
 ```
 
 **Example**:
@@ -474,14 +541,16 @@ If condition, then:
 ```
 
 **Flowchart**:
-```
-    ┌──────────┐
-    │Condition?│──No→ (Continue)
-    └──────────┘
-        ↓ Yes
-     Module A
-        ↓
-    (Continue)
+
+```mermaid
+flowchart TD
+    %% Single-alternative selection logic
+    classDef decision fill:#fff7cc,stroke:#d69e00
+    classDef module fill:#f0f9ff,stroke:#0369a1
+    Cond{"Condition?"}:::decision
+    Cond -- Yes --> A["Module A"]:::module
+    Cond -- No --> Continue(("Continue"))
+    A --> Continue
 ```
 
 **Example**:
@@ -503,16 +572,17 @@ Else:
 ```
 
 **Flowchart**:
-```
-      ┌──────────┐
-   No │Condition?│ Yes
-   ┌──┴──────────┴──┐
-   ↓                ↓
-Module B         Module A
-   ↓                ↓
-   └────────┬───────┘
-            ↓
-       (Continue)
+
+```mermaid
+flowchart TD
+    %% Double-alternative selection logic (If/Else)
+    classDef decision fill:#fff7cc,stroke:#d69e00
+    classDef module fill:#f0f9ff,stroke:#0369a1
+    Cond2{"Condition?"}:::decision
+    Cond2 -- Yes --> A2["Module A"]:::module
+    Cond2 -- No --> B2["Module B"]:::module
+    A2 --> Continue2(("Continue"))
+    B2 --> Continue2
 ```
 
 **Example**:
@@ -618,19 +688,13 @@ Repeat for K = R to S by T:
 - **T**: Increment
 
 **Flowchart**:
-```
-    K = R
-      ↓
-  ┌────────────┐
-  │ Is K > S?  │──Yes→ (Continue)
-  └────────────┘
-      ↓ No
-    Module
-   (body of loop)
-      ↓
-    K = K + T
-      ↓
-   (Loop back)
+
+```mermaid
+flowchart TD
+    Start["K = R"] --> Check{Is K > S?}
+    Check -- No --> Body["Module (body of loop)"]
+    Body --> Inc["K = K + T"] --> Check
+    Check -- Yes --> End((Continue))
 ```
 
 **Example**:
@@ -652,15 +716,13 @@ Repeat while condition:
 ```
 
 **Flowchart**:
-```
-  ┌────────────┐
-  │Condition?  │──No→ (Continue)
-  └────────────┘
-      ↓ Yes
-    Module
-   (body of loop)
-      ↓
-   (Loop back)
+
+```mermaid
+flowchart TD
+    Cond{Condition?}
+    Cond -- Yes --> Body["Module (body of loop)"]
+    Body --> Cond
+    Cond -- No --> End((Continue))
 ```
 
 **Important Requirements**:
