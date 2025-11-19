@@ -69,12 +69,16 @@ This chapter introduces **data structures** - ways to organize and store data in
 
 Data is organized in a hierarchy:
 
-```
-FILES (Collection of records)
-  ↓
-RECORDS (Collection of fields for one entity)
-  ↓
-FIELDS (Single elementary unit of information)
+```mermaid
+graph TD;
+    subgraph "Hierarchical Organization of Data"
+        direction LR
+        A["FILES<br>(Collection of records)"] --> B["RECORDS<br>(Collection of fields for one entity)"];
+        B --> C["FIELDS<br>(Single elementary unit of information)"];
+    end
+    style A fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style B fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style C fill:#000,stroke:#fff,stroke-width:2px,color:#fff
 ```
 
 ### Important Definitions
@@ -198,26 +202,39 @@ Consider two factors:
 
 ### Classification of Data Structures
 
-```
-DATA STRUCTURES
-│
-├── PRIMITIVE (Basic)
-│   ├── Integer
-│   ├── Real
-│   ├── Character
-│   └── Boolean
-│
-└── NON-PRIMITIVE (Complex)
-    │
-    ├── LINEAR
-    │   ├── Arrays
-    │   ├── Linked Lists
-    │   ├── Stacks
-    │   └── Queues
-    │
-    └── NON-LINEAR
-        ├── Trees
-        └── Graphs
+```mermaid
+graph TD;
+    subgraph Data Structures
+        A(DATA STRUCTURES) --> B(PRIMITIVE);
+        A --> C(NON-PRIMITIVE);
+        B --> B1(Integer);
+        B --> B2(Real);
+        B --> B3(Character);
+        B --> B4(Boolean);
+        C --> D(LINEAR);
+        C --> E(NON-LINEAR);
+        D --> D1(Arrays);
+        D --> D2(Linked Lists);
+        D --> D3(Stacks);
+        D --> D4(Queues);
+        E --> E1(Trees);
+        E --> E2(Graphs);
+    end
+    style A fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style B fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style C fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style D fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style E fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style B1 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style B2 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style B3 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style B4 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style D1 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style D2 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style D3 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style D4 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style E1 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style E2 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
 ```
 
 ### Primitive Data Structures
@@ -369,12 +386,12 @@ Customer  | Pointer | Salesperson
 1 Adams   |    3    | Jones
 2 Brown   |    2    | Ray
 3 Clark   |    1    | Smith
-4 Drew    |    2    |
-5 Evans   |    3    |
-6 Farmer  |    1    |
-7 Geller  |    2    |
-8 Hill    |    3    |
-9 Infeld  |    2    |
+4 Drew    |    2    | 
+5 Evans   |    3    | 
+6 Farmer  |    1    | 
+7 Geller  |    2    | 
+8 Hill    |    3    | 
+9 Infeld  |    2    | 
 ```
 
 **Advantage**: Pointer (integer) takes less space than name
@@ -404,18 +421,41 @@ Each salesperson has ONE pointer to first customer
 Each customer has a link to the next customer
 Last customer has 0 (end marker)
 
-```
-Salesperson | Pointer | Customer | Link
-------------|---------|----------|------
-Jones       |    3    | Adams    | 5
-Ray         |    2    | Brown    | 4
-Smith       |    1    | Clark    | 6
-            |         | Drew     | 7
-            |         | Evans    | 8
-            |         | Farmer   | 0
-            |         | Geller   | 9
-            |         | Hill     | 0
-            |         | Infeld   | 0
+```mermaid
+graph TD;
+    subgraph Salesperson
+        Jones --> C3(Clark);
+        Ray --> C2(Brown);
+        Smith --> C1(Adams);
+    end
+
+    subgraph Customers
+        C1(Adams) --> C5(Evans);
+        C2(Brown) --> C4(Drew);
+        C3(Clark) --> C6(Farmer);
+        C4(Drew) --> C7(Geller);
+        C5(Evans) --> C8(Hill);
+        C6(Farmer) --> E1(end);
+        C7(Geller) --> C9(Infeld);
+        C8(Hill) --> E2(end);
+        C9(Infeld) --> E3(end);
+    end
+
+    style Jones fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style Ray fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style Smith fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style C1 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style C2 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style C3 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style C4 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style C5 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style C6 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style C7 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style C8 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style C9 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style E1 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style E2 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style E3 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
 ```
 
 **Example for Ray**:
@@ -550,12 +590,32 @@ Smith       |    1    | Clark    | 6
 
 **Analogy**: Stack of dishes on a spring system
 
-```
-    ___
-   |___|  ← TOP (newest item)
-   |___|
-   |___|
-   |___|  ← BOTTOM (oldest item)
+```mermaid
+graph TD;
+    subgraph Stack Operations
+        direction LR
+        subgraph Before Push
+            A[___] --> B[___];
+            B --> C[___];
+            C --> D[___];
+        end
+        subgraph Push Operation
+            E(Push) -- adds --> F[New Item];
+        end
+        subgraph After Push
+            F --> A;
+        end
+        subgraph Pop Operation
+            G(Pop) -- removes --> F;
+        end
+    end
+    style A fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style B fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style C fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style D fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style E fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style F fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style G fill:#000,stroke:#fff,stroke-width:2px,color:#fff
 ```
 
 **Operations**:
@@ -579,9 +639,26 @@ Smith       |    1    | Clark    | 6
 
 **Analogy**: Line of people waiting for a bus
 
-```
-FRONT → [Person1] [Person2] [Person3] [Person4] ← REAR
-         (exits)                      (enters)
+```mermaid
+graph TD;
+    subgraph Queue Operations
+        direction LR
+        subgraph Queue
+            A[Person 1] --> B[Person 2];
+            B --> C[Person 3];
+            C --> D[Person 4];
+        end
+        subgraph Operations
+            E(Dequeue) -- removes --> A;
+            D -- adds --> F(Enqueue);
+        end
+    end
+    style A fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style B fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style C fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style D fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style E fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style F fill:#000,stroke:#fff,stroke-width:2px,color:#fff
 ```
 
 **Operations**:
@@ -876,35 +953,19 @@ Philadelphia            |
 
 ### ADT Model Structure
 
-```
-┌─────────────────────────────────────┐
-│         APPLICATION PROGRAM         │
-│  (Uses ADT but doesn't see inside) │
-└──────────────┬──────────────────────┘
-               │
-        INTERFACE (Public Functions)
-               │
-┌──────────────┴──────────────────────┐
-│             ADT MODEL               │
-│                                     │
-│  ┌──────────────────────────────┐  │
-│  │    PUBLIC FUNCTIONS          │  │
-│  │  (Visible to application)    │  │
-│  └─────────────┬────────────────┘  │
-│                │                    │
-│  ┌─────────────┴────────────────┐  │
-│  │    PRIVATE FUNCTIONS         │  │
-│  │  (Internal use only)         │  │
-│  └─────────────┬────────────────┘  │
-│                │                    │
-│  ┌─────────────┴────────────────┐  │
-│  │    DATA STRUCTURES           │  │
-│  │  • Arrays                    │  │
-│  │  • Linked Lists              │  │
-│  │  • Records                   │  │
-│  │  • Dynamic Memory            │  │
-│  └──────────────────────────────┘  │
-└─────────────────────────────────────┘
+```mermaid
+graph TD;
+    subgraph ADT Model
+        A(APPLICATION PROGRAM) --> B{INTERFACE};
+        B --> C(PUBLIC FUNCTIONS);
+        C --> D(PRIVATE FUNCTIONS);
+        D --> E(DATA STRUCTURES);
+    end
+    style A fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style B fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style C fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style D fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style E fill:#000,stroke:#fff,stroke-width:2px,color:#fff
 ```
 
 **Model Components**:
@@ -998,12 +1059,16 @@ Philadelphia            |
 #### LINEAR SEARCH
 
 **Algorithm**:
-```
-1. Start at first record
-2. Check if Name matches
-3. If yes, return Telephone Number
-4. If no, move to next record
-5. Repeat until found or end of file
+```mermaid
+graph TD;
+    A(Start) --> B{Check if current record's Name matches};
+    B -- Yes --> C(Return Telephone Number);
+    B -- No --> D{Move to next record};
+    D --> E{End of file?};
+    E -- No --> B;
+    E -- Yes --> F(Not Found);
+    C --> G(End);
+    F --> G(End);
 ```
 
 **Complexity Analysis**:
@@ -1032,13 +1097,17 @@ Philadelphia            |
 **Requirement**: Data must be sorted alphabetically
 
 **Algorithm**:
-```
-1. Compare Name with middle element
-2. If match, done!
-3. If Name < middle, search left half
-4. If Name > middle, search right half
-5. Repeat on correct half
-6. Continue until found or no elements left
+```mermaid
+graph TD;
+    A(Start) --> B{Compare Name with middle element};
+    B -- Match --> C(Found!);
+    B -- Name < middle --> D{Search left half};
+    B -- Name > middle --> E{Search right half};
+    D --> F{Repeat on correct half};
+    E --> F;
+    F --> G{Continue until found or no elements left};
+    C --> H(End);
+    G --> H(End);
 ```
 
 **Example with 8 names** (sorted):
@@ -1147,26 +1216,40 @@ Looking for "Gold":
 
 **Implementation**:
 
-**Main File** (sorted by SSN):
-```
-SSN          | Name            | Extra Data
--------------|-----------------|------------------
-013-44-5555  | Davis, Earl     | XXXXXXXXXXXXXX
-025-55-6198  | Abbey, Gregory  | XXXXXXXXXXXXXX
-027-73-3961  | Lane, Alice     | XXXXXXXXXXXXXX
-174-62-3485  | Brown, John     | XXXXXXXXXXXXXX
-182-74-6398  | Smith, Mary     | XXXXXXXXXXXXXX
-```
+```mermaid
+graph TD;
+    subgraph Auxiliary Array (Sorted by Name)
+        direction LR
+        A(Abbey, Gregory) --> P1(2);
+        B(Brown, John) --> P2(4);
+        C(Davis, Earl) --> P3(1);
+        D(Lane, Alice) --> P4(3);
+        E(Smith, Mary) --> P5(5);
+    end
 
-**Auxiliary Array** (sorted alphabetically):
-```
-Name            | Pointer
-----------------|--------
-Abbey, Gregory  | 2
-Brown, John     | 4
-Davis, Earl     | 1
-Lane, Alice     | 3
-Smith, Mary     | 5
+    subgraph Main File (Sorted by SSN)
+        P1 --> R2(025-55-6198 | Abbey, Gregory | ...);
+        P2 --> R4(174-62-3485 | Brown, John | ...);
+        P3 --> R1(013-44-5555 | Davis, Earl | ...);
+        P4 --> R3(027-73-3961 | Lane, Alice | ...);
+        P5 --> R5(182-74-6398 | Smith, Mary | ...);
+    end
+
+    style A fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style B fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style C fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style D fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style E fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style P1 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style P2 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style P3 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style P4 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style P5 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style R1 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style R2 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style R3 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style R4 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style R5 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
 ```
 
 **How it works**:
@@ -1303,7 +1386,7 @@ SSN 123-45-6789 → H(123456789) → Address 4521
 
 **Variable-length items**:
 
-**(d) Names of children**: 
+**(d) Names of children**:
 - Some people have 0 children
 - Some have 1, 2, 3, or more
 - Length varies greatly
@@ -1921,35 +2004,20 @@ start              must traverse 500 links
 **Optimal Storage**: Arrays indexed by flight number
 
 **Structure**:
-```
-ORIG[flight_number] = origin_city
-DEST[flight_number] = destination_city
-```
-
-**Example**:
-```
-Flight | ORIG | DEST
--------|------|------
-701    | 2    | 3      (Boston → Chicago)
-702    | 3    | 2      (Chicago → Boston)
-705    | 5    | 3      (Philadelphia → Chicago)
-...
-718    | 4    | 5      (Miami → Philadelphia)
-```
+- ORIG[flight_number] = origin_city
+- DEST[flight_number] = destination_city
 
 **Access method**:
-```
-Given flight_number = 705
-origin = ORIG[705] = 5 (Philadelphia)
-destination = DEST[705] = 3 (Chicago)
-```
+- Given flight_number = 705
+- origin = ORIG[705] = 5 (Philadelphia)
+- destination = DEST[705] = 3 (Chicago)
 
 **Advantages**:
 - **O(1) access time** (instant/constant time)
 - Direct array indexing
 - No searching needed
 
-**Disadvantages** (see Problem 1.16):
+**Disadvantages**:
 - Wastes space if flight numbers are sparse
 - Example: If flights are 701, 705, 850, need array size 850
 
@@ -1958,9 +2026,7 @@ destination = DEST[705] = 3 (Chicago)
 **Optimal Storage**: 2D array (matrix)
 
 **Structure**:
-```
-FLIGHT[origin_city][destination_city] = flight_number
-```
+- FLIGHT[origin_city][destination_city] = flight_number
 
 **Example**:
 ```
@@ -1976,10 +2042,8 @@ From:
 ```
 
 **Access method**:
-```
-Given: origin = Boston (2), destination = Chicago (3)
-flight = FLIGHT[2][3] = 701
-```
+- Given: origin = Boston (2), destination = Chicago (3)
+- flight = FLIGHT[2][3] = 701
 
 **Reading the table**:
 - 0 = No direct flight
@@ -1990,17 +2054,19 @@ flight = FLIGHT[2][3] = 701
 - Direct matrix indexing
 - Easy to check if route exists
 
-**Disadvantages** (see Problem 1.16):
+**Disadvantages**:
 - Wastes space if few routes (sparse matrix)
 - Size = (number of cities)²
 - Many zeros if airline doesn't serve all routes
 
 #### Problem 1.16
 **Question**: Discuss drawbacks to representations in Problem 1.15 when airline serves n cities with s flights
+- (a) Using arrays for flight number lookup
+- (b) Using matrix for city-pair lookup
 
 **Solution**:
 
-**(a) Array Indexed by Flight Number - DRAWBACK**:
+**(a) Drawbacks of Array for Flight Number Lookup**:
 
 **Problem**: **Sparse array** if flight numbers are spread out
 
@@ -2032,7 +2098,7 @@ Ratio s/n: 5/1000 = 0.005 (0.5%)
 - Use associative array/dictionary
 - Store only existing flight numbers
 
-**(b) 2D Matrix - DRAWBACK**:
+**(b) Drawbacks of Matrix for City-Pair Lookup**:
 
 **Problem**: **Sparse matrix** if few routes compared to possible routes
 
