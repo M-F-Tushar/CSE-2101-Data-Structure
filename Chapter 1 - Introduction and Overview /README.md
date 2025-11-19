@@ -1,7 +1,9 @@
 # Data Structures - Chapter 1: Complete Study Guide
+
 ## Introduction and Overview
 
 ---
+
 ## TABLE OF CONTENTS
 
 1. [Introduction](#11-introduction)
@@ -70,15 +72,15 @@ This chapter introduces **data structures** - ways to organize and store data in
 Data is organized in a hierarchy:
 
 ```mermaid
-graph TD;
-    subgraph "Hierarchical Organization of Data"
-        direction LR
-        A["FILES<br>(Collection of records)"] --> B["RECORDS<br>(Collection of fields for one entity)"];
-        B --> C["FIELDS<br>(Single elementary unit of information)"];
-    end
-    style A fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style B fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style C fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+graph LR
+    A[File] -->|Collection of| B[Records]
+    B -->|Collection of| C[Fields]
+    C -->|Contains| D[Data Values]
+    
+    style A fill:#2c3e50,stroke:#fff,color:#fff
+    style B fill:#34495e,stroke:#fff,color:#fff
+    style C fill:#7f8c8d,stroke:#fff,color:#fff
+    style D fill:#95a5a6,stroke:#fff,color:#fff
 ```
 
 ### Important Definitions
@@ -203,38 +205,45 @@ Consider two factors:
 ### Classification of Data Structures
 
 ```mermaid
-graph TD;
-    subgraph Data Structures
-        A(DATA STRUCTURES) --> B(PRIMITIVE);
-        A --> C(NON-PRIMITIVE);
-        B --> B1(Integer);
-        B --> B2(Real);
-        B --> B3(Character);
-        B --> B4(Boolean);
-        C --> D(LINEAR);
-        C --> E(NON-LINEAR);
-        D --> D1(Arrays);
-        D --> D2(Linked Lists);
-        D --> D3(Stacks);
-        D --> D4(Queues);
-        E --> E1(Trees);
-        E --> E2(Graphs);
+graph TD
+    root[DATA STRUCTURES]
+    
+    subgraph "Types"
+        Prim[Primitive DS]
+        NonPrim[Non-Primitive DS]
     end
-    style A fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style B fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style C fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style D fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style E fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style B1 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style B2 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style B3 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style B4 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style D1 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style D2 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style D3 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style D4 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style E1 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style E2 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    
+    subgraph "Non-Primitive Categories"
+        Linear[Linear DS]
+        NonLinear[Non-Linear DS]
+    end
+    
+    root --> Prim
+    root --> NonPrim
+    
+    Prim --> Int[Integer]
+    Prim --> Real[Real]
+    Prim --> Char[Character]
+    Prim --> Bool[Boolean]
+    
+    NonPrim --> Linear
+    NonPrim --> NonLinear
+    
+    Linear --> Arr[Arrays]
+    Linear --> LL[Linked Lists]
+    Linear --> Stk[Stacks]
+    Linear --> Que[Queues]
+    
+    NonLinear --> Tree[Trees]
+    NonLinear --> Graph[Graphs]
+
+    classDef main fill:#2c3e50,stroke:#fff,stroke-width:2px,color:#fff;
+    classDef sub fill:#34495e,stroke:#fff,color:#fff;
+    classDef leaf fill:#95a5a6,stroke:#333,color:#000;
+    
+    class root,Prim,NonPrim main;
+    class Linear,NonLinear sub;
+    class Int,Real,Char,Bool,Arr,LL,Stk,Que,Tree,Graph leaf;
 ```
 
 ### Primitive Data Structures
@@ -271,13 +280,9 @@ graph TD;
 
 An array is a list of data items that are all the same type, arranged in a specific order.
 
-Think of it like a row of boxes, where each box stores one value, and each box has a number 
+Think of it like a row of boxes, where each box stores one value, and each box has a number (index) so you can find it easily.
 
-(index) so you can find it easily.
-
-**Linear Array**: A linear array is a list containing a fixed number (n) of similar elements, 
-
-arranged one after another.
+**Linear Array**: A linear array is a list containing a fixed number (n) of similar elements, arranged one after another.
 
 **Notations for Arrays**:
 
@@ -422,40 +427,36 @@ Each customer has a link to the next customer
 Last customer has 0 (end marker)
 
 ```mermaid
-graph TD;
-    subgraph Salesperson
-        Jones --> C3(Clark);
-        Ray --> C2(Brown);
-        Smith --> C1(Adams);
+graph LR
+    subgraph Salespeople
+        S1[Smith]
+        S2[Ray]
+        S3[Jones]
     end
 
     subgraph Customers
-        C1(Adams) --> C5(Evans);
-        C2(Brown) --> C4(Drew);
-        C3(Clark) --> C6(Farmer);
-        C4(Drew) --> C7(Geller);
-        C5(Evans) --> C8(Hill);
-        C6(Farmer) --> E1(end);
-        C7(Geller) --> C9(Infeld);
-        C8(Hill) --> E2(end);
-        C9(Infeld) --> E3(end);
+        C1[1: Adams] --> C5[5: Evans] --> C8[8: Hill] --> END1((0))
+        C2[2: Brown] --> C4[4: Drew] --> C7[7: Geller] --> C9[9: Infeld] --> END2((0))
+        C3[3: Clark] --> C6[6: Farmer] --> END3((0))
     end
 
-    style Jones fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style Ray fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style Smith fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style C1 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style C2 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style C3 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style C4 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style C5 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style C6 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style C7 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style C8 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style C9 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style E1 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style E2 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style E3 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    S1 -.-> C1
+    S2 -.-> C2
+    S3 -.-> C3
+
+    style S1 fill:#f39c12,stroke:#333
+    style S2 fill:#f39c12,stroke:#333
+    style S3 fill:#f39c12,stroke:#333
+    
+    style C1 fill:#3498db,stroke:#333,color:#fff
+    style C2 fill:#3498db,stroke:#333,color:#fff
+    style C3 fill:#3498db,stroke:#333,color:#fff
+    style C4 fill:#3498db,stroke:#333,color:#fff
+    style C5 fill:#3498db,stroke:#333,color:#fff
+    style C6 fill:#3498db,stroke:#333,color:#fff
+    style C7 fill:#3498db,stroke:#333,color:#fff
+    style C8 fill:#3498db,stroke:#333,color:#fff
+    style C9 fill:#3498db,stroke:#333,color:#fff
 ```
 
 **Example for Ray**:
@@ -498,25 +499,36 @@ graph TD;
 
 **Hierarchical Breakdown**:
 
-```
-                    EMPLOYEE
-                       |
-    _____________________|_____________________
-    |      |       |      |       |            |
-  Soc.   Name  Address  Age   Salary    Dependents
-  Sec.No  |       |
-          |       |
-      ____|____   |
-      |   |   |   |
-    Last First MI |
-                  |
-            ______|______
-            |           |
-         Street       Area
-                        |
-                   _____|_____
-                   |    |    |
-                 City State ZIP
+```mermaid
+graph TD
+    Emp[EMPLOYEE]
+    
+    SSN[Soc. Sec. No]
+    Name[Name]
+    Addr[Address]
+    Age[Age]
+    Sal[Salary]
+    Dep[Dependents]
+    
+    Emp --> SSN
+    Emp --> Name
+    Emp --> Addr
+    Emp --> Age
+    Emp --> Sal
+    Emp --> Dep
+    
+    Name --> Last
+    Name --> First
+    Name --> MI
+    
+    Addr --> Street
+    Addr --> Area
+    
+    Area --> City
+    Area --> State
+    Area --> ZIP
+
+    style Emp fill:#8e44ad,color:#fff
 ```
 
 **Level Representation**:
@@ -555,16 +567,43 @@ graph TD;
 
 **Tree Representation**:
 
-```
-            *
-           / \
-          +   ↑
-         / \ / \
-        *  y -  3
-       / \  / \
-      2  x a  *
-             / \
-            7  b
+```mermaid
+graph TD
+    Root(( * ))
+    
+    Plus(( + ))
+    Pow(( ↑ ))
+    
+    Root --> Plus
+    Root --> Pow
+    
+    Mul1(( * ))
+    Y( y )
+    Plus --> Mul1
+    Plus --> Y
+    
+    Mul1 --> 2( 2 )
+    Mul1 --> X( x )
+    
+    Minus(( - ))
+    3( 3 )
+    Pow --> Minus
+    Pow --> 3
+    
+    A( a )
+    Mul2(( * ))
+    Minus --> A
+    Minus --> Mul2
+    
+    Mul2 --> 7( 7 )
+    Mul2 --> B( b )
+
+    style Root fill:#e74c3c,stroke:#333,color:#fff
+    style Plus fill:#e67e22,stroke:#333,color:#fff
+    style Pow fill:#e67e22,stroke:#333,color:#fff
+    style Mul1 fill:#f1c40f,stroke:#333,color:#000
+    style Minus fill:#f1c40f,stroke:#333,color:#000
+    style Mul2 fill:#f39c12,stroke:#333,color:#fff
 ```
 
 **Reading the tree**:
@@ -591,31 +630,22 @@ graph TD;
 **Analogy**: Stack of dishes on a spring system
 
 ```mermaid
-graph TD;
-    subgraph Stack Operations
-        direction LR
-        subgraph Before Push
-            A[___] --> B[___];
-            B --> C[___];
-            C --> D[___];
-        end
-        subgraph Push Operation
-            E(Push) -- adds --> F[New Item];
-        end
-        subgraph After Push
-            F --> A;
-        end
-        subgraph Pop Operation
-            G(Pop) -- removes --> F;
-        end
+graph BT
+    subgraph Stack
+        D[Item 4]
+        C[Item 3]
+        B[Item 2]
+        A[Item 1]
     end
-    style A fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style B fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style C fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style D fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style E fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style F fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style G fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    
+    New[New Item]
+    
+    New -->|PUSH| D
+    D -->|POP| Out[Remove]
+    
+    style D fill:#e74c3c,color:#fff
+    style New fill:#2ecc71,color:#fff
+    style Out fill:#95a5a6,color:#fff
 ```
 
 **Operations**:
@@ -640,25 +670,16 @@ graph TD;
 **Analogy**: Line of people waiting for a bus
 
 ```mermaid
-graph TD;
-    subgraph Queue Operations
-        direction LR
-        subgraph Queue
-            A[Person 1] --> B[Person 2];
-            B --> C[Person 3];
-            C --> D[Person 4];
-        end
-        subgraph Operations
-            E(Dequeue) -- removes --> A;
-            D -- adds --> F(Enqueue);
-        end
+graph LR
+    subgraph Queue
+        A[Person 1] --- B[Person 2] --- C[Person 3] --- D[Person 4]
     end
-    style A fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style B fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style C fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style D fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style E fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style F fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    
+    IN[New Person] -->|ENQUEUE| D
+    A -->|DEQUEUE| OUT[Exit]
+    
+    style A fill:#e74c3c,color:#fff
+    style D fill:#2ecc71,color:#fff
 ```
 
 **Operations**:
@@ -681,18 +702,32 @@ graph TD;
 
 **Example**: Airline Flight Routes
 
-```
-    Boston ----701---- Chicago
-      |                   |
-     711                 705
-      |                   |
-Philadelphia            |
-      |    \           /
-     712    717     708
-      |        \   /
-    New York -- Miami
-             715
-      Los Angeles
+```mermaid
+graph TD
+    BOS((Boston))
+    CHI((Chicago))
+    MIA((Miami))
+    PHI((Philadelphia))
+    ATL((Atlanta))
+    NYC((New York))
+    LA((Los Angeles))
+    
+    BOS ---|701| CHI
+    BOS ---|711| PHI
+    CHI ---|705| PHI
+    CHI ---|708| MIA
+    PHI ---|712| NYC
+    PHI ---|717| MIA
+    NYC ---|715| LA
+    MIA --- LA
+
+    style BOS fill:#3498db,color:#fff
+    style CHI fill:#3498db,color:#fff
+    style MIA fill:#3498db,color:#fff
+    style PHI fill:#3498db,color:#fff
+    style ATL fill:#3498db,color:#fff
+    style NYC fill:#3498db,color:#fff
+    style LA fill:#3498db,color:#fff
 ```
 
 **Components**:
@@ -888,27 +923,25 @@ Philadelphia            |
 ```
 
 **c) Tree**:
-```
-      1
-     / \
-    2   6
-   / \   \
-  3   5   7
- /         \
-4           8
-             \
-              9
+```mermaid
+graph TD
+    1-->2
+    1-->6
+    2-->3
+    2-->5
+    6-->7
+    3-->4
+    7-->8
+    8-->9
 ```
 
 **d) Graph**:
-```
-1 -- 2 -- 6
-|    |    |
-3    5    7
-|         |
-4         8
-          |
-          9
+```mermaid
+graph LR
+    1 --- 2 --- 6
+    1 --- 3 --- 4
+    2 --- 5
+    6 --- 7 --- 8 --- 9
 ```
 
 **ADT Principle Applied**:
@@ -954,18 +987,26 @@ Philadelphia            |
 ### ADT Model Structure
 
 ```mermaid
-graph TD;
-    subgraph ADT Model
-        A(APPLICATION PROGRAM) --> B{INTERFACE};
-        B --> C(PUBLIC FUNCTIONS);
-        C --> D(PRIVATE FUNCTIONS);
-        D --> E(DATA STRUCTURES);
+graph TD
+    User[Application Program]
+    
+    subgraph "ADT Interface (Public)"
+        Pub[Public Functions]
     end
-    style A fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style B fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style C fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style D fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style E fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    
+    subgraph "Implementation (Hidden)"
+        Priv[Private Functions]
+        Data[Data Structures]
+    end
+    
+    User -->|Calls| Pub
+    Pub -->|Uses| Priv
+    Priv -->|Manipulates| Data
+    
+    style User fill:#2c3e50,color:#fff
+    style Pub fill:#27ae60,color:#fff
+    style Priv fill:#7f8c8d,color:#fff
+    style Data fill:#7f8c8d,color:#fff
 ```
 
 **Model Components**:
@@ -1059,16 +1100,18 @@ graph TD;
 #### LINEAR SEARCH
 
 **Algorithm**:
+
 ```mermaid
-graph TD;
-    A(Start) --> B{Check if current record's Name matches};
-    B -- Yes --> C(Return Telephone Number);
-    B -- No --> D{Move to next record};
-    D --> E{End of file?};
-    E -- No --> B;
-    E -- Yes --> F(Not Found);
-    C --> G(End);
-    F --> G(End);
+flowchart TD
+    Start((Start)) --> Check{Record Match?}
+    Check -- Yes --> Found[Return Result]
+    Found --> End((End))
+    
+    Check -- No --> Next[Move to Next]
+    Next --> EOF{End of File?}
+    EOF -- No --> Check
+    EOF -- Yes --> NotFound[Return Not Found]
+    NotFound --> End
 ```
 
 **Complexity Analysis**:
@@ -1097,17 +1140,21 @@ graph TD;
 **Requirement**: Data must be sorted alphabetically
 
 **Algorithm**:
+
 ```mermaid
-graph TD;
-    A(Start) --> B{Compare Name with middle element};
-    B -- Match --> C(Found!);
-    B -- Name < middle --> D{Search left half};
-    B -- Name > middle --> E{Search right half};
-    D --> F{Repeat on correct half};
-    E --> F;
-    F --> G{Continue until found or no elements left};
-    C --> H(End);
-    G --> H(End);
+flowchart TD
+    Start((Start)) --> Mid[Check Middle Element]
+    Mid --> Compare{Compare Value}
+    
+    Compare -- "Match" --> Found[Found!]
+    Compare -- "Value < Middle" --> Left[Search Left Half]
+    Compare -- "Value > Middle" --> Right[Search Right Half]
+    
+    Left --> Repeat[Repeat Process]
+    Right --> Repeat
+    Repeat --> Mid
+    
+    Found --> End((End))
 ```
 
 **Example with 8 names** (sorted):
@@ -1217,39 +1264,34 @@ Looking for "Gold":
 **Implementation**:
 
 ```mermaid
-graph TD;
-    subgraph Auxiliary Array (Sorted by Name)
-        direction LR
-        A(Abbey, Gregory) --> P1(2);
-        B(Brown, John) --> P2(4);
-        C(Davis, Earl) --> P3(1);
-        D(Lane, Alice) --> P4(3);
-        E(Smith, Mary) --> P5(5);
+graph LR
+    subgraph "Auxiliary Array (Sorted by Name)"
+        A1[Abbey, Gregory] -->|Pointer| R2
+        A2[Brown, John] -->|Pointer| R4
+        A3[Davis, Earl] -->|Pointer| R1
+        A4[Lane, Alice] -->|Pointer| R3
+        A5[Smith, Mary] -->|Pointer| R5
     end
 
-    subgraph Main File (Sorted by SSN)
-        P1 --> R2(025-55-6198 | Abbey, Gregory | ...);
-        P2 --> R4(174-62-3485 | Brown, John | ...);
-        P3 --> R1(013-44-5555 | Davis, Earl | ...);
-        P4 --> R3(027-73-3961 | Lane, Alice | ...);
-        P5 --> R5(182-74-6398 | Smith, Mary | ...);
+    subgraph "Main File (Sorted by SSN)"
+        R1[Rec 1: 013-44... | Davis, Earl]
+        R2[Rec 2: 025-55... | Abbey, Gregory]
+        R3[Rec 3: 027-73... | Lane, Alice]
+        R4[Rec 4: 174-62... | Brown, John]
+        R5[Rec 5: 182-74... | Smith, Mary]
     end
 
-    style A fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style B fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style C fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style D fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style E fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style P1 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style P2 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style P3 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style P4 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style P5 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style R1 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style R2 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style R3 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style R4 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style R5 fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style A1 fill:#f1c40f,stroke:#333
+    style A2 fill:#f1c40f,stroke:#333
+    style A3 fill:#f1c40f,stroke:#333
+    style A4 fill:#f1c40f,stroke:#333
+    style A5 fill:#f1c40f,stroke:#333
+    
+    style R1 fill:#3498db,color:#fff
+    style R2 fill:#3498db,color:#fff
+    style R3 fill:#3498db,color:#fff
+    style R4 fill:#3498db,color:#fff
+    style R5 fill:#3498db,color:#fff
 ```
 
 **How it works**:
@@ -1622,18 +1664,36 @@ Index | NAME    | LINK
 
 Using symbols: ↑ for exponentiation, * for multiplication
 
-```
-                *
-              /   \
-             /     \
-            +       ↑
-           / \     / \
-          /   \   /   \
-         *    y  -    3
-        / \     / \
-       7  x    5  *
-                  / \
-                 a  b
+```mermaid
+graph TD
+    Root(( * ))
+    
+    Plus(( + ))
+    Pow(( ↑ ))
+    
+    Root --> Plus
+    Root --> Pow
+    
+    Mul1(( * ))
+    Y( y )
+    Plus --> Mul1
+    Plus --> Y
+    
+    Mul1 --> 7( 7 )
+    Mul1 --> X( x )
+    
+    Minus(( - ))
+    3( 3 )
+    Pow --> Minus
+    Pow --> 3
+    
+    Mul2(( * ))
+    B( b )
+    Minus --> Mul2
+    Minus --> B
+    
+    Mul2 --> 5( 5 )
+    Mul2 --> A( a )
 ```
 
 **Reading the tree**:
@@ -1652,9 +1712,9 @@ Using symbols: ↑ for exponentiation, * for multiplication
        /   \
       -     3
      / \
-    5   *
-       / \
-      a   b
+    *   b
+   / \
+  5   a
 ```
 
 **Algebraic expression of scope**: (5a - b)³
@@ -1688,18 +1748,25 @@ Using symbols: ↑ for exponentiation, * for multiplication
 
 **Tree Diagram**:
 
-```
-           Employee (01)
-               |
-        _______|________
-        |      |       |      |
-      Name  Number  Hours   Rate
-      (02)   (02)   (02)    (02)
-                     |
-                 ____|____
-                 |       |
-              Regular Overtime
-               (03)    (03)
+```mermaid
+graph TD
+    Emp[Employee - 01]
+    
+    Name[Name - 02]
+    Num[Number - 02]
+    Hours[Hours - 02]
+    Rate[Rate - 02]
+    
+    Emp --> Name
+    Emp --> Num
+    Emp --> Hours
+    Emp --> Rate
+    
+    Reg[Regular - 03]
+    Over[Overtime - 03]
+    
+    Hours --> Reg
+    Hours --> Over
 ```
 
 **Reading the structure**:
@@ -1813,18 +1880,28 @@ Number | Origin | Destination
 
 **Graph Representation**:
 
-```
-        Boston (2)
-         /  ↑  \
-      711/   |   \702
-        ↓  712   ↓
-   Philadelphia (5) → Chicago (3)
-        ↓  \     705  ↓
-      713 \ 717      708
-          ↓  ↓        ↓
-       Atlanta (1)  Miami (4)
-           ↓         ↑
-          715 ─────→ 718
+```mermaid
+graph TD
+    BOS((Boston 2))
+    CHI((Chicago 3))
+    MIA((Miami 4))
+    PHI((Philadelphia 5))
+    ATL((Atlanta 1))
+
+    BOS -->|701| CHI
+    CHI -->|702| BOS
+    
+    BOS -->|711| PHI
+    PHI -->|712| BOS
+    
+    CHI -->|708| MIA
+    
+    PHI -->|705| CHI
+    PHI -->|713| ATL
+    PHI -->|717| MIA
+    
+    ATL -->|715| MIA
+    MIA -->|718| PHI
 ```
 
 **Detailed connections**:
