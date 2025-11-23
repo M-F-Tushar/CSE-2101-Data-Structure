@@ -27,16 +27,21 @@
 - **Alternative terms**: String processing, string manipulation, text editing
 
 ```mermaid
-graph LR
+flowchart LR
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    classDef focus fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef old fill:#ffebee,stroke:#c62828,color:#c62828;
+    classDef new fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
     A[Early Computers] -->|Focus| B[Numerical Processing]
     C[Modern Computers] -->|Focus| D[Character Processing]
     D --> E[Word Processing]
     D --> F[Text Manipulation]
     D --> G[Pattern Matching]
     
-    style A fill:#ffcccc
-    style C fill:#ccffcc
-    style D fill:#4ecdc4,color:#fff
+    class A,B old;
+    class C,D new;
+    class E,F,G focus;
 ```
 
 ---
@@ -53,7 +58,11 @@ Special:   + - / * ( ) , . $ = ' □ (blank space)
 ```
 
 ```mermaid
-graph TD
+flowchart TD
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    classDef main fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef sub fill:#fff3e0,stroke:#e65100,color:#e65100;
+
     A[Character Set] --> B[Alphabet]
     A --> C[Digits]
     A --> D[Special Characters]
@@ -61,7 +70,8 @@ graph TD
     C --> C1[0-9: 10 digits]
     D --> D1[Operators & Symbols]
     
-    style A fill:#4ecdc4,color:#fff
+    class A main;
+    class B,C,D sub;
 ```
 
 ### String Definition
@@ -84,15 +94,17 @@ Strings are enclosed in single quotation marks:
 
 ```mermaid
 flowchart LR
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    classDef string fill:#fff9c4,stroke:#fbc02d,color:#333;
+    classDef empty fill:#ffebee,stroke:#c62828,color:#c62828;
+
     S1["'THE END'"] --> L1[Length = 7]
     S2["'TO BE OR NOT TO BE'"] --> L2[Length = 18]
     S3["''"] --> L3[Length = 0]
     S4["'12'"] --> L4[Length = 2]
     
-    style S1 fill:#ffe66d
-    style S2 fill:#ffe66d
-    style S3 fill:#ffcccc
-    style S4 fill:#ffe66d
+    class S1,S2,S4 string;
+    class S3 empty;
 ```
 
 ### Concatenation
@@ -107,15 +119,16 @@ The operation of joining two strings S1 and S2 is denoted: **S1//S2**
 **Property**: LENGTH(S1//S2) = LENGTH(S1) + LENGTH(S2)
 
 ```mermaid
-graph LR
+flowchart LR
+    classDef result fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
     A['THE'] --> C['THEEND']
     B['END'] --> C
     D['THE'] --> F['THE END']
     E[' '] --> F
     G['END'] --> F
     
-    style C fill:#51cf66,color:#fff
-    style F fill:#51cf66,color:#fff
+    class C,F result;
 ```
 
 ### Substrings
@@ -144,7 +157,10 @@ S = 'TO BE OR NOT TO BE'
 ```
 
 ```mermaid
-graph TD
+flowchart TD
+    classDef main fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef sub fill:#fff9c4,stroke:#fbc02d,color:#333;
+
     S[String S] --> X[Prefix X]
     S --> Y[Substring Y]
     S --> Z[Suffix Z]
@@ -153,8 +169,8 @@ graph TD
     Z --> Z1[Terminal Substring:<br/>Z is empty]
     Y --> Y1[General Substring:<br/>X and Z not empty]
     
-    style S fill:#4ecdc4,color:#fff
-    style Y fill:#ffe66d
+    class S main;
+    class Y sub;
 ```
 
 ### Storage Representation
@@ -167,7 +183,10 @@ graph TD
 **Byte-addressable machine**: Computer that can access individual bytes
 
 ```mermaid
-graph LR
+flowchart LR
+    classDef standard fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+    classDef common fill:#e1f5fe,stroke:#01579b,color:#01579b;
+
     A[Character Encoding] --> B[6-bit: 64 chars]
     A --> C[7-bit ASCII: 128 chars]
     A --> D[8-bit EBCDIC: 256 chars]
@@ -175,8 +194,8 @@ graph LR
     C --> C1[Most Common<br/>for English]
     D --> D1[Standard Today]
     
-    style C fill:#51cf66,color:#fff
-    style D fill:#4ecdc4,color:#fff
+    class C standard;
+    class D common;
 ```
 
 ---
@@ -186,19 +205,25 @@ graph LR
 ### Three Main Storage Structures
 
 ```mermaid
-graph TB
+flowchart TB
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    classDef main fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef bad fill:#ffebee,stroke:#c62828,color:#c62828;
+    classDef ok fill:#fff9c4,stroke:#fbc02d,color:#333;
+    classDef good fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
     A[String Storage Methods] --> B[Fixed-Length Structures]
     A --> C[Variable-Length with Fixed Maximum]
     A --> D[Linked Storage]
     
-    B --> B1[✓ Easy access O&#40;1&#41;<br/>✗ Wasted space]
-    C --> C1[✓ Flexible within limit<br/>✓ Less waste]
-    D --> D1[✓ Fully dynamic<br/>✗ Slower access O&#40;n&#41;]
+    B --> B1["✓ Easy access O(1)<br/>✗ Wasted space"]
+    C --> C1["✓ Flexible within limit<br/>✓ Less waste"]
+    D --> D1["✓ Fully dynamic<br/>✗ Slower access O(n)"]
     
-    style A fill:#4ecdc4,color:#fff
-    style B fill:#ff6b6b,color:#fff
-    style C fill:#ffe66d
-    style D fill:#51cf66,color:#fff
+    class A main;
+    class B bad;
+    class C ok;
+    class D good;
 ```
 
 #### 3.1 Fixed-Length Structures
@@ -228,19 +253,19 @@ Memory Storage (80 chars per record):
 ```
 
 ```mermaid
-graph TD
+flowchart TD
+    classDef record fill:#ffebee,stroke:#c62828,color:#c62828;
+
     subgraph "Fixed-Length Storage - 80 Characters"
-        R1[Record 1: /*PROGRAM PRINTING...■■■■■■]
-        R2[Record 2: void main&#40;&#41;■■■■■■■■■■■■■■■■■■■]
-        R3[Record 3: {■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■]
+        R1["Record 1: /*PROGRAM PRINTING...■■■■■■"]
+        R2["Record 2: void main()■■■■■■■■■■■■■■■■■■■"]
+        R3["Record 3: {■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"]
     end
     
     R1 -.-> A1[Actual: 55 chars]
     R1 -.-> P1[Padding: 25 chars]
     
-    style R1 fill:#ffcccc
-    style R2 fill:#ffcccc
-    style R3 fill:#ffcccc
+    class R1,R2,R3 record;
 ```
 
 **Advantages:**
@@ -264,7 +289,9 @@ Advantage: Records need not be consecutive in memory
 ```
 
 ```mermaid
-graph LR
+flowchart LR
+    classDef index fill:#e1f5fe,stroke:#01579b,color:#01579b;
+
     subgraph "Pointer Array"
         P1[Index 1] --> M1[Memory 200]
         P2[Index 2] --> M2[Memory 280]
@@ -273,14 +300,11 @@ graph LR
     end
     
     M1 -.-> D1[/*PROGRAM PRINTING...]
-    M2 -.-> D2[void main&#40;&#41;]
+    M2 -.-> D2["void main()"]
     M3 -.-> D3[int J, K;]
     M4 -.-> D4[scanf...]
     
-    style P1 fill:#4ecdc4
-    style P2 fill:#4ecdc4
-    style P3 fill:#4ecdc4
-    style P4 fill:#4ecdc4
+    class P1,P2,P3,P4 index;
 ```
 
 #### 3.2 Variable-Length with Fixed Maximum
@@ -304,25 +328,24 @@ POINT Array:
 ```
 
 ```mermaid
-graph TD
+flowchart TD
+    classDef sentinel fill:#fff9c4,stroke:#fbc02d,color:#333;
+    classDef length fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
     subgraph "Method 1: Sentinel Markers"
-        S1[Record 1: Data...$$]
-        S2[Record 2: Data...$$]
-        S3[Record 3: Data...$$]
+        S1["Record 1: Data...$$"]
+        S2["Record 2: Data...$$"]
+        S3["Record 3: Data...$$"]
     end
     
     subgraph "Method 2: Length Prefix"
-        L1[55 &#124; Data...]
-        L2[18 &#124; Data...]
-        L3[21 &#124; Data...]
+        L1["55 | Data..."]
+        L2["18 | Data..."]
+        L3["21 | Data..."]
     end
     
-    style S1 fill:#ffe66d
-    style S2 fill:#ffe66d
-    style S3 fill:#ffe66d
-    style L1 fill:#51cf66,color:#fff
-    style L2 fill:#51cf66,color:#fff
-    style L3 fill:#51cf66,color:#fff
+    class S1,S2,S3 sentinel;
+    class L1,L2,L3 length;
 ```
 
 **Visual Comparison:**
@@ -352,7 +375,10 @@ Four Characters per Node:
 ```
 
 ```mermaid
-graph LR
+flowchart LR
+    classDef single fill:#ffebee,stroke:#c62828,color:#c62828;
+    classDef multi fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
     subgraph "Single Character Nodes"
         N1[T] --> N2[o]
         N2 --> N3[□]
@@ -363,18 +389,14 @@ graph LR
     
     subgraph "Four Character Nodes"
         M1[To b] --> M2[e or]
-        M2 --> M3[ not]
-        M3 --> M4[ to ]
-        M4 --> M5[be, ]
+        M2 --> M3[" not"]
+        M3 --> M4[" to "]
+        M4 --> M5["be, "]
         M5 --> M6[...]
     end
     
-    style N1 fill:#ffcccc
-    style N2 fill:#ffcccc
-    style N3 fill:#ffcccc
-    style M1 fill:#51cf66,color:#fff
-    style M2 fill:#51cf66,color:#fff
-    style M3 fill:#51cf66,color:#fff
+    class N1,N2,N3 single;
+    class M1,M2,M3 multi;
 ```
 
 **Example: "To be or not to be, that is the question"**
@@ -396,7 +418,11 @@ Four Character Nodes:
 - [X] No direct character access
 
 ```mermaid
-graph TD
+flowchart TD
+    classDef main fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef good fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+    classDef bad fill:#ffebee,stroke:#c62828,color:#c62828;
+
     A[Linked Storage] --> B[Advantages]
     A --> C[Disadvantages]
     
@@ -408,9 +434,9 @@ graph TD
     C --> C2[✗ Sequential Access Only]
     C --> C3[✗ No Random Access]
     
-    style A fill:#4ecdc4,color:#fff
-    style B fill:#51cf66,color:#fff
-    style C fill:#ff6b6b,color:#fff
+    class A main;
+    class B,B1,B2,B3 good;
+    class C,C1,C2,C3 bad;
 ```
 
 ---
@@ -432,7 +458,12 @@ Denoted by quotation marks:
 3. **Dynamic**: Fully variable length
 
 ```mermaid
-graph TD
+flowchart TD
+    classDef main fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef static fill:#ffebee,stroke:#c62828,color:#c62828;
+    classDef semi fill:#fff9c4,stroke:#fbc02d,color:#333;
+    classDef dynamic fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
     A[String Variables in C] --> B[Static]
     A --> C[Semistatic]
     A --> D[Dynamic]
@@ -441,10 +472,10 @@ graph TD
     C --> C1[Max size limit<br/>strlen ≤ max]
     D --> D1[Fully variable<br/>malloc/realloc]
     
-    style A fill:#4ecdc4,color:#fff
-    style B fill:#ffcccc
-    style C fill:#ffe66d
-    style D fill:#51cf66,color:#fff
+    class A main;
+    class B static;
+    class C semi;
+    class D dynamic;
 ```
 
 **C Declaration Examples:**
@@ -474,6 +505,9 @@ char my name[40];    // Contains space
 
 ```mermaid
 flowchart TD
+    classDef invalid fill:#ffebee,stroke:#c62828,color:#c62828;
+    classDef valid fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
     Start{Valid Variable Name?}
     Start -->|Check| A{Starts with<br/>letter or _?}
     A -->|No| Invalid1[✗ Invalid]
@@ -483,10 +517,8 @@ flowchart TD
     C -->|Yes| Invalid3[✗ Invalid]
     C -->|No| Valid[✓ Valid]
     
-    style Invalid1 fill:#ff6b6b,color:#fff
-    style Invalid2 fill:#ff6b6b,color:#fff
-    style Invalid3 fill:#ff6b6b,color:#fff
-    style Valid fill:#51cf66,color:#fff
+    class Invalid1,Invalid2,Invalid3 invalid;
+    class Valid valid;
 ```
 
 ---
@@ -509,32 +541,32 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-        Root(("String ADT\nOperations"))
-        Root --> Access[Access]
-        Root --> Analysis[Analysis]
-        Root --> Build[Construction]
-        Root --> Modify[Modification]
+    classDef root fill:#e1f5fe,stroke:#01579b,color:#01579b,font-weight:600;
+    classDef group fill:#f3e5f5,stroke:#4a148c,color:#4a148c;
+    classDef op fill:#fff,stroke:#333,color:#333;
 
-        Access --> GETCHAR
-        Access --> PUTCHAR
+    Root(("String ADT\nOperations"))
+    Root --> Access[Access]
+    Root --> Analysis[Analysis]
+    Root --> Build[Construction]
+    Root --> Modify[Modification]
 
-        Analysis --> LENGTH
-        Analysis --> POS
-        Analysis --> COMPARE
+    Access --> GETCHAR
+    Access --> PUTCHAR
 
-        Build --> CONCAT
-        Build --> SUBSTRING
+    Analysis --> LENGTH
+    Analysis --> POS
+    Analysis --> COMPARE
 
-        Modify --> INSERT
-        Modify --> DELETE
+    Build --> CONCAT
+    Build --> SUBSTRING
 
-        classDef root fill:#4ecdc4,stroke:#1d7874,color:#fff,font-weight:600;
-        classDef group fill:#eef2ff,stroke:#312e81,color:#111;
-        classDef op fill:#ffffff,stroke:#94a3b8,color:#111;
+    Modify --> INSERT
+    Modify --> DELETE
 
-        class Root root;
-        class Access,Analysis,Build,Modify group;
-        class GETCHAR,PUTCHAR,LENGTH,POS,COMPARE,CONCAT,SUBSTRING,INSERT,DELETE op;
+    class Root root;
+    class Access,Analysis,Build,Modify group;
+    class GETCHAR,PUTCHAR,LENGTH,POS,COMPARE,CONCAT,SUBSTRING,INSERT,DELETE op;
 ```
 
 ### Implementation Methods
@@ -558,7 +590,10 @@ S1 = 'JANICE'
 ```
 
 ```mermaid
-graph TD
+flowchart TD
+    classDef method1 fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef method2 fill:#fff9c4,stroke:#fbc02d,color:#333;
+
     subgraph "Method 1: Length Prefix"
         M1A[6] --> M1B[J A N I C E]
     end
@@ -567,11 +602,11 @@ graph TD
         M2A[J A N I C E] --> M2B[\0]
     end
     
-    M1A -.Length.-> M1C[O&#40;1&#41; to get length]
-    M2B -.Terminator.-> M2C[O&#40;n&#41; to get length]
+    M1A -.Length.-> M1C["O(1) to get length"]
+    M2B -.Terminator.-> M2C["O(n) to get length"]
     
-    style M1A fill:#4ecdc4,color:#fff
-    style M2B fill:#ffe66d
+    class M1A method1;
+    class M2B method2;
 ```
 
 **Comparison:**
@@ -654,11 +689,14 @@ SUBSTRING(S, 4, 7):
 
 ```mermaid
 flowchart LR
+    classDef input fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef output fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
     A[TO BE OR NOT] --> B{Position 4<br/>Length 7}
     B --> C[Extract:<br/>BE OR N]
     
-    style A fill:#4ecdc4,color:#fff
-    style C fill:#51cf66,color:#fff
+    class A input;
+    class C output;
 ```
 
 ### 6.2 INDEX (Pattern Matching)
@@ -678,7 +716,11 @@ INDEX(T, ' THE') = 14  ✓ With space, position 14
 
 ```mermaid
 flowchart TD
-    Start([INDEX&#40;T, P&#41;]) --> Init[K = 1]
+    classDef start fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef found fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+    classDef notfound fill:#ffebee,stroke:#c62828,color:#c62828;
+
+    Start([INDEX(T, P)]) --> Init[K = 1]
     Init --> Loop{K ≤ MAX?}
     Loop -->|No| NotFound[Return 0]
     Loop -->|Yes| Compare[Compare P<br/>with T[K...K+r-1]]
@@ -687,9 +729,9 @@ flowchart TD
     Match -->|No| Inc[K = K + 1]
     Inc --> Loop
     
-    style Start fill:#4ecdc4
-    style Found fill:#51cf66,color:#fff
-    style NotFound fill:#ff6b6b,color:#fff
+    class Start start;
+    class Found found;
+    class NotFound notfound;
 ```
 
 **Visual Search:**
@@ -744,7 +786,10 @@ S1 // ' ' // S2 = 'MARK TWAIN'
 ```
 
 ```mermaid
-graph LR
+flowchart LR
+    classDef result fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+    classDef spaced fill:#e1f5fe,stroke:#01579b,color:#01579b;
+
     A[MARK] --> C[MARKTWAIN]
     B[TWAIN] --> C
     
@@ -752,8 +797,8 @@ graph LR
     E[' '] --> F
     G[TWAIN] --> F
     
-    style C fill:#51cf66,color:#fff
-    style F fill:#4ecdc4,color:#fff
+    class C result;
+    class F spaced;
 ```
 
 **Visual Process:**
@@ -801,11 +846,15 @@ M A R C   T W A I N
 
 ```mermaid
 flowchart LR
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    classDef count1 fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+    classDef count2 fill:#e1f5fe,stroke:#01579b,color:#01579b;
+
     S1[COMPUTER] --> L1[Count = 8]
-    S2[MARC TWAIN] --> L2[Count = 10<br/>includes space]
+    S2[MARC TWAIN] --> L2["Count = 10<br/>includes space"]
     
-    style L1 fill:#51cf66,color:#fff
-    style L2 fill:#4ecdc4,color:#fff
+    class L1 count1;
+    class L2 count2;
 ```
 
 **C Implementation:**
@@ -823,7 +872,9 @@ int len = strlen(S1);  // len = 8
 ### Core Operations
 
 ```mermaid
-graph TD
+flowchart TD
+    classDef main fill:#e1f5fe,stroke:#01579b,color:#01579b;
+
     A[Text Processing] --> B[INSERT]
     A --> C[DELETE]
     A --> D[REPLACE]
@@ -836,7 +887,7 @@ graph TD
     C1 --> F[Keep prefix & suffix]
     D1 --> G[DELETE → INSERT]
     
-    style A fill:#4ecdc4,color:#fff
+    class A main;
 ```
 
 #### 7.1 INSERTION
@@ -895,6 +946,9 @@ INSERT(T, K, S) =
 
 ```mermaid
 flowchart TD
+    classDef main fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef result fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
     A[INSERT Operation] --> B[Extract Prefix<br/>1 to K-1]
     A --> C[New String S]
     A --> D[Extract Suffix<br/>K to end]
@@ -903,8 +957,8 @@ flowchart TD
     D --> E
     E --> F[Result]
     
-    style A fill:#4ecdc4,color:#fff
-    style F fill:#51cf66,color:#fff
+    class A main;
+    class F result;
 ```
 
 **Breakdown:**
@@ -967,6 +1021,9 @@ DELETE(T, K, L) =
 
 ```mermaid
 flowchart LR
+    classDef remove fill:#ffebee,stroke:#c62828,color:#c62828;
+    classDef result fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
     A[DELETE Operation] --> B[Keep Prefix<br/>1 to K-1]
     A --> C[Remove Middle<br/>K to K+L-1]
     A --> D[Keep Suffix<br/>K+L to end]
@@ -974,8 +1031,8 @@ flowchart LR
     D --> E
     E --> F[Result]
     
-    style C fill:#ff6b6b,color:#fff
-    style F fill:#51cf66,color:#fff
+    class C remove;
+    class F result;
 ```
 
 **Special Case:**
@@ -1051,16 +1108,20 @@ Result: XCYABZ
 
 ```mermaid
 flowchart TD
-    Start([REPLACE&#40;T,P1,P2&#41;]) --> Find[K = INDEX&#40;T,P1&#41;]
+    classDef start fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef done fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+    classDef nochange fill:#fff9c4,stroke:#fbc02d,color:#333;
+
+    Start([REPLACE(T,P1,P2)]) --> Find[K = INDEX(T,P1)]
     Find --> Check{K = 0?}
     Check -->|Yes| NoChange[Return T unchanged]
-    Check -->|No| Del[T = DELETE&#40;T,K,LENGTH&#40;P1&#41;&#41;]
-    Del --> Ins[T = INSERT&#40;T,K,P2&#41;]
+    Check -->|No| Del["T = DELETE(T,K,LENGTH(P1))"]
+    Del --> Ins["T = INSERT(T,K,P2)"]
     Ins --> Done[Return T]
     
-    style Start fill:#4ecdc4
-    style Done fill:#51cf66,color:#fff
-    style NoChange fill:#ffe66d
+    class Start start;
+    class Done done;
+    class NoChange nochange;
 ```
 
 ### Algorithm 3.1: Delete All Occurrences
@@ -1078,16 +1139,20 @@ Algorithm DELETE_ALL(T, P):
 
 ```mermaid
 flowchart TD
-    Start([DELETE_ALL&#40;T,P&#41;]) --> Find[K = INDEX&#40;T,P&#41;]
+    classDef start fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef del fill:#ffebee,stroke:#c62828,color:#c62828;
+    classDef output fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
+    Start([DELETE_ALL(T,P)]) --> Find[K = INDEX(T,P)]
     Find --> Loop{K ≠ 0?}
     Loop -->|No| Output[OUTPUT T]
-    Loop -->|Yes| Del[T = DELETE&#40;T,K,LENGTH&#40;P&#41;&#41;]
+    Loop -->|Yes| Del["T = DELETE(T,K,LENGTH(P))"]
     Del --> Find
     Output --> End([End])
     
-    style Start fill:#4ecdc4
-    style Del fill:#ff6b6b,color:#fff
-    style Output fill:#51cf66,color:#fff
+    class Start start;
+    class Del del;
+    class Output output;
 ```
 
 **Example Execution:**
@@ -1155,21 +1220,24 @@ Algorithm REPLACE_ALL(T, P, Q):
 
 ```mermaid
 flowchart TD
-    Start([REPLACE_ALL&#40;T,P,Q&#41;]) --> Find[K = INDEX&#40;T,P&#41;]
+    classDef start fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef danger fill:#ffebee,stroke:#c62828,color:#c62828;
+    classDef safe fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+    classDef output fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
+    Start([REPLACE_ALL(T,P,Q)]) --> Find[K = INDEX(T,P)]
     Find --> Loop{K ≠ 0?}
     Loop -->|No| Output[OUTPUT T]
-    Loop -->|Yes| Check{LENGTH&#40;Q&#41;<br/>< LENGTH&#40;P&#41;?}
-    Check -->|Yes| Safe[T = REPLACE&#40;T,P,Q&#41;]
+    Loop -->|Yes| Check{"LENGTH(Q)<br/>< LENGTH(P)?"}
+    Check -->|Yes| Safe["T = REPLACE(T,P,Q)"]
     Check -->|No| Danger[⚠️ May not terminate!]
     Safe --> Find
     Danger --> Infinite[Infinite Loop]
     Output --> End([End])
     
-    style Start fill:#4ecdc4
-    style Danger fill:#ff6b6b,color:#fff
-    style Infinite fill:#ff6b6b,color:#fff
-    style Safe fill:#51cf66,color:#fff
-    style Output fill:#51cf66,color:#fff
+    class Start start;
+    class Danger,Infinite danger;
+    class Safe,Output safe;
 ```
 
 **⚠️ WARNING**: This may not terminate!
@@ -1194,8 +1262,11 @@ Iteration 3: XABBBY  (infinite loop!)
 ```
 
 ```mermaid
-graph TD
-    A[REPLACE_ALL Safety] --> B{LENGTH&#40;Q&#41; vs LENGTH&#40;P&#41;}
+flowchart TD
+    classDef safe fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+    classDef danger fill:#ffebee,stroke:#c62828,color:#c62828;
+
+    A[REPLACE_ALL Safety] --> B{"LENGTH(Q) vs LENGTH(P)"}
     B -->|Q < P| C[✓ Safe - Always terminates]
     B -->|Q = P| D[✓ Safe - String doesn't grow]
     B -->|Q > P| E[⚠️ Dangerous]
@@ -1204,9 +1275,8 @@ graph TD
     F -->|Yes| G[✗ Infinite Loop!]
     F -->|No| H[✓ May be safe]
     
-    style C fill:#51cf66,color:#fff
-    style D fill:#51cf66,color:#fff
-    style G fill:#ff6b6b,color:#fff
+    class C,D safe;
+    class G danger;
 ```
 
 **Safe Condition**: Algorithm terminates if `LENGTH(Q) < LENGTH(P)`
@@ -1222,7 +1292,9 @@ Given:
 Find: Does P appear in T? If yes, where?
 
 ```mermaid
-graph LR
+flowchart LR
+    classDef main fill:#e1f5fe,stroke:#01579b,color:#01579b;
+
     A[Pattern Matching Problem] --> B[Input]
     A --> C[Output]
     
@@ -1232,7 +1304,7 @@ graph LR
     C --> C1[Position K<br/>if found]
     C --> C2[0 if not found]
     
-    style A fill:#4ecdc4,color:#fff
+    class A main;
 ```
 
 ### 8.1 First Algorithm (Brute Force)
@@ -1255,6 +1327,9 @@ MAX = s - r + 1 = 20 - 4 + 1 = 17 substrings
 
 ```mermaid
 flowchart LR
+    classDef match fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+    classDef pattern fill:#e1f5fe,stroke:#01579b,color:#01579b;
+
     T[Text: aabbbabb] --> W1[W₁: aabb]
     T --> W2[W₂: abbb]
     T --> W3[W₃: bbba]
@@ -1267,8 +1342,8 @@ flowchart LR
     P -.compare.-> W4
     P -.match!.-> W5
     
-    style W5 fill:#51cf66,color:#fff
-    style P fill:#4ecdc4,color:#fff
+    class W5 match;
+    class P pattern;
 ```
 
 **Algorithm 3.3: Pattern Matching (Brute Force)**
@@ -1300,20 +1375,24 @@ OUTPUT: INDEX (position of P in T, or 0)
 
 ```mermaid
 flowchart TD
-    Start([Algorithm 3.3<br/>Brute Force]) --> Init[K=1<br/>MAX=S-R+1]
+    classDef start fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef success fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+    classDef fail fill:#ffebee,stroke:#c62828,color:#c62828;
+
+    Start([Algorithm 3.3<br/>Brute Force]) --> Init["K=1<br/>MAX=S-R+1"]
     Init --> OuterLoop{K ≤ MAX?}
     OuterLoop -->|No| Fail[INDEX = 0<br/>Not Found]
     OuterLoop -->|Yes| InnerLoop[L = 1 to R]
-    InnerLoop --> Compare{P[L] =<br/>T[K+L-1]?}
+    InnerLoop --> Compare{"P[L] =<br/>T[K+L-1]?"}
     Compare -->|No| NextK[K = K+1]
     Compare -->|Yes| CheckL{L = R?}
     CheckL -->|No| InnerLoop
     CheckL -->|Yes| Success[INDEX = K<br/>Found!]
     NextK --> OuterLoop
     
-    style Start fill:#4ecdc4
-    style Success fill:#51cf66,color:#fff
-    style Fail fill:#ff6b6b,color:#fff
+    class Start start;
+    class Success success;
+    class Fail fail;
 ```
 
 **Detailed Example:**
@@ -1396,16 +1475,16 @@ C(n) = (n+1)²/8 = O(n²)
 
 ```mermaid
 flowchart LR
+    classDef head fill:#e1f5fe,stroke:#01579b,color:#01579b,font-weight:600;
+    classDef case fill:#fff,stroke:#333,color:#333;
+    classDef note fill:#fff9c4,stroke:#fbc02d,color:#333;
+
     Start["Brute Force Complexity"] --> Best["Best: O(r) comparisons\n(found immediately)"]
     Start --> Avg["Average: grows with n\n(depends on overlaps)"]
     Start --> Worst["Worst: O(n^2) comparisons\n(r substrings × r chars)"]
 
     Avg --> NoteAvg[Example: 50→1250 comparisons]
     Worst --> NoteWorst[Example: all 'a' text → quadratic]
-
-    classDef head fill:#4ecdc4,stroke:#155e75,color:#fff,font-weight:600;
-    classDef case fill:#ffffff,stroke:#475569,color:#111;
-    classDef note fill:#fef9c3,stroke:#a16207,color:#111;
 
     class Start head;
     class Best,Avg,Worst case;
@@ -1431,19 +1510,23 @@ Q₄ = 'aaba' (complete pattern)
 ```
 
 ```mermaid
-graph LR
+flowchart LR
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    classDef match fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef complete fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+    classDef empty fill:#ffebee,stroke:#c62828,color:#c62828;
+    classDef partial fill:#fff9c4,stroke:#fbc02d,color:#333;
+
     Q0[Q₀: Empty] --> Q1[Q₁: a]
     Q1 --> Q2[Q₂: aa]
     Q2 --> Q3[Q₃: aab]
     Q3 --> Q4[Q₄: aaba]
     Q4 --> P[P: Complete Match!]
     
-    style Q0 fill:#ffcccc
-    style Q1 fill:#ffe66d
-    style Q2 fill:#ffe66d
-    style Q3 fill:#ffe66d
-    style Q4 fill:#4ecdc4,color:#fff
-    style P fill:#51cf66,color:#fff
+    class Q0 empty;
+    class Q1,Q2,Q3 partial;
+    class Q4 match;
+    class P complete;
 ```
 
 **State Transition Table:**
@@ -1598,19 +1681,23 @@ OUTPUT: INDEX
 
 ```mermaid
 flowchart TD
-    Start([Algorithm 3.4<br/>KMP Style]) --> Init[K=1, S₁=Q₀]
-    Init --> Loop{Sₖ≠P AND<br/>K≤N?}
-    Loop -->|No| Check{Sₖ = P?}
+    classDef start fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef found fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+    classDef notfound fill:#ffebee,stroke:#c62828,color:#c62828;
+
+    Start([Algorithm 3.4<br/>KMP Style]) --> Init["K=1, S₁=Q₀"]
+    Init --> Loop{"Sₖ≠P AND<br/>K≤N?"}
+    Loop -->|No| Check{"Sₖ = P?"}
     Loop -->|Yes| Read[Read Tₖ]
-    Read --> Transition[Sₖ₊₁ = F&#40;Sₖ,Tₖ&#41;]
+    Read --> Transition["Sₖ₊₁ = F(Sₖ,Tₖ)"]
     Transition --> Inc[K = K+1]
     Inc --> Loop
-    Check -->|Yes| Found[INDEX = K-LENGTH&#40;P&#41;]
+    Check -->|Yes| Found["INDEX = K-LENGTH(P)"]
     Check -->|No| NotFound[INDEX = 0]
     
-    style Start fill:#4ecdc4
-    style Found fill:#51cf66,color:#fff
-    style NotFound fill:#ff6b6b,color:#fff
+    class Start start;
+    class Found found;
+    class NotFound notfound;
 ```
 
 **Complexity**: **O(n)** where n = LENGTH(T)
@@ -1625,14 +1712,14 @@ flowchart TD
 
 ```mermaid
 flowchart TD
+    classDef head fill:#e1f5fe,stroke:#01579b,color:#01579b,font-weight:600;
+    classDef option fill:#fff,stroke:#333,color:#333;
+    classDef note fill:#fff9c4,stroke:#fbc02d,color:#333;
+
     Compare["Pattern Matching Options"] --> BF["Brute Force\nComplexity: O(n^2)\nGood for tiny inputs"]
     Compare --> KMP["KMP / Automata\nComplexity: O(n)\nBest for long texts"]
     BF --> BFExample["Example workload: n=100 → ~10k ops"]
     KMP --> KMPExample["Example workload: n=100 → ~100 ops"]
-
-    classDef head fill:#4ecdc4,stroke:#155e75,color:#fff,font-weight:600;
-    classDef option fill:#ffffff,stroke:#475569,color:#111;
-    classDef note fill:#fef9c3,stroke:#a16207,color:#111;
 
     class Compare head;
     class BF,KMP option;
@@ -1640,18 +1727,22 @@ flowchart TD
 ```
 
 ```mermaid
-graph TD
+flowchart TD
+    classDef main fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef simple fill:#fff9c4,stroke:#fbc02d,color:#333;
+    classDef optimal fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
     A[Pattern Matching<br/>Algorithm Selection] --> B{Pattern Length}
-    B -->|Short<br/>&#40;< 5 chars&#41;| C[Brute Force<br/>Simple & Fast]
-    B -->|Medium<br/>&#40;5-20 chars&#41;| D{Text Length}
-    B -->|Long<br/>&#40;> 20 chars&#41;| E[KMP or<br/>Boyer-Moore]
+    B -->|Short<br/>(< 5 chars)| C[Brute Force<br/>Simple & Fast]
+    B -->|Medium<br/>(5-20 chars)| D{Text Length}
+    B -->|Long<br/>(> 20 chars)| E[KMP or<br/>Boyer-Moore]
     
     D -->|Short| C
     D -->|Long| E
     
-    style A fill:#4ecdc4,color:#fff
-    style C fill:#ffe66d
-    style E fill:#51cf66,color:#fff
+    class A main;
+    class C simple;
+    class E optimal;
 ```
 
 ---
@@ -1681,8 +1772,11 @@ Total: 11 substrings
 ```
 
 ```mermaid
-graph TD
-    W[W = 'ABCD'] --> L4[Length 4: ABCD]
+flowchart TD
+    classDef main fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef result fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
+    W["W = 'ABCD'"] --> L4[Length 4: ABCD]
     W --> L3[Length 3: ABC, BCD]
     W --> L2[Length 2: AB, BC, CD]
     W --> L1[Length 1: A, B, C, D]
@@ -1694,8 +1788,8 @@ graph TD
     L1 --> T
     L0 --> T
     
-    style W fill:#4ecdc4,color:#fff
-    style T fill:#51cf66,color:#fff
+    class W main;
+    class T result;
 ```
 
 c) **Initial Substrings:**
@@ -1709,13 +1803,15 @@ A     (first 1)
 
 ```mermaid
 flowchart LR
+    classDef main fill:#e1f5fe,stroke:#01579b,color:#01579b;
+
     S[ABCD] --> I1[ABCD]
     S --> I2[ABC]
     S --> I3[AB]
     S --> I4[A]
     S --> I5[Λ]
     
-    style S fill:#4ecdc4,color:#fff
+    class S main;
 ```
 
 ### Problem 3.2: Character Representation
@@ -1734,7 +1830,11 @@ Answer: Minimum 6 bits, typically 7 or 8 bits
 ```
 
 ```mermaid
-graph LR
+flowchart LR
+    classDef fail fill:#ffebee,stroke:#c62828,color:#c62828;
+    classDef success fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+    classDef standard fill:#e1f5fe,stroke:#01579b,color:#01579b;
+
     A[48 Characters] --> B{Bits Needed}
     B --> C[2⁵=32 ✗]
     B --> D[2⁶=64 ✓]
@@ -1746,10 +1846,9 @@ graph LR
     E --> E1[Standard]
     F --> F1[Common]
     
-    style C fill:#ff6b6b,color:#fff
-    style D fill:#51cf66,color:#fff
-    style E fill:#4ecdc4,color:#fff
-    style F fill:#4ecdc4,color:#fff
+    class C,C1 fail;
+    class D,D1 success;
+    class E,E1,F,F1 standard;
 ```
 
 ### Problem 3.8: String Operations
@@ -1784,14 +1883,15 @@ b) SUBSTRING(T, 10, 5)
 
 ```mermaid
 flowchart TD
-    S["S = 'JOHN PAUL JONES'"] --> Op1[SUBSTRING&#40;S,4,8&#41;]
+    classDef result fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
+    S["S = 'JOHN PAUL JONES'"] --> Op1["SUBSTRING(S,4,8)"]
     Op1 --> R1["Result: 'N PAUL J'"]
     
-    T["T = 'A THING OF BEAUTY...'"] --> Op2[SUBSTRING&#40;T,10,5&#41;]
+    T["T = 'A THING OF BEAUTY...'"] --> Op2["SUBSTRING(T,10,5)"]
     Op2 --> R2["Result: 'F BEA'"]
     
-    style R1 fill:#51cf66,color:#fff
-    style R2 fill:#51cf66,color:#fff
+    class R1,R2 result;
 ```
 
 ### Problem 3.10: INDEX Function
@@ -1811,21 +1911,20 @@ f) INDEX(T, 'THE') = 0  (not in text)
 ```
 
 ```mermaid
-graph TD
-    S["S = 'JOHN PAUL JONES'"] --> I1["INDEX&#40;S,'JO'&#41; = 1 ✓"]
-    S --> I2["INDEX&#40;S,'JOY'&#41; = 0 ✗"]
-    S --> I3["INDEX&#40;S,' JO'&#41; = 10 ✓"]
+flowchart TD
+    classDef success fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+    classDef fail fill:#ffebee,stroke:#c62828,color:#c62828;
+
+    S["S = 'JOHN PAUL JONES'"] --> I1["INDEX(S,'JO') = 1 ✓"]
+    S --> I2["INDEX(S,'JOY') = 0 ✗"]
+    S --> I3["INDEX(S,' JO') = 10 ✓"]
     
-    T["T = 'A THING OF BEAUTY...'"] --> I4["INDEX&#40;T,'A'&#41; = 1 ✓"]
-    T --> I5["INDEX&#40;T,' A'&#41; = 21 ✓"]
-    T --> I6["INDEX&#40;T,'THE'&#41; = 0 ✗"]
+    T["T = 'A THING OF BEAUTY...'"] --> I4["INDEX(T,'A') = 1 ✓"]
+    T --> I5["INDEX(T,' A') = 21 ✓"]
+    T --> I6["INDEX(T,'THE') = 0 ✗"]
     
-    style I1 fill:#51cf66,color:#fff
-    style I2 fill:#ff6b6b,color:#fff
-    style I3 fill:#51cf66,color:#fff
-    style I4 fill:#51cf66,color:#fff
-    style I5 fill:#51cf66,color:#fff
-    style I6 fill:#ff6b6b,color:#fff
+    class I1,I3,I4,I5 success;
+    class I2,I6 fail;
 ```
 
 ### Problem 3.11: Concatenation
@@ -1851,6 +1950,9 @@ d) SUBSTRING(T, 28, 3) // 'GIVEN'
 
 ```mermaid
 flowchart LR
+    classDef intermediate fill:#fff9c4,stroke:#fbc02d,color:#333;
+    classDef result fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
     A['THE'] --> C1['THEEND']
     B['END'] --> C1
     
@@ -1858,8 +1960,8 @@ flowchart LR
     E[' '] --> C2
     F['END'] --> C2
     
-    style C1 fill:#ffe66d
-    style C2 fill:#51cf66,color:#fff
+    class C1 intermediate;
+    class C2 result;
 ```
 
 ### Problem 3.12: INSERT Operations
@@ -1940,20 +2042,21 @@ d) REPLACE('JOHN PAUL JONES', 'PAUL', 'DAVID')
 
 ```mermaid
 flowchart TD
+    classDef delete fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+    classDef replace fill:#e1f5fe,stroke:#01579b,color:#01579b;
+
     subgraph "DELETE Operations"
-        D1["DELETE&#40;'AAABBB',2,2&#41;"] --> DR1["'ABBB'"]
-        D2["DELETE&#40;'JOHN PAUL JONES',6,5&#41;"] --> DR2["'JOHN JONES'"]
+        D1["DELETE('AAABBB',2,2)"] --> DR1["'ABBB'"]
+        D2["DELETE('JOHN PAUL JONES',6,5)"] --> DR2["'JOHN JONES'"]
     end
     
     subgraph "REPLACE Operations"
-        R1["REPLACE&#40;'AAABBB','AA','BB'&#41;"] --> RR1["'BBABBB'"]
-        R2["REPLACE&#40;'JOHN PAUL JONES','PAUL','DAVID'&#41;"] --> RR2["'JOHN DAVID JONES'"]
+        R1["REPLACE('AAABBB','AA','BB')"] --> RR1["'BBABBB'"]
+        R2["REPLACE('JOHN PAUL JONES','PAUL','DAVID')"] --> RR2["'JOHN DAVID JONES'"]
     end
     
-    style DR1 fill:#51cf66,color:#fff
-    style DR2 fill:#51cf66,color:#fff
-    style RR1 fill:#4ecdc4,color:#fff
-    style RR2 fill:#4ecdc4,color:#fff
+    class DR1,DR2 delete;
+    class RR1,RR2 replace;
 ```
 
 ### Problem 3.18: Pattern Matching Complexity
@@ -2059,19 +2162,23 @@ Q₅ = aaabb (P)
 ```
 
 ```mermaid
-graph LR
+flowchart LR
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    classDef empty fill:#ffebee,stroke:#c62828,color:#c62828;
+    classDef partial fill:#fff9c4,stroke:#fbc02d,color:#333;
+    classDef match fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef success fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
     Q0[Q₀: Λ] --> Q1[Q₁: a]
     Q1 --> Q2[Q₂: aa]
     Q2 --> Q3[Q₃: aaa]
     Q3 --> Q4[Q₄: aaab]
     Q4 --> Q5[Q₅: aaabb]
     
-    style Q0 fill:#ffcccc
-    style Q1 fill:#ffe66d
-    style Q2 fill:#ffe66d
-    style Q3 fill:#ffe66d
-    style Q4 fill:#4ecdc4,color:#fff
-    style Q5 fill:#51cf66,color:#fff
+    class Q0 empty;
+    class Q1,Q2,Q3 partial;
+    class Q4 match;
+    class Q5 success;
 ```
 
 **State Transition Table:**
@@ -2149,6 +2256,10 @@ Q₆ = ababab (P)
 
 ```mermaid
 flowchart LR
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    classDef empty fill:#ffebee,stroke:#c62828,color:#c62828;
+    classDef success fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
     Q0[Q₀] -->|a| Q1[Q₁]
     Q1 -->|b| Q2[Q₂]
     Q2 -->|a| Q3[Q₃]
@@ -2156,8 +2267,8 @@ flowchart LR
     Q4 -->|a| Q5[Q₅]
     Q5 -->|b| Q6[Q₆ - P]
     
-    style Q0 fill:#ffcccc
-    style Q6 fill:#51cf66,color:#fff
+    class Q0 empty;
+    class Q6 success;
 ```
 
 **State Transition Table:**
@@ -2267,18 +2378,21 @@ SUBSTRING(S,1,5): TO BE
 
 ```mermaid
 flowchart TD
-    Start([SUBSTR Function]) --> Input[Input: STR, i, j]
+    classDef start fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef return fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
+    Start([SUBSTR Function]) --> Input["Input: STR, i, j"]
     Input --> Init[Initialize m=0]
     Init --> Loop[for k = i-1 to i+j-2]
-    Loop --> Copy[STRRES[m] = STR[k]]
+    Loop --> Copy["STRRES[m] = STR[k]"]
     Copy --> Inc[m++]
     Inc --> Check{More chars?}
     Check -->|Yes| Loop
     Check -->|No| Term[Add '\0']
     Term --> Return[Return STRRES]
     
-    style Start fill:#4ecdc4
-    style Return fill:#51cf66,color:#fff
+    class Start start;
+    class Return return;
 ```
 
 #### Program 2: INDEX Function
@@ -2331,11 +2445,15 @@ INDEX(T,' THE '): 14
 
 ```mermaid
 flowchart TD
+    classDef start fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef found fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+    classDef notfound fill:#ffebee,stroke:#c62828,color:#c62828;
+
     Start([INDEX Function]) --> OuterLoop[for m in text]
     OuterLoop --> SetFlag[flag = 1]
     SetFlag --> InnerLoop[for n in pattern]
-    InnerLoop --> Compare{STR1[m+n]<br/>== STR2[n]?}
-    Compare -->|No| SetFalse[flag = 0, break]
+    InnerLoop --> Compare{"STR1[m+n]<br/>== STR2[n]?"}
+    Compare -->|No| SetFalse["flag = 0, break"]
     Compare -->|Yes| NextChar[Continue]
     NextChar --> InnerLoop
     SetFalse --> CheckFlag{flag == 1?}
@@ -2345,9 +2463,9 @@ flowchart TD
     NextPos --> OuterLoop
     OuterLoop --> NotFound[return 0]
     
-    style Start fill:#4ecdc4
-    style Found fill:#51cf66,color:#fff
-    style NotFound fill:#ff6b6b,color:#fff
+    class Start start;
+    class Found found;
+    class NotFound notfound;
 ```
 
 #### Program 3: String Concatenation
@@ -2515,7 +2633,10 @@ REPLACE('XABYABZ','BA','C'): XABYABZ
 ```
 
 ```mermaid
-graph TD
+flowchart TD
+    classDef main fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef helper fill:#fff9c4,stroke:#fbc02d,color:#333;
+
     subgraph "Program 4 Function Dependencies"
         Main[Main Program] --> Ins[INSERT]
         Main --> Del[DELETE]
@@ -2528,8 +2649,8 @@ graph TD
         Rep --> Ins
     end
     
-    style Main fill:#4ecdc4,color:#fff
-    style Sub fill:#ffe66d
+    class Main main;
+    class Sub helper;
 ```
 
 #### Program 5: Pattern Matching (Brute Force)
@@ -2663,6 +2784,9 @@ Text contains 'THE' 4 times
 
 ```mermaid
 flowchart TD
+    classDef start fill:#e1f5fe,stroke:#01579b,color:#01579b;
+    classDef return fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+
     Start([COUNT_WORD]) --> Prep[Prepare patterns:<br/>BEG, MID, END]
     Prep --> Loop[For each line K]
     Loop --> CheckBeg{Word at<br/>beginning?}
@@ -2676,8 +2800,8 @@ flowchart TD
     MoreLines -->|Yes| Loop
     MoreLines -->|No| Return[Return count]
     
-    style Start fill:#4ecdc4
-    style Return fill:#51cf66,color:#fff
+    class Start start;
+    class Return return;
 ```
 
 ---
@@ -2702,20 +2826,25 @@ flowchart TD
 ```
 
 ```mermaid
-graph TD
+flowchart TD
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    classDef fast fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
+    classDef medium fill:#fff9c4,stroke:#fbc02d,color:#333;
+    classDef slow fill:#ffebee,stroke:#c62828,color:#c62828;
+
     subgraph "String Operations Complexity"
-        A[Operations] --> B[O&#40;1&#41;]
-        A --> C[O&#40;n&#41;]
-        A --> D[O&#40;mn&#41;]
+        A[Operations] --> B["O(1)"]
+        A --> C["O(n)"]
+        A --> D["O(mn)"]
         
         C --> C1[strlen<br/>strcpy<br/>strcat]
         C --> C2[INSERT<br/>DELETE<br/>REPLACE]
         D --> D1[strstr<br/>Pattern Match]
     end
     
-    style B fill:#51cf66,color:#fff
-    style C fill:#ffe66d
-    style D fill:#ff6b6b,color:#fff
+    class B fast;
+    class C medium;
+    class D slow;
 ```
 
 ### Pattern Matching Comparison
