@@ -28,7 +28,6 @@
 
 ```mermaid
 flowchart LR
-    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
     classDef focus fill:#e1f5fe,stroke:#01579b,color:#01579b;
     classDef old fill:#ffebee,stroke:#c62828,color:#c62828;
     classDef new fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
@@ -59,7 +58,6 @@ Special:   + - / * ( ) , . $ = ' □ (blank space)
 
 ```mermaid
 flowchart TD
-    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
     classDef main fill:#e1f5fe,stroke:#01579b,color:#01579b;
     classDef sub fill:#fff3e0,stroke:#e65100,color:#e65100;
 
@@ -88,19 +86,6 @@ Strings are enclosed in single quotation marks:
 'TO BE OR NOT TO BE' -> Length: 18
 ''                  -> Length: 0 (empty string)
 '12'                -> Length: 2
-```
-
--> **Important**: The blank space [space] is a character and counts toward length!
-
-```mermaid
-flowchart LR
-    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
-    classDef string fill:#fff9c4,stroke:#fbc02d,color:#333;
-    classDef empty fill:#ffebee,stroke:#c62828,color:#c62828;
-
-    S1["'THE END'"] --> L1[Length = 7]
-    S2["'TO BE OR NOT TO BE'"] --> L2[Length = 18]
-    S3["''"] --> L3[Length = 0]
     S4["'12'"] --> L4[Length = 2]
     
     class S1,S2,S4 string;
@@ -206,7 +191,6 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
     classDef main fill:#e1f5fe,stroke:#01579b,color:#01579b;
     classDef bad fill:#ffebee,stroke:#c62828,color:#c62828;
     classDef ok fill:#fff9c4,stroke:#fbc02d,color:#333;
@@ -846,7 +830,6 @@ M A R C   T W A I N
 
 ```mermaid
 flowchart LR
-    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
     classDef count1 fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
     classDef count2 fill:#e1f5fe,stroke:#01579b,color:#01579b;
 
@@ -1511,7 +1494,6 @@ Q₄ = 'aaba' (complete pattern)
 
 ```mermaid
 flowchart LR
-    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
     classDef match fill:#e1f5fe,stroke:#01579b,color:#01579b;
     classDef complete fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
     classDef empty fill:#ffebee,stroke:#c62828,color:#c62828;
@@ -2163,7 +2145,6 @@ Q₅ = aaabb (P)
 
 ```mermaid
 flowchart LR
-    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
     classDef empty fill:#ffebee,stroke:#c62828,color:#c62828;
     classDef partial fill:#fff9c4,stroke:#fbc02d,color:#333;
     classDef match fill:#e1f5fe,stroke:#01579b,color:#01579b;
@@ -2256,7 +2237,6 @@ Q₆ = ababab (P)
 
 ```mermaid
 flowchart LR
-    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
     classDef empty fill:#ffebee,stroke:#c62828,color:#c62828;
     classDef success fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
 
@@ -2827,7 +2807,6 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
     classDef fast fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32;
     classDef medium fill:#fff9c4,stroke:#fbc02d,color:#333;
     classDef slow fill:#ffebee,stroke:#c62828,color:#c62828;
