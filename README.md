@@ -4,7 +4,7 @@
 
 **A comprehensive repository for the university course on Data Structures**
 
-[![Course](https://img.shields.io/badge/Course-SE%202101-blue.svg)](https://github.com/M-F-Tushar)
+[![Course](https://img.shields.io/badge/Course-CSE%202101-blue.svg)](https://github.com/M-F-Tushar)
 [![Credits](https://img.shields.io/badge/Credits-3.00-green.svg)](https://github.com/M-F-Tushar)
 [![Language](https://img.shields.io/badge/Language-C-orange.svg)](https://github.com/M-F-Tushar)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -219,8 +219,8 @@ To use the code examples in this repository, you need:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/M-F-Tushar/SE-2101-Data-Structures.git
-   cd SE-2101-Data-Structures
+   git clone https://github.com/M-F-Tushar/CSE-2101-Data-Structures.git
+   cd CSE-2101-Data-Structures
    ```
 
 2. **Compile a C program**
