@@ -353,9 +353,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📊 Repository Stats
 
-![GitHub stars](https://img.shields.io/github/stars/M-F-Tushar/SE-2101-Data-Structures?style=social)
-![GitHub forks](https://img.shields.io/github/forks/M-F-Tushar/SE-2101-Data-Structures?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/M-F-Tushar/SE-2101-Data-Structures?style=social)
+![GitHub stars](https://img.shields.io/github/stars/M-F-Tushar/CSE-2101-Data-Structures?style=social)
+![GitHub forks](https://img.shields.io/github/forks/M-F-Tushar/CSE-2101-Data-Structures?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/M-F-Tushar/CSE-2101-Data-Structures?style=social)
 
 ---
 
