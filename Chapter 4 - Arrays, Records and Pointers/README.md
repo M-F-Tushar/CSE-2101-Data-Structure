@@ -1905,4 +1905,4 @@ int main() {
 
 **End of Chapter 4**
 
-*Continue to [Chapter 5: Linked Lists](../Chapter%205%20-%20Linked%20Lists/README.md)*
+*Continue to [Chapter 5: Linked Lists](https://github.com/M-F-Tushar/CSE-2101-Data-Structure/tree/main/Chapter%205%20-%20Linked%20Lists)*
