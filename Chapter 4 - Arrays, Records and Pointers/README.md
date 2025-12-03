@@ -243,19 +243,64 @@ Size of each int: 4 bytes
 
 **In Simple Terms:** Traversal means visiting each element in the array one by one, like checking each box in a row of boxes.
 
-```mermaid
-graph LR
-    A[Start] --> B[Set counter K = 0]
-    B --> C{K < N?}
-    C -->|Yes| D[Process element K]
-    D --> E[K = K + 1]
-    E --> C
-    C -->|No| F[End]
-    
-    style A fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style F fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
-    style D fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+---
+
+### 📘 Algorithm 4.1: Traversing a Linear Array
+
+> **Purpose:** Visit every element in an array exactly once and apply some operation (like printing or counting).
+
+#### Pseudocode (from textbook)
+
 ```
+Algorithm 4.1: TRAVERSE(LA, LB, UB)
+────────────────────────────────────
+LA    = Linear Array
+LB    = Lower Bound (first index)
+UB    = Upper Bound (last index)
+
+1. [Initialize counter] Set K := LB
+2. Repeat Steps 3 and 4 while K ≤ UB
+3.     [Visit element] Apply PROCESS to LA[K]
+4.     [Increase counter] Set K := K + 1
+   [End of Step 2 loop]
+5. Exit
+```
+
+#### 🔍 Step-by-Step Explanation
+
+| Step | What Happens | Example (array of 5 elements) |
+|------|--------------|-------------------------------|
+| 1 | Start at first element | K = 1 (or 0 in C) |
+| 2 | Check if more elements exist | Is K ≤ 5? Yes! |
+| 3 | Do something with current element | Print LA[1] |
+| 4 | Move to next element | K = 2 |
+| 2-4 | Repeat until done | Continue until K > 5 |
+| 5 | Finished! | All elements visited |
+
+#### 🎯 Visual Flowchart
+
+```mermaid
+flowchart TD
+    START([🟢 Start]) --> INIT["K = LB<br/>(Initialize counter)"]
+    INIT --> CHECK{K ≤ UB?}
+    CHECK -->|✅ Yes| PROCESS["Apply PROCESS<br/>to LA[K]"]
+    PROCESS --> INCREMENT["K = K + 1"]
+    INCREMENT --> CHECK
+    CHECK -->|❌ No| EXIT([🔴 Exit])
+    
+    style START fill:#2ecc71,stroke:#27ae60,color:#fff
+    style EXIT fill:#e74c3c,stroke:#c0392b,color:#fff
+    style PROCESS fill:#3498db,stroke:#2980b9,color:#fff
+    style CHECK fill:#f39c12,stroke:#e67e22,color:#000
+```
+
+#### 💡 Why This Works
+
+- **K starts at the first index** → We don't skip any element
+- **K increases by 1 each time** → We visit elements in order
+- **Loop stops when K > UB** → We don't go past the array
+
+---
 
 ### C Program: Array Traversal
 
@@ -339,6 +384,141 @@ graph TD
     style A fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
     style D fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
+
+---
+
+### 📘 Algorithm 4.2: Inserting into a Linear Array
+
+> **Purpose:** Insert a new element ITEM at position K in array LA that has N elements.
+
+#### Pseudocode (from textbook)
+
+```
+Algorithm 4.2: INSERT(LA, N, K, ITEM)
+─────────────────────────────────────
+LA   = Linear Array with N elements
+K    = Position where ITEM should be inserted (K ≤ N)
+ITEM = Element to insert
+
+1. [Initialize counter] Set J := N
+2. Repeat Steps 3 and 4 while J ≥ K
+3.     [Move Jth element downward] Set LA[J+1] := LA[J]
+4.     [Decrease counter] Set J := J - 1
+   [End of Step 2 loop]
+5. [Insert element] Set LA[K] := ITEM
+6. [Reset N] Set N := N + 1
+7. Exit
+```
+
+#### 🔍 Step-by-Step Example
+
+**Insert 25 at position 3 in array [10, 20, 30, 40, 50]**
+
+| Step | J | Action | Array State |
+|------|---|--------|-------------|
+| Start | - | Original array | [10, 20, 30, 40, 50, _] |
+| 1 | 5 | J = N = 5 | - |
+| 3 | 5 | LA[6] = LA[5] = 50 | [10, 20, 30, 40, 50, **50**] |
+| 4 | 4 | J = 4 | - |
+| 3 | 4 | LA[5] = LA[4] = 40 | [10, 20, 30, **40**, 50, 50] |
+| 4 | 3 | J = 3 | - |
+| 3 | 3 | LA[4] = LA[3] = 30 | [10, 20, **30**, 40, 50, 50] |
+| 4 | 2 | J = 2, now J < K, exit loop | - |
+| 5 | - | LA[3] = 25 | [10, 20, **25**, 30, 40, 50] |
+| 6 | - | N = 6 | Done! |
+
+#### 🎯 Visual Flowchart
+
+```mermaid
+flowchart TD
+    START([🟢 Start]) --> INIT["J = N<br/>(Start from last element)"]
+    INIT --> CHECK{"J ≥ K?<br/>(More elements to shift?)"}
+    CHECK -->|✅ Yes| SHIFT["LA[J+1] = LA[J]<br/>(Shift element right)"]
+    SHIFT --> DEC["J = J - 1"]
+    DEC --> CHECK
+    CHECK -->|❌ No| INSERT["LA[K] = ITEM<br/>(Insert new element)"]
+    INSERT --> UPDATE["N = N + 1<br/>(Update count)"]
+    UPDATE --> EXIT([🔴 Exit])
+    
+    style START fill:#2ecc71,stroke:#27ae60,color:#fff
+    style EXIT fill:#e74c3c,stroke:#c0392b,color:#fff
+    style SHIFT fill:#3498db,stroke:#2980b9,color:#fff
+    style INSERT fill:#9b59b6,stroke:#8e44ad,color:#fff
+```
+
+#### ⚠️ Important: Why Shift in Reverse Order?
+
+We shift from **right to left** (starting from the last element) because:
+- If we shifted left to right, we would **overwrite** data before saving it!
+
+```
+❌ Wrong (left to right): LA[4] = LA[3] → We lose LA[4]'s value!
+✅ Correct (right to left): LA[6] = LA[5], then LA[5] = LA[4], etc.
+```
+
+---
+
+### 📘 Algorithm 4.3: Deleting from a Linear Array
+
+> **Purpose:** Delete the element at position K from array LA and store it in ITEM.
+
+#### Pseudocode (from textbook)
+
+```
+Algorithm 4.3: DELETE(LA, N, K, ITEM)
+─────────────────────────────────────
+LA   = Linear Array with N elements
+K    = Position of element to delete (K ≤ N)
+ITEM = Will store the deleted element
+
+1. Set ITEM := LA[K]
+2. Repeat for J = K to N-1:
+       [Move J+1st element upward] Set LA[J] := LA[J+1]
+   [End of loop]
+3. [Reset N] Set N := N - 1
+4. Exit
+```
+
+#### 🔍 Step-by-Step Example
+
+**Delete element at position 2 from array [10, 20, 30, 40, 50]**
+
+| Step | J | Action | Array State |
+|------|---|--------|-------------|
+| Start | - | Original array | [10, 20, 30, 40, 50] |
+| 1 | - | ITEM = LA[2] = 20 | Saved: 20 |
+| 2 | 2 | LA[2] = LA[3] = 30 | [10, **30**, 30, 40, 50] |
+| 2 | 3 | LA[3] = LA[4] = 40 | [10, 30, **40**, 40, 50] |
+| 2 | 4 | LA[4] = LA[5] = 50 | [10, 30, 40, **50**, 50] |
+| 3 | - | N = 4 | [10, 30, 40, 50] ✅ |
+
+#### 🎯 Visual Flowchart
+
+```mermaid
+flowchart TD
+    START([🟢 Start]) --> SAVE["ITEM = LA[K]<br/>(Save deleted element)"]
+    SAVE --> INIT["J = K"]
+    INIT --> CHECK{"J ≤ N-1?<br/>(More elements to shift?)"}
+    CHECK -->|✅ Yes| SHIFT["LA[J] = LA[J+1]<br/>(Shift element left)"]
+    SHIFT --> INC["J = J + 1"]
+    INC --> CHECK
+    CHECK -->|❌ No| UPDATE["N = N - 1<br/>(Update count)"]
+    UPDATE --> EXIT([🔴 Exit])
+    
+    style START fill:#2ecc71,stroke:#27ae60,color:#fff
+    style EXIT fill:#e74c3c,stroke:#c0392b,color:#fff
+    style SHIFT fill:#3498db,stroke:#2980b9,color:#fff
+    style SAVE fill:#e74c3c,stroke:#c0392b,color:#fff
+```
+
+#### 💡 Key Difference from Insertion
+
+| Operation | Shift Direction | Reason |
+|-----------|-----------------|--------|
+| **Insert** | Right → Left (reverse) | Create space for new element |
+| **Delete** | Left → Right (forward) | Fill the gap left by removed element |
+
+---
 
 ### C Program: Insertion
 
@@ -492,6 +672,109 @@ graph TD
     style D fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
 
+---
+
+### 📘 Algorithm 4.4: Bubble Sort
+
+> **Purpose:** Sort an array DATA with N elements in ascending order by repeatedly comparing adjacent elements and swapping if needed.
+
+#### Pseudocode (from textbook)
+
+```
+Algorithm 4.4: BUBBLE(DATA, N)
+──────────────────────────────
+DATA = Array with N elements
+
+1. Repeat Steps 2 and 3 for K = 1 to N-1:
+2.     Set PTR := 1  [Initialize pass pointer]
+3.     Repeat while PTR ≤ N - K:  [Execute pass]
+           (a) If DATA[PTR] > DATA[PTR+1], then:
+                   Interchange DATA[PTR] and DATA[PTR+1]
+               [End of If structure]
+           (b) Set PTR := PTR + 1
+       [End of inner loop]
+   [End of Step 1 outer loop]
+4. Exit
+```
+
+#### 🔍 Understanding the Algorithm
+
+**Two Loops:**
+- **Outer loop (K):** Controls the number of passes (N-1 passes total)
+- **Inner loop (PTR):** Compares adjacent elements in each pass
+
+**Why `PTR ≤ N - K`?**
+- After each pass, the largest unsorted element is in its final position
+- So we don't need to check it again!
+
+#### 🎯 Visual Flowchart
+
+```mermaid
+flowchart TD
+    START([🟢 Start]) --> OUTER["K = 1<br/>(First pass)"]
+    OUTER --> CHECK_OUTER{"K ≤ N-1?<br/>(More passes needed?)"}
+    CHECK_OUTER -->|❌ No| EXIT([🔴 Exit - Sorted!])
+    CHECK_OUTER -->|✅ Yes| INIT_PTR["PTR = 1<br/>(Start of array)"]
+    INIT_PTR --> CHECK_INNER{"PTR ≤ N-K?<br/>(More comparisons?)"}
+    CHECK_INNER -->|❌ No| INC_K["K = K + 1<br/>(Next pass)"]
+    INC_K --> CHECK_OUTER
+    CHECK_INNER -->|✅ Yes| COMPARE{"DATA[PTR] ><br/>DATA[PTR+1]?"}
+    COMPARE -->|✅ Yes| SWAP["Swap<br/>DATA[PTR] ↔ DATA[PTR+1]"]
+    COMPARE -->|❌ No| INC_PTR["PTR = PTR + 1"]
+    SWAP --> INC_PTR
+    INC_PTR --> CHECK_INNER
+    
+    style START fill:#2ecc71,stroke:#27ae60,color:#fff
+    style EXIT fill:#2ecc71,stroke:#27ae60,color:#fff
+    style SWAP fill:#e74c3c,stroke:#c0392b,color:#fff
+    style COMPARE fill:#f39c12,stroke:#e67e22,color:#000
+```
+
+#### 📊 Complete Example: Sort [32, 51, 27, 85, 66, 23, 13, 57]
+
+**Pass 1 (K=1): Find largest element (bubbles to position 8)**
+```
+[32, 51, 27, 85, 66, 23, 13, 57]  Compare 32,51 → No swap
+[32, 51, 27, 85, 66, 23, 13, 57]  Compare 51,27 → Swap!
+[32, 27, 51, 85, 66, 23, 13, 57]  Compare 51,85 → No swap
+[32, 27, 51, 85, 66, 23, 13, 57]  Compare 85,66 → Swap!
+[32, 27, 51, 66, 85, 23, 13, 57]  Compare 85,23 → Swap!
+[32, 27, 51, 66, 23, 85, 13, 57]  Compare 85,13 → Swap!
+[32, 27, 51, 66, 23, 13, 85, 57]  Compare 85,57 → Swap!
+[32, 27, 51, 66, 23, 13, 57, 85]  ← 85 is now in correct position! ✅
+```
+
+**Pass 2-7:** Continue until fully sorted
+```
+After Pass 2: [27, 32, 51, 23, 13, 57, 66, 85]
+After Pass 3: [27, 32, 23, 13, 51, 57, 66, 85]
+After Pass 4: [27, 23, 13, 32, 51, 57, 66, 85]
+After Pass 5: [23, 13, 27, 32, 51, 57, 66, 85]
+After Pass 6: [13, 23, 27, 32, 51, 57, 66, 85]
+After Pass 7: [13, 23, 27, 32, 51, 57, 66, 85] ✅ Sorted!
+```
+
+#### ⏱️ Time Complexity Analysis
+
+**Counting Comparisons:**
+```
+Pass 1: n-1 comparisons
+Pass 2: n-2 comparisons
+Pass 3: n-3 comparisons
+...
+Pass n-1: 1 comparison
+
+Total = (n-1) + (n-2) + ... + 1 = n(n-1)/2 ≈ n²/2
+```
+
+| Case | Complexity | When |
+|------|------------|------|
+| **Best** | O(n) | Array already sorted (with FLAG optimization) |
+| **Average** | O(n²) | Random order |
+| **Worst** | O(n²) | Array in reverse order |
+
+---
+
 ### Step-by-Step Example
 
 **Original Array:** `[64, 34, 25, 12, 22, 11, 90]`
@@ -580,6 +863,100 @@ Sorted array: 11 12 22 25 34 64 90
 
 **In Simple Terms:** Linear search is like looking for a book on a shelf by checking each book one by one from left to right until you find it.
 
+---
+
+### 📘 Algorithm 4.5: Linear Search
+
+> **Purpose:** Find the location LOC of ITEM in array DATA with N elements. Returns LOC=0 if not found.
+
+#### Pseudocode (from textbook)
+
+```
+Algorithm 4.5: LINEAR(DATA, N, ITEM, LOC)
+─────────────────────────────────────────
+DATA = Linear Array with N elements
+ITEM = Element to search for
+LOC  = Will store location of ITEM (or 0 if not found)
+
+1. [Insert ITEM at the end] Set DATA[N+1] := ITEM
+2. [Initialize counter] Set LOC := 1
+3. [Search for ITEM]
+   Repeat while DATA[LOC] ≠ ITEM:
+       Set LOC := LOC + 1
+   [End of loop]
+4. [Successful?] If LOC = N+1, then: Set LOC := 0
+5. Exit
+```
+
+#### 🔍 Understanding the Sentinel Trick
+
+**Why add ITEM at the end (Step 1)?**
+- This is called a **sentinel** - a guard value
+- It guarantees the loop will always terminate
+- Without it, we'd need two checks: `LOC ≤ N` AND `DATA[LOC] ≠ ITEM`
+- With sentinel, we only need one check: `DATA[LOC] ≠ ITEM`
+
+```
+Without sentinel: while (LOC ≤ N AND DATA[LOC] ≠ ITEM)  ← 2 checks
+With sentinel:    while (DATA[LOC] ≠ ITEM)              ← 1 check (faster!)
+```
+
+#### 🎯 Visual Flowchart
+
+```mermaid
+flowchart TD
+    START([🟢 Start]) --> SENTINEL["DATA[N+1] = ITEM<br/>(Place sentinel)"]
+    SENTINEL --> INIT["LOC = 1"]
+    INIT --> CHECK{"DATA[LOC] ≠ ITEM?<br/>(Not found yet?)"}
+    CHECK -->|✅ Yes| NEXT["LOC = LOC + 1<br/>(Check next)"]
+    NEXT --> CHECK
+    CHECK -->|❌ No, Found!| VERIFY{"LOC = N+1?<br/>(Hit sentinel?)"}
+    VERIFY -->|✅ Yes| NOTFOUND["LOC = 0<br/>(Not in array)"]
+    VERIFY -->|❌ No| FOUND["LOC = position<br/>(Found it!)"]
+    NOTFOUND --> EXIT([🔴 Exit])
+    FOUND --> EXIT
+    
+    style START fill:#2ecc71,stroke:#27ae60,color:#fff
+    style EXIT fill:#e74c3c,stroke:#c0392b,color:#fff
+    style FOUND fill:#2ecc71,stroke:#27ae60,color:#fff
+    style NOTFOUND fill:#e74c3c,stroke:#c0392b,color:#fff
+    style SENTINEL fill:#9b59b6,stroke:#8e44ad,color:#fff
+```
+
+#### 📊 Example: Search for "Susan" in [Mary, Jane, Diane, Susan, Karen, Edith]
+
+| Step | LOC | DATA[LOC] | Action |
+|------|-----|-----------|--------|
+| 1 | - | - | Place "Susan" at DATA[7] (sentinel) |
+| 2 | 1 | Mary | Mary ≠ Susan → continue |
+| 3 | 2 | Jane | Jane ≠ Susan → continue |
+| 3 | 3 | Diane | Diane ≠ Susan → continue |
+| 3 | 4 | Susan | Susan = Susan → **Found!** |
+| 4 | 4 | - | LOC=4 ≠ N+1=7, so keep LOC=4 |
+
+**Result:** Susan found at position 4 ✅
+
+#### 📊 Example: Search for "Paula" (not in array)
+
+| Step | LOC | DATA[LOC] | Action |
+|------|-----|-----------|--------|
+| 1 | - | - | Place "Paula" at DATA[7] |
+| 3 | 1-6 | ... | Keep searching, not found |
+| 3 | 7 | Paula | Paula = Paula → "Found" (sentinel) |
+| 4 | 7 | - | LOC=7 = N+1=7, so LOC = 0 |
+
+**Result:** Paula not found (LOC = 0) ❌
+
+#### ⏱️ Time Complexity
+
+| Case | Comparisons | When |
+|------|-------------|------|
+| **Best** | O(1) | ITEM is first element |
+| **Average** | O(n/2) ≈ O(n) | ITEM is in middle |
+| **Worst** | O(n) | ITEM is last or not present |
+
+---
+
 ```mermaid
 graph LR
     A["Start at index 0"] --> B["Check if current element matches"]
@@ -662,6 +1039,131 @@ Array: 45 23 67 12 89 34 56
 **In Simple Terms:** Binary search is like finding a word in a dictionary. You open it in the middle, check if your word comes before or after, then repeat with the appropriate half. Much faster than checking every page!
 
 **Important:** Binary search only works on **sorted arrays**.
+
+---
+
+### 📘 Algorithm 4.6: Binary Search
+
+> **Purpose:** Find ITEM in a **sorted** array DATA. Returns LOC (position) or NULL (0) if not found.
+
+#### Pseudocode (from textbook)
+
+```
+Algorithm 4.6: BINARY(DATA, LB, UB, ITEM, LOC)
+──────────────────────────────────────────────
+DATA = Sorted array with lower bound LB and upper bound UB
+ITEM = Element to search for
+LOC  = Will store location (or NULL=0 if not found)
+BEG, END, MID = Beginning, end, and middle of current segment
+
+1. [Initialize segment variables]
+   Set BEG := LB, END := UB
+   Set MID := INT((BEG + END) / 2)
+
+2. Repeat Steps 3 and 4 while BEG ≤ END and DATA[MID] ≠ ITEM
+
+3.     If ITEM < DATA[MID], then:
+           Set END := MID - 1      [Search left half]
+       Else:
+           Set BEG := MID + 1      [Search right half]
+       [End of If structure]
+
+4.     Set MID := INT((BEG + END) / 2)
+   [End of Step 2 loop]
+
+5. If DATA[MID] = ITEM, then:
+       Set LOC := MID
+   Else:
+       Set LOC := NULL
+   [End of If structure]
+
+6. Exit
+```
+
+#### 🔍 The Key Insight
+
+**Each comparison eliminates HALF the remaining elements!**
+
+```
+Start:    1,000,000 elements
+After 1:    500,000 elements
+After 2:    250,000 elements
+After 3:    125,000 elements
+...
+After 20:        ~1 element  ← Found in just 20 steps!
+```
+
+#### 🎯 Visual Flowchart
+
+```mermaid
+flowchart TD
+    START([🟢 Start]) --> INIT["BEG = LB, END = UB<br/>MID = (BEG+END)/2"]
+    INIT --> MAINCHECK{"BEG ≤ END<br/>AND<br/>DATA[MID] ≠ ITEM?"}
+    MAINCHECK -->|❌ No| FINAL{"DATA[MID] = ITEM?"}
+    MAINCHECK -->|✅ Yes| COMPARE{"ITEM < DATA[MID]?"}
+    COMPARE -->|✅ Yes, go LEFT| LEFT["END = MID - 1<br/>(Search left half)"]
+    COMPARE -->|❌ No, go RIGHT| RIGHT["BEG = MID + 1<br/>(Search right half)"]
+    LEFT --> RECALC["MID = (BEG+END)/2"]
+    RIGHT --> RECALC
+    RECALC --> MAINCHECK
+    FINAL -->|✅ Yes| FOUND["LOC = MID<br/>✅ Found!"]
+    FINAL -->|❌ No| NOTFOUND["LOC = NULL<br/>❌ Not found"]
+    FOUND --> EXIT([🔴 Exit])
+    NOTFOUND --> EXIT
+    
+    style START fill:#2ecc71,stroke:#27ae60,color:#fff
+    style EXIT fill:#e74c3c,stroke:#c0392b,color:#fff
+    style FOUND fill:#2ecc71,stroke:#27ae60,color:#fff
+    style NOTFOUND fill:#e74c3c,stroke:#c0392b,color:#fff
+    style LEFT fill:#3498db,stroke:#2980b9,color:#fff
+    style RIGHT fill:#e67e22,stroke:#d35400,color:#fff
+```
+
+#### 📊 Complete Example: Find 40 in [11, 22, 30, 33, 40, 44, 55, 60, 66, 77, 80, 88, 99]
+
+```
+Array indices: 1   2   3   4   5   6   7   8   9  10  11  12  13
+Values:       11  22  30  33  40  44  55  60  66  77  80  88  99
+```
+
+| Step | BEG | END | MID | DATA[MID] | Comparison | Action |
+|------|-----|-----|-----|-----------|------------|--------|
+| 1 | 1 | 13 | 7 | 55 | 40 < 55 | Search LEFT: END = 6 |
+| 2 | 1 | 6 | 3 | 30 | 40 > 30 | Search RIGHT: BEG = 4 |
+| 3 | 4 | 6 | 5 | **40** | 40 = 40 | **FOUND at position 5!** ✅ |
+
+**Only 3 comparisons!** (Linear search would need 5)
+
+#### 📊 Example: Find 85 (Not in array)
+
+| Step | BEG | END | MID | DATA[MID] | Comparison | Action |
+|------|-----|-----|-----|-----------|------------|--------|
+| 1 | 1 | 13 | 7 | 55 | 85 > 55 | Search RIGHT: BEG = 8 |
+| 2 | 8 | 13 | 10 | 77 | 85 > 77 | Search RIGHT: BEG = 11 |
+| 3 | 11 | 13 | 12 | 88 | 85 < 88 | Search LEFT: END = 11 |
+| 4 | 11 | 11 | 11 | 80 | 85 > 80 | Search RIGHT: BEG = 12 |
+| 5 | 12 | 11 | - | - | BEG > END | **NOT FOUND** ❌ |
+
+#### ⏱️ Time Complexity Comparison
+
+| Array Size | Linear Search | Binary Search |
+|------------|---------------|---------------|
+| 10 | 10 | 4 |
+| 100 | 100 | 7 |
+| 1,000 | 1,000 | 10 |
+| 1,000,000 | 1,000,000 | **20** |
+
+**Formula:** Binary search needs at most $\lceil \log_2 n \rceil + 1$ comparisons
+
+#### ⚠️ Limitations of Binary Search
+
+| Requirement | Why It Matters |
+|-------------|----------------|
+| **Array must be sorted** | Can't compare with middle if unsorted |
+| **Direct access needed** | Must jump to middle (arrays: ✅, linked lists: ❌) |
+| **Static data preferred** | Inserting/deleting requires maintaining sort order |
+
+---
 
 ```mermaid
 graph TD
@@ -1254,6 +1756,115 @@ graph LR
     style B fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
     style C fill:#F5E663,stroke:#333,stroke-width:2px,color:#000
 ```
+
+---
+
+### 📘 Algorithm 4.7: Matrix Multiplication
+
+> **Purpose:** Multiply matrix A (M×P) by matrix B (P×N) to produce matrix C (M×N).
+
+#### Pseudocode (from textbook)
+
+```
+Algorithm 4.7: MATMUL(A, B, C, M, P, N)
+──────────────────────────────────────
+A = M × P matrix
+B = P × N matrix  
+C = Result matrix (M × N)
+
+1. Repeat Steps 2 to 4 for I = 1 to M:
+2.     Repeat Steps 3 and 4 for J = 1 to N:
+3.         Set C[I,J] := 0  [Initialize element]
+4.         Repeat for K = 1 to P:
+               C[I,J] := C[I,J] + A[I,K] * B[K,J]
+           [End of inner loop]
+       [End of Step 2 middle loop]
+   [End of Step 1 outer loop]
+5. Exit
+```
+
+#### 🔍 Understanding Matrix Multiplication
+
+**The Rule:** Each element C[i,j] is the **dot product** of:
+- Row i of matrix A
+- Column j of matrix B
+
+```
+C[i,j] = A[i,1]×B[1,j] + A[i,2]×B[2,j] + ... + A[i,P]×B[P,j]
+       = Σ(k=1 to P) A[i,k] × B[k,j]
+```
+
+#### 🎯 Visual Flowchart
+
+```mermaid
+flowchart TD
+    START([🟢 Start]) --> I_INIT["I = 1<br/>(Row of result)"]
+    I_INIT --> I_CHECK{"I ≤ M?"}
+    I_CHECK -->|❌ No| EXIT([🔴 Exit])
+    I_CHECK -->|✅ Yes| J_INIT["J = 1<br/>(Column of result)"]
+    J_INIT --> J_CHECK{"J ≤ N?"}
+    J_CHECK -->|❌ No| I_INC["I = I + 1"]
+    I_INC --> I_CHECK
+    J_CHECK -->|✅ Yes| INIT_C["C[I,J] = 0"]
+    INIT_C --> K_INIT["K = 1"]
+    K_INIT --> K_CHECK{"K ≤ P?"}
+    K_CHECK -->|❌ No| J_INC["J = J + 1"]
+    J_INC --> J_CHECK
+    K_CHECK -->|✅ Yes| CALC["C[I,J] = C[I,J] + A[I,K] × B[K,J]"]
+    CALC --> K_INC["K = K + 1"]
+    K_INC --> K_CHECK
+    
+    style START fill:#2ecc71,stroke:#27ae60,color:#fff
+    style EXIT fill:#e74c3c,stroke:#c0392b,color:#fff
+    style CALC fill:#3498db,stroke:#2980b9,color:#fff
+```
+
+#### 📊 Example: Multiply 2×3 by 3×2 matrices
+
+```
+    A (2×3)           B (3×2)           C (2×2)
+┌─────────────┐   ┌─────────┐      ┌───────────┐
+│ 1   2   3   │   │  7   8  │      │  58   64  │
+│ 4   5   6   │ × │  9  10  │  =   │ 139  154  │
+└─────────────┘   │ 11  12  │      └───────────┘
+                  └─────────┘
+```
+
+**Calculating C[1,1]:**
+```
+C[1,1] = A[1,1]×B[1,1] + A[1,2]×B[2,1] + A[1,3]×B[3,1]
+       = 1×7 + 2×9 + 3×11
+       = 7 + 18 + 33
+       = 58 ✅
+```
+
+**Calculating C[1,2]:**
+```
+C[1,2] = A[1,1]×B[1,2] + A[1,2]×B[2,2] + A[1,3]×B[3,2]
+       = 1×8 + 2×10 + 3×12
+       = 8 + 20 + 36
+       = 64 ✅
+```
+
+#### ⏱️ Time Complexity
+
+**Counting Multiplications:**
+- Outer loop runs M times
+- Middle loop runs N times  
+- Inner loop runs P times
+- Each iteration does 1 multiplication
+
+**Total:** $M \times N \times P$ multiplications = **O(n³)** for n×n matrices
+
+#### 💡 Important Notes
+
+| Requirement | Rule |
+|-------------|------|
+| **Dimension Match** | Columns of A must equal rows of B (A is M×**P**, B is **P**×N) |
+| **Result Size** | C has M rows (from A) and N columns (from B) |
+| **Not Commutative** | A×B ≠ B×A in general! |
+
+---
 
 ### C Program: Matrix Addition
 
@@ -1905,4 +2516,4 @@ int main() {
 
 **End of Chapter 4**
 
-*Continue to [Chapter 5: Linked Lists](https://github.com/M-F-Tushar/CSE-2101-Data-Structure/tree/main/Chapter%205%20-%20Linked%20Lists)*
+*Continue to [Chapter 5: Linked Lists](../Chapter%205%20-%20Linked%20Lists/README.md)*
