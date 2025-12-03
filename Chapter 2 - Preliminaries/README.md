@@ -797,6 +797,996 @@ Binary search is ~100x faster!
 
 ---
 
+## 📚 Algorithms from Chapter 2
+
+This section covers all the algorithms presented in Chapter 2 of Schaum's Data Structures textbook, with easy-to-understand explanations and visual flowcharts.
+
+---
+
+## Algorithm 2.1: Largest Element in Array (Using Go To)
+
+### Problem Statement
+**Given:** An array DATA with N numerical values  
+**Find:** The location LOC and value MAX of the largest element
+
+### The Idea (Super Simple!)
+
+Imagine you're looking for the tallest person in a line:
+1. Start by assuming the first person is the tallest
+2. Go through each person one by one
+3. If someone is taller, remember them as the new tallest
+4. When you reach the end, you know the tallest person!
+
+### Algorithm (Textbook Format)
+
+```
+Algorithm 2.1: LARGEST ELEMENT IN ARRAY
+─────────────────────────────────────────
+A nonempty array DATA with N numerical values is given.
+This algorithm finds the location LOC and the value MAX 
+of the largest element of DATA.
+The variable K is used as a counter.
+
+Step 1. [Initialize.] Set K := 1, LOC := 1 and MAX := DATA[1].
+Step 2. [Increment counter.] Set K := K + 1.
+Step 3. [Test counter.] If K > N, then:
+            Write: LOC, MAX, and Exit.
+Step 4. [Compare and update.] If MAX < DATA[K], then:
+            Set LOC := K and MAX := DATA[K].
+Step 5. [Repeat loop.] Go to Step 2.
+```
+
+### Visual Flowchart
+
+```mermaid
+flowchart TD
+    START([Start]) --> INIT["K ← 1<br/>LOC ← 1<br/>MAX ← DATA[1]"]
+    INIT --> INC["K ← K + 1"]
+    INC --> TEST{"Is K > N?"}
+    TEST -->|Yes| OUTPUT["Write: LOC, MAX"]
+    OUTPUT --> STOP([Stop])
+    TEST -->|No| COMPARE{"Is MAX < DATA[K]?"}
+    COMPARE -->|Yes| UPDATE["LOC ← K<br/>MAX ← DATA[K]"]
+    UPDATE --> INC
+    COMPARE -->|No| INC
+    
+    style START fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style STOP fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style TEST fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style COMPARE fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style INIT fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style UPDATE fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style OUTPUT fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
+```
+
+### Step-by-Step Trace
+
+**Given:** DATA = [45, 23, 78, 12, 89, 34], N = 6
+
+| Step | K | DATA[K] | MAX | LOC | Action |
+|------|---|---------|-----|-----|--------|
+| Init | 1 | 45 | 45 | 1 | Initialize MAX = DATA[1] |
+| 2-4 | 2 | 23 | 45 | 1 | 23 < 45, no update |
+| 2-4 | 3 | 78 | 78 | 3 | 78 > 45, update MAX and LOC |
+| 2-4 | 4 | 12 | 78 | 3 | 12 < 78, no update |
+| 2-4 | 5 | 89 | 89 | 5 | 89 > 78, update MAX and LOC |
+| 2-4 | 6 | 34 | 89 | 5 | 34 < 89, no update |
+| 3 | 7 | - | 89 | 5 | K > N, exit with MAX=89, LOC=5 |
+
+### C Implementation
+
+```c
+#include <stdio.h>
+
+void findLargest_GoTo(int DATA[], int N) {
+    int K, LOC, MAX;
+    
+    // Step 1: Initialize
+    K = 1;
+    LOC = 1;
+    MAX = DATA[1];  // Using 1-indexed (DATA[0] unused)
+    
+Step2:
+    // Step 2: Increment counter
+    K = K + 1;
+    
+    // Step 3: Test counter
+    if (K > N) {
+        printf("Location: %d, Maximum: %d\n", LOC, MAX);
+        return;  // Exit
+    }
+    
+    // Step 4: Compare and update
+    if (MAX < DATA[K]) {
+        LOC = K;
+        MAX = DATA[K];
+    }
+    
+    // Step 5: Repeat loop
+    goto Step2;
+}
+
+int main() {
+    // Using index 1 to N (index 0 unused)
+    int DATA[] = {0, 45, 23, 78, 12, 89, 34};  // 0 is placeholder
+    int N = 6;
+    
+    printf("Array: [45, 23, 78, 12, 89, 34]\n");
+    findLargest_GoTo(DATA, N);
+    
+    return 0;
+}
+```
+
+**Output:**
+```
+Array: [45, 23, 78, 12, 89, 34]
+Location: 5, Maximum: 89
+```
+
+### ⚠️ Note About Go To
+
+The `Go to` statement is **generally avoided** in modern programming because it makes code harder to read and maintain. Algorithm 2.3 shows the improved version using a `while` loop.
+
+### Complexity Analysis
+
+| Metric | Value | Explanation |
+|--------|-------|-------------|
+| Time Complexity | O(n) | Visit each element once |
+| Space Complexity | O(1) | Only need a few variables |
+| Comparisons | n-1 | Compare each element with MAX |
+
+---
+
+## Algorithm 2.2: Quadratic Equation Solver
+
+### Problem Statement
+**Given:** Coefficients A, B, C of the equation ax² + bx + c = 0  
+**Find:** The real solutions (if any)
+
+### The Idea (Super Simple!)
+
+A quadratic equation can have:
+- **Two different solutions** (when discriminant > 0)
+- **One solution** (when discriminant = 0)
+- **No real solutions** (when discriminant < 0)
+
+The **discriminant** D = B² - 4AC tells us which case we have!
+
+```mermaid
+graph TD
+    A["Calculate D = B² - 4AC"] --> B{"D > 0?"}
+    B -->|Yes| C["Two different solutions<br/>x₁ = (-B + √D) / 2A<br/>x₂ = (-B - √D) / 2A"]
+    B -->|No| D{"D = 0?"}
+    D -->|Yes| E["One solution<br/>x = -B / 2A"]
+    D -->|No| F["No real solutions<br/>(D < 0)"]
+    
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style E fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style F fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+```
+
+### Algorithm (Textbook Format)
+
+```
+Algorithm 2.2: QUADRATIC EQUATION
+─────────────────────────────────────────
+This algorithm inputs the coefficients A, B, C of a 
+quadratic equation and outputs the real solutions, if any.
+
+Step 1. Read: A, B, C.
+Step 2. Set D := B² - 4*A*C.
+Step 3. If D > 0, then:
+            (a) Set X1 := (-B + √D) / (2*A) and
+                    X2 := (-B - √D) / (2*A).
+            (b) Write: X1, X2.
+        Else if D = 0, then:
+            (a) Set X := -B / (2*A).
+            (b) Write: 'UNIQUE SOLUTION', X.
+        Else:
+            Write: 'NO REAL SOLUTIONS'
+        [End of If structure.]
+Step 4. Exit.
+```
+
+### Visual Flowchart
+
+```mermaid
+flowchart TD
+    START([Start]) --> READ["Read A, B, C"]
+    READ --> CALC["D ← B² - 4AC"]
+    CALC --> CHECK1{"D > 0?"}
+    
+    CHECK1 -->|Yes| TWO["X1 ← (-B + √D) / 2A<br/>X2 ← (-B - √D) / 2A"]
+    TWO --> OUT1["Write: X1, X2"]
+    
+    CHECK1 -->|No| CHECK2{"D = 0?"}
+    CHECK2 -->|Yes| ONE["X ← -B / 2A"]
+    ONE --> OUT2["Write: 'UNIQUE SOLUTION', X"]
+    
+    CHECK2 -->|No| OUT3["Write: 'NO REAL SOLUTIONS'"]
+    
+    OUT1 --> STOP([Stop])
+    OUT2 --> STOP
+    OUT3 --> STOP
+    
+    style START fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style STOP fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style CHECK1 fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style CHECK2 fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style TWO fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style ONE fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style OUT3 fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+```
+
+### Example Cases
+
+**Case 1: Two Solutions (D > 0)**
+- Equation: x² - 5x + 6 = 0 (A=1, B=-5, C=6)
+- D = (-5)² - 4(1)(6) = 25 - 24 = 1 > 0
+- X1 = (5 + 1) / 2 = 3
+- X2 = (5 - 1) / 2 = 2
+- ✅ Solutions: x = 3 and x = 2
+
+**Case 2: One Solution (D = 0)**
+- Equation: x² - 4x + 4 = 0 (A=1, B=-4, C=4)
+- D = (-4)² - 4(1)(4) = 16 - 16 = 0
+- X = 4 / 2 = 2
+- ✅ Solution: x = 2 (double root)
+
+**Case 3: No Real Solutions (D < 0)**
+- Equation: x² + 2x + 5 = 0 (A=1, B=2, C=5)
+- D = (2)² - 4(1)(5) = 4 - 20 = -16 < 0
+- ❌ No real solutions
+
+### C Implementation
+
+```c
+#include <stdio.h>
+#include <math.h>
+
+void solveQuadratic(double A, double B, double C) {
+    printf("\nEquation: %.1fx² + %.1fx + %.1f = 0\n", A, B, C);
+    
+    // Step 2: Calculate discriminant
+    double D = B * B - 4 * A * C;
+    printf("Discriminant D = %.2f\n", D);
+    
+    // Step 3: Check cases
+    if (D > 0) {
+        // Two distinct real solutions
+        double X1 = (-B + sqrt(D)) / (2 * A);
+        double X2 = (-B - sqrt(D)) / (2 * A);
+        printf("Two solutions: X1 = %.4f, X2 = %.4f\n", X1, X2);
+    }
+    else if (D == 0) {
+        // One unique solution
+        double X = -B / (2 * A);
+        printf("UNIQUE SOLUTION: X = %.4f\n", X);
+    }
+    else {
+        // No real solutions
+        printf("NO REAL SOLUTIONS\n");
+    }
+}
+
+int main() {
+    printf("=== QUADRATIC EQUATION SOLVER ===\n");
+    
+    // Test Case 1: Two solutions
+    solveQuadratic(1, -5, 6);  // x² - 5x + 6 = 0
+    
+    // Test Case 2: One solution
+    solveQuadratic(1, -4, 4);  // x² - 4x + 4 = 0
+    
+    // Test Case 3: No real solutions
+    solveQuadratic(1, 2, 5);   // x² + 2x + 5 = 0
+    
+    return 0;
+}
+```
+
+**Output:**
+```
+=== QUADRATIC EQUATION SOLVER ===
+
+Equation: 1.0x² + -5.0x + 6.0 = 0
+Discriminant D = 1.00
+Two solutions: X1 = 3.0000, X2 = 2.0000
+
+Equation: 1.0x² + -4.0x + 4.0 = 0
+Discriminant D = 0.00
+UNIQUE SOLUTION: X = 2.0000
+
+Equation: 1.0x² + 2.0x + 5.0 = 0
+Discriminant D = -16.00
+NO REAL SOLUTIONS
+```
+
+### Key Insight: The Quadratic Formula
+
+$$x = \frac{-B \pm \sqrt{B^2 - 4AC}}{2A}$$
+
+The discriminant $D = B^2 - 4AC$ determines:
+- $D > 0$: Two distinct real roots
+- $D = 0$: One repeated real root
+- $D < 0$: Two complex conjugate roots (no real solutions)
+
+---
+
+## Algorithm 2.3: Largest Element in Array (Using While Loop)
+
+### Why This Version?
+
+This is the **improved version** of Algorithm 2.1. Instead of using `Go to` (which creates "spaghetti code"), it uses a `while` loop for **structured programming**.
+
+### Algorithm (Textbook Format)
+
+```
+Algorithm 2.3: LARGEST ELEMENT IN ARRAY (Structured)
+─────────────────────────────────────────
+Given a nonempty array DATA with N numerical values,
+this algorithm finds the location LOC and the value MAX 
+of the largest element of DATA.
+
+1. [Initialize.] Set K := 1, LOC := 1 and MAX := DATA[1].
+2. Repeat Steps 3 and 4 while K ≤ N:
+3.     If MAX < DATA[K], then:
+           Set LOC := K and MAX := DATA[K].
+       [End of If structure.]
+4.     Set K := K + 1.
+   [End of Step 2 loop.]
+5. Write: LOC, MAX.
+6. Exit.
+```
+
+### Visual Flowchart
+
+```mermaid
+flowchart TD
+    START([Start]) --> INIT["K ← 1<br/>LOC ← 1<br/>MAX ← DATA[1]"]
+    INIT --> LOOP{"K ≤ N?"}
+    LOOP -->|No| OUTPUT["Write: LOC, MAX"]
+    OUTPUT --> STOP([Stop])
+    LOOP -->|Yes| COMPARE{"MAX < DATA[K]?"}
+    COMPARE -->|Yes| UPDATE["LOC ← K<br/>MAX ← DATA[K]"]
+    COMPARE -->|No| INC["K ← K + 1"]
+    UPDATE --> INC
+    INC --> LOOP
+    
+    style START fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style STOP fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style LOOP fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
+    style COMPARE fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style INIT fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style UPDATE fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style OUTPUT fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+### Comparison: Go To vs While Loop
+
+```mermaid
+graph LR
+    subgraph "Algorithm 2.1 (Go To)"
+        A1["Step 2"] --> A2["Step 3"]
+        A2 --> A3["Step 4"]
+        A3 --> A4["Step 5: Go to Step 2"]
+        A4 -.-> A1
+    end
+    
+    subgraph "Algorithm 2.3 (While Loop)"
+        B1["while K ≤ N"] --> B2["Check & Update"]
+        B2 --> B3["Increment K"]
+        B3 --> B1
+    end
+    
+    style A4 fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B1 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+### C Implementation
+
+```c
+#include <stdio.h>
+
+void findLargest_While(int DATA[], int N) {
+    int K, LOC, MAX;
+    
+    // Step 1: Initialize
+    K = 1;
+    LOC = 1;
+    MAX = DATA[1];  // Using 1-indexed
+    
+    // Step 2: Repeat while K ≤ N
+    while (K <= N) {
+        // Step 3: Compare and update
+        if (MAX < DATA[K]) {
+            LOC = K;
+            MAX = DATA[K];
+        }
+        
+        // Step 4: Increment counter
+        K = K + 1;
+    }
+    
+    // Step 5: Output result
+    printf("Location: %d, Maximum: %d\n", LOC, MAX);
+}
+
+int main() {
+    // Using index 1 to N (index 0 unused)
+    int DATA[] = {0, 45, 23, 78, 12, 89, 34};  // 0 is placeholder
+    int N = 6;
+    
+    printf("Array: [45, 23, 78, 12, 89, 34]\n");
+    printf("Using While Loop:\n");
+    findLargest_While(DATA, N);
+    
+    return 0;
+}
+```
+
+**Output:**
+```
+Array: [45, 23, 78, 12, 89, 34]
+Using While Loop:
+Location: 5, Maximum: 89
+```
+
+### Benefits of Structured Programming
+
+| Feature | Go To (Algorithm 2.1) | While Loop (Algorithm 2.3) |
+|---------|----------------------|---------------------------|
+| Readability | ❌ Harder to follow | ✅ Easy to understand |
+| Maintenance | ❌ Difficult to modify | ✅ Easy to change |
+| Debugging | ❌ Hard to trace | ✅ Clear flow |
+| Modern Practice | ❌ Discouraged | ✅ Recommended |
+
+---
+
+## Algorithm 2.4: Linear Search
+
+### Problem Statement
+**Given:** An array DATA with N elements and a specific ITEM to search for  
+**Find:** The location LOC where ITEM appears, or LOC = 0 if not found
+
+### The Idea (Super Simple!)
+
+Linear search is like looking for a book on a shelf:
+1. Start from the first book
+2. Check each book one by one
+3. If you find it, note the position
+4. If you reach the end without finding it, the book isn't there
+
+### Algorithm (Textbook Format)
+
+```
+Algorithm 2.4: LINEAR SEARCH
+─────────────────────────────────────────
+A linear array DATA with N elements and a specific 
+ITEM of information are given. This algorithm finds 
+the location LOC of ITEM in DATA or sets LOC = 0.
+
+1. [Initialize] Set K := 1 and LOC := 0.
+2. Repeat Steps 3 and 4 while LOC = 0 and K ≤ N.
+3.     If ITEM = DATA[K], then: Set LOC := K.
+4.     Set K := K + 1. [Increment counter.]
+   [End of Step 2 loop.]
+5. [Successful?]
+       If LOC = 0, then:
+           Write: ITEM is not in the array DATA.
+       Else:
+           Write: LOC is the location of ITEM.
+       [End of If structure.]
+6. Exit.
+```
+
+### Visual Flowchart
+
+```mermaid
+flowchart TD
+    START([Start]) --> INIT["K ← 1<br/>LOC ← 0"]
+    INIT --> LOOP{"LOC = 0<br/>AND<br/>K ≤ N?"}
+    
+    LOOP -->|No| CHECK{"LOC = 0?"}
+    
+    LOOP -->|Yes| COMPARE{"ITEM = DATA[K]?"}
+    COMPARE -->|Yes| FOUND["LOC ← K"]
+    COMPARE -->|No| INC["K ← K + 1"]
+    FOUND --> INC
+    INC --> LOOP
+    
+    CHECK -->|Yes| NOTFOUND["Write: 'ITEM not found'"]
+    CHECK -->|No| SUCCESS["Write: 'LOC is location'"]
+    
+    NOTFOUND --> STOP([Stop])
+    SUCCESS --> STOP
+    
+    style START fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style STOP fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style LOOP fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
+    style COMPARE fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style CHECK fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style FOUND fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style NOTFOUND fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style SUCCESS fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+### Step-by-Step Trace
+
+**Given:** DATA = [15, 42, 73, 28, 56], N = 5, ITEM = 73
+
+| Step | K | DATA[K] | ITEM | LOC | Condition | Action |
+|------|---|---------|------|-----|-----------|--------|
+| Init | 1 | - | 73 | 0 | - | Initialize K=1, LOC=0 |
+| 2-4 | 1 | 15 | 73 | 0 | 15 ≠ 73 | Continue |
+| 2-4 | 2 | 42 | 73 | 0 | 42 ≠ 73 | Continue |
+| 2-4 | 3 | 73 | 73 | 3 | 73 = 73 | Found! LOC = 3 |
+| 5 | - | - | - | 3 | LOC ≠ 0 | Output: Location is 3 |
+
+**Another Example:** ITEM = 99 (not in array)
+
+| Step | K | DATA[K] | ITEM | LOC | Condition | Action |
+|------|---|---------|------|-----|-----------|--------|
+| Init | 1 | - | 99 | 0 | - | Initialize |
+| 2-4 | 1 | 15 | 99 | 0 | 15 ≠ 99 | Continue |
+| 2-4 | 2 | 42 | 99 | 0 | 42 ≠ 99 | Continue |
+| 2-4 | 3 | 73 | 99 | 0 | 73 ≠ 99 | Continue |
+| 2-4 | 4 | 28 | 99 | 0 | 28 ≠ 99 | Continue |
+| 2-4 | 5 | 56 | 99 | 0 | 56 ≠ 99 | Continue |
+| 2 | 6 | - | - | 0 | K > N | Exit loop |
+| 5 | - | - | - | 0 | LOC = 0 | Output: Not found |
+
+### C Implementation
+
+```c
+#include <stdio.h>
+
+int linearSearch(int DATA[], int N, int ITEM) {
+    int K, LOC;
+    
+    // Step 1: Initialize
+    K = 1;
+    LOC = 0;
+    
+    // Step 2: Repeat while LOC = 0 and K ≤ N
+    while (LOC == 0 && K <= N) {
+        // Step 3: Compare
+        if (ITEM == DATA[K]) {
+            LOC = K;
+        }
+        
+        // Step 4: Increment counter
+        K = K + 1;
+    }
+    
+    // Step 5: Report result
+    if (LOC == 0) {
+        printf("  ITEM %d is not in the array DATA.\n", ITEM);
+    } else {
+        printf("  LOC = %d is the location of ITEM %d.\n", LOC, ITEM);
+    }
+    
+    return LOC;
+}
+
+int main() {
+    // Using index 1 to N (index 0 unused)
+    int DATA[] = {0, 15, 42, 73, 28, 56};  // 0 is placeholder
+    int N = 5;
+    
+    printf("=== LINEAR SEARCH ===\n");
+    printf("Array DATA: [15, 42, 73, 28, 56]\n\n");
+    
+    printf("Searching for 73:\n");
+    linearSearch(DATA, N, 73);
+    
+    printf("\nSearching for 28:\n");
+    linearSearch(DATA, N, 28);
+    
+    printf("\nSearching for 99:\n");
+    linearSearch(DATA, N, 99);
+    
+    return 0;
+}
+```
+
+**Output:**
+```
+=== LINEAR SEARCH ===
+Array DATA: [15, 42, 73, 28, 56]
+
+Searching for 73:
+  LOC = 3 is the location of ITEM 73.
+
+Searching for 28:
+  LOC = 4 is the location of ITEM 28.
+
+Searching for 99:
+  ITEM 99 is not in the array DATA.
+```
+
+### Complexity Analysis
+
+```mermaid
+graph TD
+    A["Linear Search Complexity"] --> B["Best Case: O(1)<br/>Item is at first position"]
+    A --> C["Average Case: O(n/2) = O(n)<br/>Item is in the middle"]
+    A --> D["Worst Case: O(n)<br/>Item is last or not found"]
+    
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+```
+
+| Case | Comparisons | Big O |
+|------|-------------|-------|
+| Best Case | 1 | O(1) |
+| Average Case | n/2 | O(n) |
+| Worst Case | n | O(n) |
+
+### Average Case Analysis (From Textbook)
+
+If ITEM appears in the array with equal probability at any position:
+- Position 1: 1 comparison (probability 1/n)
+- Position 2: 2 comparisons (probability 1/n)
+- ...
+- Position n: n comparisons (probability 1/n)
+
+Expected comparisons:
+$$C(n) = 1 \cdot \frac{1}{n} + 2 \cdot \frac{1}{n} + \cdots + n \cdot \frac{1}{n} = \frac{1}{n}(1 + 2 + \cdots + n) = \frac{n(n+1)}{2n} = \frac{n+1}{2}$$
+
+So the average case is approximately **n/2 comparisons**, which is O(n).
+
+---
+
+## 📐 Subalgorithms: Functions and Procedures
+
+### What is a Subalgorithm?
+
+A **subalgorithm** is a complete, independent module that:
+- Can be called by a main algorithm or another subalgorithm
+- Receives input values (called **arguments** or **parameters**)
+- Performs computations
+- Returns result(s) to the calling algorithm
+
+### Two Types of Subalgorithms
+
+```mermaid
+graph TD
+    A["Subalgorithms"] --> B["Function<br/>Returns ONE value"]
+    A --> C["Procedure<br/>Can return MULTIPLE values"]
+    
+    B --> D["Example: MEAN(A, B, C)<br/>Returns average"]
+    C --> E["Example: SWITCH(X, Y)<br/>Swaps two values"]
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style E fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+---
+
+### Function 2.5: MEAN (Average of Three Numbers)
+
+**Purpose:** Calculate the average of three numbers A, B, and C.
+
+```
+Function 2.5: MEAN(A, B, C)
+─────────────────────────────────────────
+1. Set AVE := (A + B + C) / 3.
+2. Return(AVE).
+```
+
+### How Function Calls Work
+
+```mermaid
+sequenceDiagram
+    participant Main as Main Algorithm
+    participant Func as Function MEAN
+    
+    Main->>Func: Call MEAN(10, 20, 30)
+    Note over Func: A=10, B=20, C=30
+    Note over Func: AVE = (10+20+30)/3 = 20
+    Func-->>Main: Return 20
+    Note over Main: TEST = 20
+```
+
+### C Implementation
+
+```c
+#include <stdio.h>
+
+// Function 2.5: MEAN
+double MEAN(double A, double B, double C) {
+    double AVE;
+    
+    // Step 1: Calculate average
+    AVE = (A + B + C) / 3.0;
+    
+    // Step 2: Return result
+    return AVE;
+}
+
+int main() {
+    double T1 = 85.0;  // Test score 1
+    double T2 = 90.0;  // Test score 2
+    double T3 = 88.0;  // Test score 3
+    
+    // Call the function
+    double TEST = MEAN(T1, T2, T3);
+    
+    printf("Test scores: %.1f, %.1f, %.1f\n", T1, T2, T3);
+    printf("Average (TEST): %.2f\n", TEST);
+    
+    return 0;
+}
+```
+
+**Output:**
+```
+Test scores: 85.0, 90.0, 88.0
+Average (TEST): 87.67
+```
+
+---
+
+### Procedure 2.6: SWITCH (Swap Two Values)
+
+**Purpose:** Interchange the values of two variables AAA and BBB.
+
+```
+Procedure 2.6: SWITCH(AAA, BBB)
+─────────────────────────────────────────
+1. Set TEMP := AAA, AAA := BBB, and BBB := TEMP.
+2. Return.
+```
+
+### How Procedure Calls Work
+
+```mermaid
+sequenceDiagram
+    participant Main as Main Algorithm
+    participant Proc as Procedure SWITCH
+    
+    Note over Main: BEG = 5, AUX = 10
+    Main->>Proc: Call SWITCH(BEG, AUX)
+    Note over Proc: AAA = 5, BBB = 10
+    Note over Proc: TEMP = 5
+    Note over Proc: AAA = 10
+    Note over Proc: BBB = 5
+    Proc-->>Main: Return (values modified)
+    Note over Main: BEG = 10, AUX = 5
+```
+
+### Visual Explanation of Swap
+
+```mermaid
+graph LR
+    subgraph Before
+        A1["AAA = 5"] 
+        B1["BBB = 10"]
+    end
+    
+    subgraph Step 1
+        T1["TEMP ← AAA"]
+        A2["TEMP = 5"]
+    end
+    
+    subgraph Step 2
+        T2["AAA ← BBB"]
+        A3["AAA = 10"]
+    end
+    
+    subgraph Step 3
+        T3["BBB ← TEMP"]
+        B3["BBB = 5"]
+    end
+    
+    subgraph After
+        A4["AAA = 10"]
+        B4["BBB = 5"]
+    end
+    
+    A1 --> T1
+    T1 --> T2
+    T2 --> T3
+    T3 --> A4
+    
+    style A1 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B1 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style A4 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style B4 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+```
+
+### C Implementation
+
+```c
+#include <stdio.h>
+
+// Procedure 2.6: SWITCH
+void SWITCH(int *AAA, int *BBB) {
+    int TEMP;
+    
+    // Step 1: Swap using temporary variable
+    TEMP = *AAA;
+    *AAA = *BBB;
+    *BBB = TEMP;
+    
+    // Step 2: Return (implicit in C void function)
+}
+
+int main() {
+    int BEG = 5;
+    int AUX = 10;
+    
+    printf("Before SWITCH:\n");
+    printf("  BEG = %d, AUX = %d\n", BEG, AUX);
+    
+    // Call the procedure
+    SWITCH(&BEG, &AUX);
+    
+    printf("\nAfter SWITCH:\n");
+    printf("  BEG = %d, AUX = %d\n", BEG, AUX);
+    
+    return 0;
+}
+```
+
+**Output:**
+```
+Before SWITCH:
+  BEG = 5, AUX = 10
+
+After SWITCH:
+  BEG = 10, AUX = 5
+```
+
+---
+
+### Converting Function to Procedure
+
+Any function can be converted to a procedure by adding an extra parameter for the return value:
+
+```mermaid
+graph LR
+    A["Function MEAN(A, B, C)<br/>Returns AVE"] --> B["Procedure MEAN(A, B, C, AVE)<br/>AVE is output parameter"]
+    
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+**As a Procedure:**
+```
+Procedure MEAN(A, B, C, AVE)
+─────────────────────────────────────────
+1. Set AVE := (A + B + C) / 3.
+2. Return.
+```
+
+**Called as:**
+```
+Call MEAN(T1, T2, T3, TEST)
+```
+
+### C Implementation (Procedure Version)
+
+```c
+#include <stdio.h>
+
+// MEAN as a Procedure
+void MEAN_Procedure(double A, double B, double C, double *AVE) {
+    *AVE = (A + B + C) / 3.0;
+}
+
+int main() {
+    double T1 = 85.0, T2 = 90.0, T3 = 88.0;
+    double TEST;
+    
+    // Call as procedure
+    MEAN_Procedure(T1, T2, T3, &TEST);
+    
+    printf("Average: %.2f\n", TEST);
+    
+    return 0;
+}
+```
+
+---
+
+## 🗂️ Variables and Data Types
+
+### Data Types in Algorithms
+
+```mermaid
+graph TD
+    A["Data Types"] --> B["Character<br/>Letters, symbols<br/>Coded as EBCDIC/ASCII"]
+    A --> C["Real (Float)<br/>Numbers with decimals<br/>3.14, -2.5"]
+    A --> D["Integer<br/>Whole numbers<br/>-5, 0, 42"]
+    A --> E["Logical (Boolean)<br/>True or False<br/>1 or 0"]
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style E fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
+```
+
+### Local vs Global Variables
+
+```mermaid
+graph TD
+    subgraph "Main Program"
+        M1["Global Variable: X = 10"]
+        M2["Local Variable: A = 5"]
+    end
+    
+    subgraph "Subalgorithm 1"
+        S1["Can access X (global)"]
+        S2["Local Variable: B = 3"]
+        S3["Cannot access A"]
+    end
+    
+    subgraph "Subalgorithm 2"
+        T1["Can access X (global)"]
+        T2["Local Variable: C = 7"]
+        T3["Cannot access A or B"]
+    end
+    
+    M1 --> S1
+    M1 --> T1
+    
+    style M1 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style M2 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style S2 fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style T2 fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
+```
+
+| Variable Type | Scope | Example |
+|---------------|-------|---------|
+| **Local** | Only within the module | TEMP in SWITCH |
+| **Parameter** | Passed between modules | A, B, C in MEAN |
+| **Global** | Accessible everywhere | Declared with COMMON (FORTRAN) |
+
+### ⚠️ Warning: Side Effects
+
+A **side effect** occurs when a subalgorithm changes a variable that it shouldn't. This can cause hard-to-find bugs!
+
+```c
+// BAD: Uses global variable (side effect possible)
+int globalCounter = 0;
+
+void badFunction() {
+    globalCounter++;  // Side effect!
+}
+
+// GOOD: Uses parameters
+void goodFunction(int *counter) {
+    (*counter)++;  // Clear and explicit
+}
+```
+
+---
+
+## 📊 Algorithms Comparison Table
+
+| Algorithm | Purpose | Input | Output | Complexity |
+|-----------|---------|-------|--------|------------|
+| 2.1 | Find largest (Go To) | Array DATA, size N | LOC, MAX | O(n) |
+| 2.2 | Solve quadratic | A, B, C | X1, X2 or X | O(1) |
+| 2.3 | Find largest (While) | Array DATA, size N | LOC, MAX | O(n) |
+| 2.4 | Linear search | Array DATA, size N, ITEM | LOC | O(n) |
+| Func 2.5 | Calculate average | A, B, C | AVE | O(1) |
+| Proc 2.6 | Swap values | AAA, BBB | Modified AAA, BBB | O(1) |
+
+---
+
 ## Summary
 
 ### Key Concepts Learned
@@ -807,6 +1797,9 @@ Binary search is ~100x faster!
 ✅ **Complexity Analysis:** Best, average, worst cases  
 ✅ **Big O Notation:** O(1), O(log n), O(n), O(n²), etc.  
 ✅ **Asymptotic Notations:** O, Ω, Θ  
+✅ **Algorithms 2.1-2.4:** Finding maximum, quadratic solver, linear search  
+✅ **Subalgorithms:** Functions and procedures  
+✅ **Variables:** Local, global, and parameters  
 
 ### Complexity Hierarchy (Fastest to Slowest)
 
@@ -821,6 +1814,9 @@ O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2ⁿ)
 3. **Logarithmic is much better than linear** for large inputs
 4. **Quadratic and exponential are slow** for large inputs
 5. **Always analyze worst case** for safety
+6. **Use structured programming** (avoid Go To statements)
+7. **Subalgorithms** make code reusable and modular
+8. **Be careful with global variables** to avoid side effects
 
 ---
 
