@@ -1822,6 +1822,6 @@ O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2ⁿ)
 
 **End of Chapter 2**
 
-*Continue to [Chapter 3: String Processing](../Chapter%203%20-%20String%20Processing/README.md)*
+*Continue to [Chapter 3: String Processing](https://github.com/M-F-Tushar/CSE-2101-Data-Structure/blob/main/Chapter%203%20-%20String%20Processing/README.md)*
 
 
