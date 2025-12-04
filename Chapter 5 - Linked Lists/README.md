@@ -1,2018 +1,2308 @@
-# Linked Lists - Complete Study Guide
+# Chapter 5: Linked Lists
 
 ## Table of Contents
-- [Introduction to Lists](#1-introduction-to-lists)
-- [What are Linked Lists?](#2-what-are-linked-lists)
-- [How Linked Lists are Stored in Memory](#3-how-linked-lists-are-stored-in-memory)
-- [Moving Through a Linked List (Traversing)](#4-moving-through-a-linked-list-traversing)
-- [Searching in a Linked List](#5-searching-in-a-linked-list)
-- [Memory Management](#6-memory-management)
-- [Adding Nodes to a Linked List (Insertion)](#7-adding-nodes-to-a-linked-list-insertion)
-- [Removing Nodes from a Linked List (Deletion)](#8-removing-nodes-from-a-linked-list-deletion)
-- [Special Types of Linked Lists](#9-special-types-of-linked-lists)
-- [Two-Way Lists](#10-two-way-lists)
-- [Practice Problems and Solutions](#11-practice-problems-and-solutions)
+
+1. [Introduction](#introduction)
+2. [What is a Linked List?](#what-is-a-linked-list)
+3. [Linked List Representation](#linked-list-representation)
+4. [Basic Operations](#basic-operations)
+5. [Traversing a Linked List](#traversing-a-linked-list)
+6. [Searching](#searching)
+7. [Insertion](#insertion)
+8. [Deletion](#deletion)
+9. [Circular Linked Lists](#circular-linked-lists)
+10. [Two-Way Linked Lists](#two-way-linked-lists)
+11. [Practice Exercises](#practice-exercises)
 
 ---
 
-## 📚 Visual Overview: Linked Lists at a Glance
+## Introduction
 
-### 🏛️ High-Level Architecture
+### Why Linked Lists?
 
-```mermaid
-graph TB
-    subgraph "Linked List Ecosystem"
-        START["🎯 START Pointer<br/>(Entry Point)"] --> LL["Linked List"]
-        
-        LL --> T1["One-Way List<br/>➡️ Single Direction"]
-        LL --> T2["Two-Way List<br/>⇄ Bidirectional"]
-        LL --> T3["Circular List<br/>🔄 Loops Back"]
-        LL --> T4["Header List<br/>🎯 Special First Node"]
-        
-        T1 --> OPS["Core Operations"]
-        T2 --> OPS
-        T3 --> OPS
-        T4 --> OPS
-        
-        OPS --> O1["🔍 Search<br/>Find data"]
-        OPS --> O2["🚪 Insert<br/>Add nodes"]
-        OPS --> O3["🗑️ Delete<br/>Remove nodes"]
-        OPS --> O4["🚶 Traverse<br/>Visit all nodes"]
-        
-        AVAIL["📋 AVAIL List<br/>(Free Memory Pool)"] -.->|"Provides nodes"| O2
-        O3 -.->|"Returns nodes"| AVAIL
-        
-        style START fill:#4caf50,color:#fff
-        style LL fill:#2196f3,color:#fff
-        style T1 fill:#e3f2fd
-        style T2 fill:#e3f2fd
-        style T3 fill:#e3f2fd
-        style T4 fill:#e3f2fd
-        style OPS fill:#ff9800,color:#fff
-        style O1 fill:#fff9c4
-        style O2 fill:#fff9c4
-        style O3 fill:#fff9c4
-        style O4 fill:#fff9c4
-        style AVAIL fill:#9c27b0,color:#fff
-    end
-```
+**In Simple Terms:** Arrays are like parking lots with fixed spaces - you can't easily add more spaces. Linked lists are like a chain where you can add or remove links anywhere!
 
-### 🛠️ Operations Quick Reference
+**Problems with Arrays:**
+- [x] Fixed size (hard to expand)
+- [x] Expensive to insert/delete (must shift elements)
+- [x] Wasted space if not full
+
+**Advantages of Linked Lists:**
+- [v] Dynamic size (grows/shrinks as needed)
+- [v] Easy insertion/deletion
+- [v] No wasted space
 
 ```mermaid
-graph LR
-    subgraph "Insert Operations"
-        I1["🆕 Insert First<br/>O(1) - Fastest"]
-        I2["🆕 Insert After<br/>O(1) if location known"]
-        I3["🆕 Insert Sorted<br/>O(n) - Must find position"]
-        
-        style I1 fill:#4caf50,color:#fff
-        style I2 fill:#8bc34a,color:#fff
-        style I3 fill:#cddc39
-    end
+graph TD
+    A["Data Storage"] --> B["Arrays"]
+    A --> C["Linked Lists"]
     
-    subgraph "Delete Operations"
-        D1["🗑️ Delete First<br/>O(1) - Fastest"]
-        D2["🗑️ Delete Specific<br/>O(n) - Must find node"]
-        D3["🗑️ Delete After<br/>O(1) if location known"]
-        
-        style D1 fill:#f44336,color:#fff
-        style D2 fill:#e57373,color:#fff
-        style D3 fill:#ef5350,color:#fff
-    end
+    B --> B1["Fixed Size"]
+    B --> B2["Fast Access"]
+    B --> B3["Slow Insert/Delete"]
     
-    subgraph "Search Operations"
-        S1["🔍 Unsorted Search<br/>O(n) - Check all"]
-        S2["🔍 Sorted Search<br/>O(n) - Can stop early"]
-        
-        style S1 fill:#2196f3,color:#fff
-        style S2 fill:#64b5f6,color:#fff
-    end
+    C --> C1["Dynamic Size"]
+    C --> C2["Slow Access"]
+    C --> C3["Fast Insert/Delete"]
     
-    subgraph "Traversal"
-        T1["🚶 Visit All Nodes<br/>O(n) - Linear time"]
-        
-        style T1 fill:#9c27b0,color:#fff
-    end
-```
-
-### 📊 Complexity Comparison Table
-
-| Operation | Array | Linked List | Notes |
-|-----------|-------|-------------|-------|
-| **Access by Index** | O(1) ⚡ | O(n) 🐢 | Arrays win - direct access |
-| **Search** | O(n) or O(log n)* | O(n) | *Binary search only for sorted arrays |
-| **Insert at Beginning** | O(n) 🐢 | O(1) ⚡ | Linked lists win - no shifting |
-| **Insert at End** | O(1)* | O(n) | *If space available |
-| **Delete at Beginning** | O(n) 🐢 | O(1) ⚡ | Linked lists win - no shifting |
-| **Memory Usage** | Lower ✅ | Higher ❌ | Pointers add overhead |
-| **Memory Allocation** | Fixed 🔒 | Dynamic 🔄 | Linked lists are flexible |
-
-> **💡 When to Use What:**
-> - **Use Arrays:** When you need fast random access, know the size in advance, or want minimal memory overhead
-> - **Use Linked Lists:** When you need frequent insertions/deletions, dynamic sizing, or don't know the final size
-
-### 🎯 Key Concepts Visual Summary
-
-```mermaid
-graph TB
-    subgraph "Essential Components"
-        N["📦 NODE<br/>Building Block"]
-        N --> NI["INFO: Data"]
-        N --> NL["LINK: Next Address"]
-    end
-    
-    subgraph "Special Pointers"
-        SP1["🎯 START<br/>First Node"]
-        SP2["∅ NULL<br/>End Marker"]
-        SP3["📋 AVAIL<br/>Free Nodes"]
-    end
-    
-    subgraph "Memory Management"
-        MM1["✅ Allocation<br/>Get from AVAIL"]
-        MM2["♻️ Deallocation<br/>Return to AVAIL"]
-        MM3["🗑️ Garbage Collection<br/>Automatic Cleanup"]
-    end
-    
-    style N fill:#4a90e2,color:#fff
-    style SP1 fill:#4caf50,color:#fff
-    style SP2 fill:#f44336,color:#fff
-    style SP3 fill:#9c27b0,color:#fff
-    style MM1 fill:#8bc34a,color:#fff
-    style MM2 fill:#ff9800,color:#fff
-    style MM3 fill:#00bcd4,color:#fff
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
 
 ---
 
-## 1. Introduction to Lists
+## What is a Linked List?
 
-### What is a List?
-
-Think about your everyday lists - a shopping list, a to-do list, or a playlist. A list is simply **a collection of items that follow a specific order**. Every list has:
-- **A first item** (where the list begins)
-- **Items in the middle** (arranged one after another)
-- **A last item** (where the list ends)
-
-Just like when you write a shopping list on paper, the order matters - you read from top to bottom!
-
-### Example: Shopping List
-```
-Original List:          After Changes:
------------            ---------------
-Milk                   Milk
-eggs                   ← deleted
-butter                 ← deleted
-tomatoes               tomatoes
-apples                 apples
-oranges                
-bread                  bread
-                       chicken  ← added
-                       corn     ← added
-                       lettuce  ← added
-```
-
-### Two Ways to Store Lists in Computer Memory
-
-#### Method 1: Using Arrays (The "Bookshelf" Approach)
-
-Imagine a bookshelf where books sit side-by-side in numbered slots:
-- **How it works:** All items are stored next to each other in memory, like books on a shelf
-- **Advantages:** 
-  - ⚡ Super fast to find any item (just jump to its position number)
-  - Simple and straightforward
-- **Disadvantages:**
-  - 🐢 Slow to add or remove items in the middle (you have to shift everything)
-  - 🔒 Fixed size - you decide the size upfront and can't easily change it
-  - Called "static" or "dense" because the size doesn't change
-
-#### Method 2: Using Linked Lists (The "Treasure Hunt" Approach)
-
-Imagine a treasure hunt where each clue tells you where to find the next clue:
-- **How it works:** Each item contains:
-  1. The actual data (like the treasure)
-  2. A pointer (like a map) showing where the next item is located
-- Items can be scattered anywhere in memory - they don't need to be neighbors!
-
-- **Advantages:**
-  - ✅ Easy to add or remove items anywhere in the list
-  - 🔄 Dynamic size - grows and shrinks automatically as needed
-  - Flexible and adaptable
-  
-- **Disadvantages:**
-  - 💾 Uses more memory (each item needs to store a pointer)
-  - 🐢 Can't jump directly to the middle (must follow the chain from the start)
-
-#### 🎨 Visual Comparison: Array vs Linked List
-
-```mermaid
-graph TB
-    subgraph "Array Storage (Contiguous Memory)"
-        A1["Index 0<br/>Data: A"] --- A2["Index 1<br/>Data: B"]
-        A2 --- A3["Index 2<br/>Data: C"]
-        A3 --- A4["Index 3<br/>Data: D"]
-        style A1 fill:#e1f5ff
-        style A2 fill:#e1f5ff
-        style A3 fill:#e1f5ff
-        style A4 fill:#e1f5ff
-    end
-    
-    subgraph "Linked List Storage (Scattered Memory)"
-        L1["📦 Node<br/>Data: A<br/>Next: →"] --> L3["📦 Node<br/>Data: B<br/>Next: →"]
-        L3 --> L2["📦 Node<br/>Data: C<br/>Next: →"]
-        L2 --> L4["📦 Node<br/>Data: D<br/>Next: ∅"]
-        START["🎯 START"] --> L1
-        style L1 fill:#fff4e6
-        style L2 fill:#fff4e6
-        style L3 fill:#fff4e6
-        style L4 fill:#fff4e6
-        style START fill:#c8e6c9
-    end
-```
-
-> **💡 Key Insight:** Arrays are like parking spaces in a row - you can jump to any spot instantly. Linked lists are like a treasure hunt - each clue leads to the next location!
-
-## 2. What are Linked Lists?
-
-### Understanding the Basic Building Block: The Node
-
-A linked list is like a chain made of individual links. Each link is called a **node**, and every node has two important parts:
-
-**Think of a node like a box with two compartments:**
-
-```mermaid
-graph TB
-    subgraph "Detailed Node Anatomy"
-        N["🔷 COMPLETE NODE"]
-        N --> I["📊 INFO Field<br/>(Stores Data)<br/>Examples: Name, Number, Record"]
-        N --> L["🔗 LINK Field<br/>(Stores Address)<br/>Points to Next Node"]
-        
-        style N fill:#4a90e2,color:#fff
-        style I fill:#50c878,color:#fff
-        style L fill:#ff6b6b,color:#fff
-    end
-    
-    subgraph "How Nodes Connect"
-        N1["Node 1<br/>INFO: 'Apple'<br/>LINK: 5"] -->|Points to| N2["Node 2<br/>INFO: 'Banana'<br/>LINK: 3"]
-        N2 -->|Points to| N3["Node 3<br/>INFO: 'Cherry'<br/>LINK: NULL"]
-        
-        style N1 fill:#e8f5e9
-        style N2 fill:#e8f5e9
-        style N3 fill:#ffebee
-    end
-```
-
-> **🎯 Simple Explanation:** Think of each node as a box with two compartments:
-> - **Left compartment (INFO):** Holds your actual data (like a name or number)
-> - **Right compartment (LINK):** Holds the address of the next box
+**In Simple Terms:** A linked list is a chain of nodes where each node contains:
+1. **Data** (the information)
+2. **Pointer** (address of next node)
 
 ```mermaid
 graph LR
-    A[Node Structure] --> B[Information Part]
-    A --> C[Link/Pointer Part]
-    B --> D[Contains actual data]
-    C --> E[Contains address of next node]
-```
-
-### How Nodes Connect to Form a List
-
-Now imagine connecting multiple boxes in a chain:
-```mermaid
-graph LR
-    START[START] --> N1[Node 1<br/>INFO | LINK]
-    N1 --> N2[Node 2<br/>INFO | LINK]
-    N2 --> N3[Node 3<br/>INFO | LINK]
-    N3 --> N4[Node 4<br/>INFO | LINK]
-    N4 --> N5[Node 5<br/>INFO | LINK]
-    N5 --> N6[Node 6<br/>INFO | LINK]
-    N6 --> NULL[X<br/>NULL]
-```
-
-### Key Components (Important Terms to Know)
-
-Let's break down the essential parts of a linked list:
-
-- **Node:** A single box in the chain that contains:
-  - **Information part (INFO):** Your actual data - could be a name, a number, or even a complete record
-  - **Link field (nextpointer):** The address telling you where the next node is located
-  
-- **START:** A special pointer that always points to the very first node in the list
-  - Think of it as the "entrance" to your list
-  - Without START, you wouldn't know where the list begins!
-  
-- **NULL pointer:** A special value (usually 0 or -1) that means "end of the list"
-  - Like a stop sign at the end of the chain
-  - When you see NULL, you know there are no more nodes
-  
-- **Empty list:** When START contains NULL
-  - This means the list has zero nodes - it's completely empty
-
-### Example 5.1: Hospital Ward
-Let's look at a hospital with 12 beds, where 9 are occupied:
-
-| Bed Number | Patient | Next |
-|------------|---------|------|
-| 1 | Kirk | 7 |
-| 2 | (empty) | |
-| 3 | Dean | 11 |
-| 4 | Maxwell | 12 |
-| 5 | Adams | 3 |
-| 6 | (empty) | |
-| 7 | Lane | 4 |
-| 8 | Green | 1 |
-| 9 | Samuels | 0 |
-| 10 | (empty) | |
-| 11 | Fields | 8 |
-| 12 | Nelson | 9 |
-
-**START = 5** (Adams is first alphabetically)
-
-Following the chain alphabetically:
-- START points to bed 5 (Adams)
-- Adams points to bed 3 (Dean)
-- Dean points to bed 11 (Fields)
-- Fields points to bed 8 (Green)
-- Green points to bed 1 (Kirk)
-- Kirk points to bed 7 (Lane)
-- Lane points to bed 4 (Maxwell)
-- Maxwell points to bed 12 (Nelson)
-- Nelson points to bed 9 (Samuels)
-- Samuels points to 0 (NULL - end of list)
-
-**Alphabetical order:** Adams → Dean → Fields → Green → Kirk → Lane → Maxwell → Nelson → Samuels
-
-## 3. How Linked Lists are Stored in Memory
-
-### The Storage Method (Understanding the Arrays)
-
-Here's something interesting: even though linked lists seem scattered, we actually use **two parallel arrays** to organize them:
-
-**Think of it like a filing system with two cabinets:**
-
-1. **INFO array (Data Cabinet):** Stores the actual information
-   - Like drawers containing the actual documents
-   
-2. **LINK array (Address Cabinet):** Stores the addresses (pointers) to the next nodes
-   - Like drawers containing maps showing where to find the next document
-
-**Plus two special sticky notes:**
-- **START:** Shows you which drawer to open first
-- **NULL:** A special value (usually 0) that means "you've reached the end"
-
-#### 🗺️ Memory Layout Visualization
-
-```mermaid
-graph TB
-    subgraph "Memory Arrays"
-        direction TB
-        subgraph "INFO Array (Data)"
-            I1["[1] Empty"]
-            I2["[2] Empty"]
-            I3["[3] 'O'"]
-            I4["[4] 'T'"]
-            I5["[5] Empty"]
-            I6["[6] ' '"]
-            I7["[7] 'X'"]
-        end
-        
-        subgraph "LINK Array (Pointers)"
-            L1["[1] -"]
-            L2["[2] -"]
-            L3["[3] → 6"]
-            L4["[4] → 0"]
-            L5["[5] -"]
-            L6["[6] → 11"]
-            L7["[7] → 10"]
-        end
-    end
+    START["START"] --> A["Data: 10 | Next"]
+    A --> B["Data: 20 | Next"]
+    B --> C["Data: 30 | Next"]
+    C --> D["NULL"]
     
-    START["🎯 START = 9"] -.->|"Points to index 9"| I9["[9] 'N'"]
+    style START fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Components:**
+- **START:** Pointer to first node
+- **Node:** Contains data and next pointer
+- **NULL:** Marks end of list
+
+---
+
+## Linked List Representation
+
+### Node Structure in C
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define a node structure
+struct Node {
+    int data;           // Data part
+    struct Node* next;  // Pointer to next node
+};
+
+int main() {
+    // Create nodes
+    struct Node* head = NULL;
+    struct Node* second = NULL;
+    struct Node* third = NULL;
     
-    style START fill:#4caf50,color:#fff
-    style I3 fill:#fff9c4
-    style I4 fill:#fff9c4
-    style I6 fill:#fff9c4
-    style I7 fill:#fff9c4
-    style I9 fill:#c8e6c9
+    // Allocate memory
+    head = (struct Node*)malloc(sizeof(struct Node));
+    second = (struct Node*)malloc(sizeof(struct Node));
+    third = (struct Node*)malloc(sizeof(struct Node));
+    
+    // Assign data
+    head->data = 10;
+    head->next = second;
+    
+    second->data = 20;
+    second->next = third;
+    
+    third->data = 30;
+    third->next = NULL;  // Last node
+    
+    // Print the list
+    struct Node* temp = head;
+    printf("Linked List: ");
+    while(temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+    
+    return 0;
+}
 ```
 
-> **📚 Reading the List:** Start at index 9, read the character 'N', then follow LINK[9] to the next position, and repeat until you hit NULL (0)!
-
-### Example 5.2: Character String "NO EXIT"
-
-Let's see how the phrase "NO EXIT" is stored in memory using linked lists:
-
-| Index | INFO | LINK |
-|-------|------|------|
-| 1 | | |
-| 2 | | |
-| 3 | O | 6 |
-| 4 | T | 0 |
-| 5 | | |
-| 6 | (space) | 11 |
-| 7 | X | 10 |
-| 8 | | |
-| 9 | N | 3 |
-| 10 | I | 4 |
-| 11 | E | 7 |
-| 12 | | |
-
-**START = 9** (This tells us to begin at index 9)
-
-**Let's follow the treasure hunt to read the string:**
-
-1. START = 9, so look at INFO[9] = **'N'** (first character) ✓
-2. LINK[9] = 3, so next look at INFO[3] = **'O'** (second character) ✓
-3. LINK[3] = 6, so next look at INFO[6] = **' '** (space character) ✓
-4. LINK[6] = 11, so next look at INFO[11] = **'E'** (fourth character) ✓
-5. LINK[11] = 7, so next look at INFO[7] = **'X'** (fifth character) ✓
-6. LINK[7] = 10, so next look at INFO[10] = **'I'** (sixth character) ✓
-7. LINK[10] = 4, so next look at INFO[4] = **'T'** (seventh character) ✓
-8. LINK[4] = 0 (NULL - we've reached the end!) 🛑
-
-**Result:** "NO EXIT" ✅
-
-> **💡 Key Insight:** Notice how the characters aren't stored in order (9, 3, 6, 11, 7, 10, 4). The LINK array creates the correct order by connecting them like a treasure map!
-
-### Example 5.3: Multiple Lists in Same Arrays
-You can store multiple lists in the same arrays:
-
-Two lists of test scores:
-
-| Index | TEST | LINK | Notes |
-|-------|------|------|-------|
-| 1 | | | |
-| 2 | 74 | 14 | ALG Node 2 |
-| 3 | | | |
-| 4 | 82 | 0 | ALG Node 4 (last) |
-| 5 | 84 | 12 | GEOM Node 1 |
-| 6 | 78 | 0 | GEOM Node 6 (last) |
-| 7 | 74 | 8 | GEOM Node 3 |
-| 8 | 100 | 13 | GEOM Node 4 |
-| 11 | 88 | 2 | ALG Node 1 |
-| 12 | 62 | 7 | GEOM Node 2 |
-| 13 | 74 | 6 | GEOM Node 5 |
-| 14 | 93 | 4 | ALG Node 3 |
-
-**ALG = 11** (Algebra test scores: 88, 74, 93, 82)  
-**GEOM = 5** (Geometry test scores: 84, 62, 74, 100, 74, 78)
-
-## 4. Moving Through a Linked List (Traversing)
-
-### What is Traversing?
-
-**Simple definition:** Traversing means **walking through the entire list**, visiting each node one by one to look at or process its data.
-
-**Think of it like:**
-- Walking through a museum and looking at each painting
-- Reading a book page by page from start to finish
-- Following a trail of breadcrumbs
-
-The key rule: **Visit each node exactly once** - no skipping, no repeating!
-
-### Algorithm 5.1: Basic Traversing (Step-by-Step)
-
-Here's how to walk through a linked list:
-
+**Output:**
 ```
-Step 1: Set PTR = START 
-        (PTR is your "current position" pointer - start at the beginning)
-        
-Step 2: While PTR ≠ NULL, repeat:
-        (Keep going as long as you haven't reached the end)
-        
-    Step 3: Process INFO[PTR] 
-            (Do something with the data at your current position)
-            
-    Step 4: Set PTR = LINK[PTR] 
-            (Move to the next node by following the link)
-            
-Step 5: Exit
-        (You've visited all nodes - done!)
+Linked List: 10 -> 20 -> 30 -> NULL
 ```
 
-> **💡 Think of PTR as your finger:** You point to the first node, read it, then move your finger to the next node by following the link. Repeat until you reach NULL (the end).
+---
 
-### Visual Flow
-
-#### 🔄 Step-by-Step Traversal Animation
-
-```mermaid
-graph TB
-    subgraph "Traversal Process"
-        START_NODE["🎯 START"] --> N1
-        N1["📦 Node 1<br/>Data: 10<br/>LINK: →"] --> N2["📦 Node 2<br/>Data: 20<br/>LINK: →"]
-        N2 --> N3["📦 Node 3<br/>Data: 30<br/>LINK: →"]
-        N3 --> N4["📦 Node 4<br/>Data: 40<br/>LINK: ∅"]
-        
-        PTR["👉 PTR<br/>(Current Position)"] -.->|"Step 1"| N1
-        PTR -.->|"Step 2"| N2
-        PTR -.->|"Step 3"| N3
-        PTR -.->|"Step 4"| N4
-        
-        style N1 fill:#e8f5e9
-        style N2 fill:#e8f5e9
-        style N3 fill:#e8f5e9
-        style N4 fill:#ffebee
-        style PTR fill:#ffd54f
-        style START_NODE fill:#4caf50,color:#fff
-    end
-```
-
-> **🎬 How It Works:**
-> 1. **PTR** starts at the first node (where START points)
-> 2. Process the data at current node
-> 3. Move PTR to the next node using LINK
-> 4. Repeat until PTR becomes NULL (end of list)
-
-#### 🔀 Algorithm Flowchart
+### Memory Representation
 
 ```mermaid
 graph TD
-    A["⭐ Start Traversal"] --> B["Set PTR = START"]
-    B --> C{"Is PTR ≠ NULL?"}
-    C -->|"✅ Yes<br/>(More nodes)"| D["📊 Process INFO[PTR]<br/>(Print, Count, etc.)"]
-    D --> E["➡️ Move Forward<br/>PTR = LINK[PTR]"]
-    E --> C
-    C -->|"❌ No<br/>(End reached)"| F["🏁 End Traversal"]
+    A["Memory Layout"] --> B["Node 1: Address 1000"]
+    A --> C["Node 2: Address 2000"]
+    A --> D["Node 3: Address 3000"]
     
-    style A fill:#4caf50,color:#fff
-    style C fill:#ff9800,color:#fff
-    style D fill:#2196f3,color:#fff
-    style E fill:#9c27b0,color:#fff
-    style F fill:#f44336,color:#fff
-```
-
-### Example: Printing a List
-```
-Procedure: PRINT(INFO, LINK, START)
-1. Set PTR = START
-2. While PTR ≠ NULL, repeat:
-   3. Print INFO[PTR]
-   4. Set PTR = LINK[PTR]
-5. Return
-```
-
-### Example: Counting Nodes
-```
-Procedure: COUNT(INFO, LINK, START, NUM)
-1. Set NUM = 0 (start counter at zero)
-2. Set PTR = START
-3. While PTR ≠ NULL, repeat:
-   4. Set NUM = NUM + 1 (increase counter)
-   5. Set PTR = LINK[PTR] (move to next)
-6. Return
-```
-
-**Example:** If list has 5 nodes, NUM will be 5 after completion.
-
-## 5. Searching in a Linked List
-
-### Two Types of Searching
-
-Searching means **finding a specific piece of data** in your list. There are two different approaches depending on whether your list is organized:
-
-#### Type 1: Searching an Unsorted List (The Hard Way)
-
-**The situation:** Your list is like a messy drawer - items are in random order.
-
-**The strategy:** You have no choice but to check every single item until you find what you're looking for (or reach the end).
-
-**Algorithm 5.2: Search Unsorted List**
-```
-SEARCH(INFO, LINK, START, ITEM, LOC)
-Purpose: Find where ITEM appears in an unsorted list
-
-Step 1: Set PTR = START
-        (Start at the beginning)
-        
-Step 2: While PTR ≠ NULL, repeat:
-        (Keep searching until you reach the end)
-        
-    Step 3: If ITEM = INFO[PTR], then:
-                (Found it!)
-                Set LOC = PTR and Exit
-            Else:
-                (Not this one, keep looking)
-                Set PTR = LINK[PTR]
-                
-Step 4: Set LOC = NULL 
-        (Searched everything - item not found)
-        
-Step 5: Exit
-```
-
-**Efficiency:**
-- 🐢 **Worst case:** Have to check all n nodes (item is last or not in list)
-- 🐢 **Average case:** Check about n/2 nodes (item is somewhere in the middle)
-
-#### Type 2: Searching a Sorted List (The Smart Way)
-
-**The situation:** Your list is organized in order (like alphabetical or numerical).
-
-**The strategy:** You can **stop early** if you pass where the item should be!
-
-**Example:** Looking for "Jones" in an alphabetical list:
-- If you reach "Kelly" and haven't found "Jones", you can stop!
-- Why? Because "Jones" comes before "Kelly" alphabetically
-- If it's not there yet, it's not in the list at all
-
-**Algorithm 5.3: Search Sorted List**
-```
-SRCHSL(INFO, LINK, START, ITEM, LOC)
-Purpose: Find ITEM in a sorted list (can stop early!)
-
-Step 1: Set PTR = START
-        (Start at the beginning)
-        
-Step 2: While PTR ≠ NULL, repeat:
-        (Keep searching)
-        
-    Step 3: If ITEM < INFO[PTR], then:
-                (Item should come before current node - keep looking)
-                Set PTR = LINK[PTR]
-                
-            Else if ITEM = INFO[PTR], then:
-                (Found it! ✅)
-                Set LOC = PTR and Exit
-                
-            Else:
-                (We've passed where it should be - it's not here! ❌)
-                Set LOC = NULL and Exit
-                
-Step 4: Set LOC = NULL 
-        (Reached end without finding it)
-        
-Step 5: Exit
-```
-
-> **⚡ Big Advantage:** In a sorted list, you can often stop searching early, saving time!
-
-### Example 5.8: Employee Salary Update
-Using the personnel file, give employee with SSN "NNN" a 5% raise:
-```
-1. Read: NNN
-2. Call SEARCH to find employee
-3. If found (LOC ≠ NULL), then:
-       Increase salary: SALARY[LOC] = SALARY[LOC] + 0.05 × SALARY[LOC]
-   Else:
-       Print "NNN is not in file"
-4. Return
-```
-
-**Important Note:** You cannot use binary search on linked lists (even if sorted) because you can't jump to the middle node directly. This is a disadvantage compared to arrays.
-
-#### 🔍 Search Comparison Visualization
-
-```mermaid
-graph TB
-    subgraph "Unsorted List Search"
-        U1["Start at first node"] --> U2["Check current node"]
-        U2 --> U3{"Found ITEM?"}
-        U3 -->|"✅ Yes"| U4["Return location"]
-        U3 -->|"❌ No"| U5{"More nodes?"}
-        U5 -->|"Yes"| U6["Move to next"]
-        U6 --> U2
-        U5 -->|"No"| U7["Not found"]
-        
-        style U4 fill:#4caf50,color:#fff
-        style U7 fill:#f44336,color:#fff
-    end
+    B --> B1["Data: 10 | Next: 2000"]
+    C --> C1["Data: 20 | Next: 3000"]
+    D --> D1["Data: 30 | Next: NULL"]
     
-    subgraph "Sorted List Search (Optimized)"
-        S1["Start at first node"] --> S2["Check current node"]
-        S2 --> S3{"Found ITEM?"}
-        S3 -->|"✅ Yes"| S4["Return location"]
-        S3 -->|"❌ No"| S5{"ITEM < current?"}
-        S5 -->|"Yes"| S6["Move to next"]
-        S5 -->|"No"| S7["⚡ Stop early!<br/>Not in list"]
-        S6 --> S2
-        
-        style S4 fill:#4caf50,color:#fff
-        style S7 fill:#ff9800,color:#fff
-    end
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
 ```
 
-> **⚡ Efficiency Tip:** In a sorted list, you can stop searching early if the current value exceeds your target - you know it won't appear later!
+**Key Point:** Nodes don't need to be stored consecutively in memory!
 
-## 6. Memory Management
+---
 
-### The AVAIL List (Your Recycling Bin for Nodes)
+## Basic Operations
 
-**What is the AVAIL list?**
-
-Think of AVAIL as a **recycling bin** for nodes. Instead of throwing away deleted nodes, we save them in the AVAIL list so we can reuse them later!
-
-**Why do we need it?**
-- When you delete a node, you don't want to waste that memory space
-- When you insert a new node, you don't want to create new memory from scratch
-- AVAIL lets you recycle: deleted nodes go in, new nodes come out!
-
-**How it works:**
-- AVAIL is itself a linked list of **free (unused) nodes**
-- When you need a new node: grab the first one from AVAIL
-- When you delete a node: put it back into AVAIL for future use
-
-```mermaid
-graph LR
-    AVAIL[AVAIL] --> F1[Free Node 1]
-    F1 --> F2[Free Node 2]
-    F2 --> F3[Free Node 3]
-    F3 --> NULL[NULL]
-    
-    START[START] --> N1[Used Node 1]
-    N1 --> N2[Used Node 2]
-    N2 --> N3[Used Node 3]
-    N3 --> NULLB[NULL]
-```
-
-### Complete List Notation (Understanding the Full Picture)
-
-When we write **LIST(INFO, LINK, START, AVAIL)**, here's what each part means:
-
-- **INFO:** The array holding all the actual data
-- **LINK:** The array holding all the pointers (addresses)
-- **START:** Pointer showing where the active list begins
-- **AVAIL:** Pointer showing where the free nodes list begins
-
-**Think of it as two separate lists sharing the same arrays:**
-1. Your **active list** (starts at START) - the data you're actually using
-2. Your **free list** (starts at AVAIL) - the recycled nodes ready for reuse
-
-### Example 5.10: Hospital Beds
-Using the hospital from Example 5.1, here's how empty beds are linked:
-
-| Bed | Patient | LINK |
-|-----|---------|------|
-| 1 | Kirk | 7 |
-| 2 | (empty) | 6 |
-| 3 | Dean | 11 |
-| 4 | Maxwell | 12 |
-| 5 | Adams | 3 |
-| 6 | (empty) | 0 |
-| 7 | Lane | 4 |
-| 8 | Green | 1 |
-| 9 | Samuels | 0 |
-| 10 | (empty) | 2 |
-| 11 | Fields | 8 |
-| 12 | Nelson | 9 |
-
-**START = 5** (patient list begins at Adams)  
-**AVAIL = 10** (free beds list begins at bed 10)
-
-Free beds chain: 10 → 2 → 6 → NULL
-
-### Garbage Collection (Automatic Cleanup)
-
-**What is garbage collection?**
-
-Sometimes memory gets "lost" - nodes that aren't being used but also aren't in the AVAIL list. Garbage collection is like a **cleanup crew** that finds this lost memory and adds it back to AVAIL.
-
-**How it works (two-step process):**
-
-1. **Mark Phase:** 
-   - Go through your active list
-   - Tag every node that's currently being used
-   - Think of it like putting sticky notes on items you want to keep
-
-2. **Collect Phase:**
-   - Find all nodes without tags (the "garbage")
-   - Add them back to the AVAIL list
-   - Now they're ready to be recycled!
-
-**When does it happen?**
-- When AVAIL list is empty or almost empty (running out of free nodes)
-- When the computer has idle time (not busy with other tasks)
-- Automatically in the background - you don't have to do anything!
-
-### Overflow and Underflow (Error Conditions)
-
-These are the two main errors that can happen with linked lists:
-
-#### ⚠️ OVERFLOW (Out of Space!)
-
-**What it means:** You're trying to add a new node, but AVAIL = NULL (the recycling bin is empty!)
-
-**Why it happens:**
-- You've used up all available memory
-- No more free nodes to recycle
-
-**What to do:**
-- Display an error message: "OVERFLOW - No space available"
-- Stop the insertion operation
-- Maybe delete some nodes to free up space
-
-#### ⚠️ UNDERFLOW (Nothing to Delete!)
-
-**What it means:** You're trying to delete from an empty list (START = NULL)
-
-**Why it happens:**
-- The list has zero nodes
-- You can't delete something that doesn't exist!
-
-**What to do:**
-- Display an error message: "UNDERFLOW - List is empty"
-- Stop the deletion operation
-
-> **💡 Remember:** 
-> - **OVERFLOW** = Too full (no free nodes)
-> - **UNDERFLOW** = Too empty (no nodes to delete)
-
-## 7. Adding Nodes to a Linked List (Insertion)
-
-### Three Ways to Insert a New Node
-
-When you want to add a new node to your linked list, you have three options depending on where you want to put it:
-
-1. **At the beginning** - Make it the new first node (fastest! ⚡)
-2. **After a specific node** - Insert it right after a node you already know
-3. **In a sorted list** - Find the right spot to keep the list in order
-
-### Common Steps for All Insertions (The Recipe)
-
-No matter which method you use, **every insertion follows these same basic steps:**
-
-**Step A: Check if you have space**
-```
-If AVAIL = NULL, then:
-    Print "OVERFLOW" and Exit
-    (Translation: The recycling bin is empty - no free nodes!)
-```
-
-**Step B: Grab a free node from AVAIL**
-```
-NEW = AVAIL
-(Take the first free node)
-
-AVAIL = LINK[AVAIL]
-(Update AVAIL to point to the next free node)
-```
-
-**Step C: Put your data in the new node**
-```
-INFO[NEW] = ITEM
-(Copy the data into the node you just grabbed)
-```
-
-**Then:** Connect it to the list (this part varies by method!)
-
-#### 🎨 Insertion Process Visualization
-
-```mermaid
-graph TB
-    subgraph "Step 1: Check Available Space"
-        A1["🔍 Check AVAIL"] --> B1{"AVAIL = NULL?"}
-        B1 -->|"❌ Yes"| C1["⚠️ OVERFLOW<br/>No space!"]
-        B1 -->|"✅ No"| D1["✓ Space available"]
-        style C1 fill:#f44336,color:#fff
-        style D1 fill:#4caf50,color:#fff
-    end
-    
-    subgraph "Step 2: Get New Node from AVAIL"
-        D2["📋 AVAIL List"] --> E2["🆕 NEW = AVAIL<br/>(Take first free node)"]
-        E2 --> F2["📋 AVAIL = LINK[AVAIL]<br/>(Update AVAIL pointer)"]
-        style E2 fill:#2196f3,color:#fff
-    end
-    
-    subgraph "Step 3: Prepare Node"
-        G3["📝 INFO[NEW] = ITEM<br/>(Copy data into node)"]
-        style G3 fill:#9c27b0,color:#fff
-    end
-    
-    subgraph "Step 4: Connect to List"
-        H4["🔗 LINK[NEW] = ...<br/>(Set pointer)"]
-        I4["🔗 Update previous node<br/>(Connect chain)"]
-        style H4 fill:#ff9800,color:#fff
-        style I4 fill:#ff9800,color:#fff
-    end
-    
-    D1 --> E2
-    F2 --> G3
-    G3 --> H4
-    H4 --> I4
-```
-
-> **💡 Memory Management:** The AVAIL list is like a recycling bin - when you delete nodes, they go back to AVAIL. When you insert, you take from AVAIL!
+### Common Linked List Operations
 
 ```mermaid
 graph TD
-    A[Check AVAIL] --> B{AVAIL = NULL?}
-    B -->|Yes| C[Print OVERFLOW]
-    B -->|No| D[Get node: NEW = AVAIL]
-    D --> E[Update AVAIL list]
-    E --> F[Copy data: INFO at NEW = ITEM]
-    F --> G[Connect to list]
+    A["Linked List Operations"] --> B["Traversal"]
+    A --> C["Searching"]
+    A --> D["Insertion"]
+    A --> E["Deletion"]
+    
+    B --> B1["Visit each node"]
+    C --> C1["Find specific data"]
+    D --> D1["Add new node"]
+    E --> E1["Remove node"]
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style E fill:#BD10E0,stroke:#333,stroke-width:2px,color:#fff
 ```
 
-### Method 1: Insert at Beginning
+---
 
-**Algorithm 5.4: INSFIRST**
+## Traversing a Linked List
+
+**In Simple Terms:** Traversing means visiting each node one by one from start to end.
+
+### C Program: Traversal
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void traverse(struct Node* head) {
+    struct Node* temp = head;
+    int position = 1;
+    
+    printf("Traversing the list:\n");
+    while(temp != NULL) {
+        printf("Node %d: %d\n", position, temp->data);
+        temp = temp->next;
+        position++;
+    }
+}
+
+int main() {
+    // Create a list: 10 -> 20 -> 30 -> NULL
+    struct Node* head = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* second = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* third = (struct Node*)malloc(sizeof(struct Node));
+    
+    head->data = 10;
+    head->next = second;
+    
+    second->data = 20;
+    second->next = third;
+    
+    third->data = 30;
+    third->next = NULL;
+    
+    traverse(head);
+    
+    return 0;
+}
 ```
-INSFIRST(INFO, LINK, START, AVAIL, ITEM)
-Purpose: Insert ITEM as the first node
 
-Step 1: [Check space] If AVAIL = NULL, then:
-            Print "OVERFLOW" and Exit
-            
-Step 2: [Get new node]
-        Set NEW = AVAIL
-        Set AVAIL = LINK[AVAIL]
-        
-Step 3: [Copy data]
-        Set INFO[NEW] = ITEM
-        
-Step 4: [Connect to list]
-        Set LINK[NEW] = START
-        
-Step 5: [Update START]
-        Set START = NEW
-        
-Step 6: Exit
+**Output:**
+```
+Traversing the list:
+Node 1: 10
+Node 2: 20
+Node 3: 30
 ```
 
-**Visual Example:**
-```
-Before:
-START → [A] → [B] → [C] → NULL
-AVAIL → [X] → [Y] → NULL
+---
 
-After inserting Z:
-START → [Z] → [A] → [B] → [C] → NULL
-AVAIL → [Y] → NULL
+## Searching
+
+**In Simple Terms:** Searching means finding if a specific value exists in the list.
+
+### C Program: Search
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+int search(struct Node* head, int key) {
+    struct Node* temp = head;
+    int position = 1;
+    
+    while(temp != NULL) {
+        if(temp->data == key) {
+            return position;  // Found
+        }
+        temp = temp->next;
+        position++;
+    }
+    
+    return -1;  // Not found
+}
+
+int main() {
+    // Create list: 10 -> 20 -> 30 -> NULL
+    struct Node* head = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* second = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* third = (struct Node*)malloc(sizeof(struct Node));
+    
+    head->data = 10;
+    head->next = second;
+    
+    second->data = 20;
+    second->next = third;
+    
+    third->data = 30;
+    third->next = NULL;
+    
+    // Search for values
+    int key1 = 20;
+    int key2 = 40;
+    
+    int pos1 = search(head, key1);
+    if(pos1 != -1) {
+        printf("%d found at position %d\n", key1, pos1);
+    } else {
+        printf("%d not found\n", key1);
+    }
+    
+    int pos2 = search(head, key2);
+    if(pos2 != -1) {
+        printf("%d found at position %d\n", key2, pos2);
+    } else {
+        printf("%d not found\n", key2);
+    }
+    
+    return 0;
+}
 ```
 
-#### 🎥 Animated Insertion Example
+**Output:**
+```
+20 found at position 2
+40 not found
+```
+
+---
+
+## Insertion
+
+### Three Types of Insertion
 
 ```mermaid
-graph TB
-    subgraph "Step 1: Initial State"
-        S1_START["🎯 START"] --> S1_A["Node A"]
-        S1_A --> S1_B["Node B"]
-        S1_B --> S1_C["Node C"]
-        S1_C --> S1_NULL["∅"]
-        
-        S1_AVAIL["📋 AVAIL"] --> S1_X["Free Node X"]
-        S1_X --> S1_Y["Free Node Y"]
-        
-        style S1_A fill:#e8f5e9
-        style S1_B fill:#e8f5e9
-        style S1_C fill:#e8f5e9
-        style S1_X fill:#fff9c4
-    end
+graph TD
+    A["Insertion Types"] --> B["At Beginning"]
+    A --> C["At End"]
+    A --> D["At Middle"]
     
-    subgraph "Step 2: Get Node from AVAIL"
-        S2_NEW["🆕 NEW"] -.->|"Points to"| S2_X["Node X<br/>(Claimed)"]
-        S2_AVAIL["📋 AVAIL"] -.->|"Now points to"| S2_Y["Free Node Y"]
-        
-        style S2_X fill:#4caf50,color:#fff
-        style S2_NEW fill:#ff9800,color:#fff
-    end
+    B --> B1["Fastest: O(1)"]
+    C --> C1["Slower: O(n)"]
+    D --> D1["Medium: O(n)"]
     
-    subgraph "Step 3: Copy Data & Link"
-        S3_X["Node X<br/>Data: Z<br/>LINK: →A"]
-        S3_A["Node A"]
-        S3_X --> S3_A
-        
-        style S3_X fill:#2196f3,color:#fff
-    end
-    
-    subgraph "Step 4: Final State"
-        S4_START["🎯 START"] --> S4_Z["Node Z"]
-        S4_Z --> S4_A["Node A"]
-        S4_A --> S4_B["Node B"]
-        S4_B --> S4_C["Node C"]
-        S4_C --> S4_NULL["∅"]
-        
-        S4_AVAIL["📋 AVAIL"] --> S4_Y["Free Node Y"]
-        
-        style S4_Z fill:#4caf50,color:#fff
-        style S4_A fill:#e8f5e9
-        style S4_B fill:#e8f5e9
-        style S4_C fill:#e8f5e9
-    end
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
 ```
 
-> **📌 Key Steps:**
-> 1. **Claim:** Take first node from AVAIL (NEW = AVAIL)
-> 2. **Update AVAIL:** Move AVAIL pointer to next free node
-> 3. **Prepare:** Put data in new node and make it point to current first node
-> 4. **Connect:** Update START to point to new node
+---
 
-### Example 5.14: Adding to Geometry List
-Adding score 75 to beginning of GEOM list:
-
-**Before:**
-- AVAIL = 9
-- GEOM = 5
-- TEST[5] = 84 (first score)
+### 1. Insert at Beginning
 
 **Steps:**
-1. Check: AVAIL ≠ NULL ✓
-2. NEW = 9, then AVAIL = LINK[9] = 10
-3. TEST[9] = 75
-4. LINK[9] = 5 (point to old first node)
-5. GEOM = 9 (new first node)
+1. Create new node
+2. Point new node to current head
+3. Update head to new node
 
-**After:**
-- AVAIL = 10
-- GEOM = 9
-- TEST[9] = 75 (new first score)
-- LINK[9] = 5 (points to 84)
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
-### Method 2: Insert After a Given Node
+struct Node {
+    int data;
+    struct Node* next;
+};
 
-**Algorithm 5.5: INSLOC**
-```
-INSLOC(INFO, LINK, START, AVAIL, LOC, ITEM)
-Purpose: Insert ITEM after the node at location LOC
-         (If LOC = NULL, insert as first node)
+void insertAtBeginning(struct Node** head, int newData) {
+    // Create new node
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    
+    // Assign data
+    newNode->data = newData;
+    
+    // Point to current head
+    newNode->next = *head;
+    
+    // Update head
+    *head = newNode;
+}
 
-Step 1: [Check space] If AVAIL = NULL, then:
-            Print "OVERFLOW" and Exit
-            
-Step 2: [Get new node]
-        Set NEW = AVAIL
-        Set AVAIL = LINK[AVAIL]
-        
-Step 3: [Copy data]
-        Set INFO[NEW] = ITEM
-        
-Step 4: [Insert into list]
-        If LOC = NULL, then:
-            Set LINK[NEW] = START
-            Set START = NEW
-        Else:
-            Set LINK[NEW] = LINK[LOC]
-            Set LINK[LOC] = NEW
-            
-Step 5: Exit
-```
+void printList(struct Node* head) {
+    struct Node* temp = head;
+    while(temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
 
-**Visual Example:**
-```
-Inserting X after node A:
-Before:
-START → [A] → [B] → [C] → NULL
-         ↑
-        LOC
-
-After:
-START → [A] → [X] → [B] → [C] → NULL
-         ↑     ↑
-        LOC   NEW
-```
-
-### Method 3: Insert in Sorted List
-For a sorted list, we need to find where to insert to maintain order.
-
-**Procedure 5.6: FINDA**
-```
-FINDA(INFO, LINK, START, ITEM, LOC)
-Purpose: Find the location LOC of the last node where INFO[LOC] < ITEM
-
-Step 1: [Empty list?]
-        If START = NULL, then:
-            Set LOC = NULL and Return
-            
-Step 2: [ITEM goes first?]
-        If ITEM < INFO[START], then:
-            Set LOC = NULL and Return
-            
-Step 3: [Initialize]
-        Set SAVE = START
-        Set PTR = LINK[START]
-        
-Step 4: [Search] While PTR ≠ NULL, repeat:
-    Step 5: If ITEM < INFO[PTR], then:
-                Set LOC = SAVE and Return
-    Step 6: Set SAVE = PTR
-            Set PTR = LINK[PTR]
-            
-Step 7: [ITEM goes at end]
-        Set LOC = SAVE
-        
-Step 8: Return
+int main() {
+    struct Node* head = NULL;
+    
+    printf("Original list: ");
+    printList(head);
+    
+    insertAtBeginning(&head, 30);
+    printf("After inserting 30: ");
+    printList(head);
+    
+    insertAtBeginning(&head, 20);
+    printf("After inserting 20: ");
+    printList(head);
+    
+    insertAtBeginning(&head, 10);
+    printf("After inserting 10: ");
+    printList(head);
+    
+    return 0;
+}
 ```
 
-**Algorithm 5.7: INSERT (Complete Sorted Insertion)**
+**Output:**
 ```
-INSERT(INFO, LINK, START, AVAIL, ITEM)
-Purpose: Insert ITEM into a sorted list
-
-Step 1: [Find position]
-        Call FINDA(INFO, LINK, START, ITEM, LOC)
-        
-Step 2: [Insert after LOC]
-        Call INSLOC(INFO, LINK, START, AVAIL, LOC, ITEM)
-        
-Step 3: Exit
+Original list: NULL
+After inserting 30: 30 -> NULL
+After inserting 20: 20 -> 30 -> NULL
+After inserting 10: 10 -> 20 -> 30 -> NULL
 ```
 
-### Example 5.15: Adding Jones to Patient List
-Patient list (alphabetical): Adams, Dean, Fields, Green, Kirk, Lane, Maxwell, Nelson, Samuels
+---
 
-Adding: Jones
+### 2. Insert at End
 
-**Step 1: Find location (FINDA)**
-- Start: SAVE = 5 (Adams), PTR = 3 (Dean)
-- Dean < Jones: SAVE = 3, PTR = 11 (Fields)
-- Fields < Jones: SAVE = 11, PTR = 8 (Green)
-- Green < Jones: SAVE = 8, PTR = 1 (Kirk)
-- Kirk > Jones: LOC = SAVE = 8 (insert after Green)
+```c
+void insertAtEnd(struct Node** head, int newData) {
+    // Create new node
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = newData;
+    newNode->next = NULL;
+    
+    // If list is empty
+    if(*head == NULL) {
+        *head = newNode;
+        return;
+    }
+    
+    // Traverse to last node
+    struct Node* temp = *head;
+    while(temp->next != NULL) {
+        temp = temp->next;
+    }
+    
+    // Link last node to new node
+    temp->next = newNode;
+}
+```
 
-**Step 2: Insert (INSLOC with LOC = 8)**
-- NEW = 10 (first available)
-- AVAIL = LINK[10] = 2
-- BED[10] = Jones
-- LINK[10] = LINK[8] = 1 (point to Kirk)
-- LINK[8] = 10 (Green now points to Jones)
+---
 
-**Result:** Adams → Dean → Fields → Green → Jones → Kirk → ...
+### 3. Insert at Position
 
-## 8. Removing Nodes from a Linked List (Deletion)
+```c
+void insertAtPosition(struct Node** head, int newData, int position) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = newData;
+    
+    // Insert at beginning
+    if(position == 1) {
+        newNode->next = *head;
+        *head = newNode;
+        return;
+    }
+    
+    // Traverse to position-1
+    struct Node* temp = *head;
+    for(int i = 1; i < position - 1 && temp != NULL; i++) {
+        temp = temp->next;
+    }
+    
+    // Insert node
+    if(temp != NULL) {
+        newNode->next = temp->next;
+        temp->next = newNode;
+    }
+}
+```
 
-### How Deletion Works (The Two-Step Dance)
+---
 
-Deleting a node is like removing a link from a chain. You need to:
+## Deletion
 
-**Step 1: Bypass the node** (Skip over it in the chain)
-- Make the previous node point directly to the next node
-- The deleted node is now "disconnected" from the list
+### Three Types of Deletion
 
-**Step 2: Recycle the node** (Return it to AVAIL)
-- Add the deleted node back to the AVAIL list
-- Now it's available for future use!
+```mermaid
+graph TD
+    A["Deletion Types"] --> B["Delete First Node"]
+    A --> C["Delete Last Node"]
+    A --> D["Delete Specific Node"]
+    
+    B --> B1["Fastest: O(1)"]
+    C --> C1["Slower: O(n)"]
+    D --> D1["Medium: O(n)"]
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+```
 
-**Think of it like:**
-- Removing someone from a line of people holding hands
-- First: The people on either side join hands (bypass)
-- Second: The removed person goes to the "waiting area" (AVAIL)
+---
+
+### 1. Delete First Node
+
+```c
+void deleteFirst(struct Node** head) {
+    if(*head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    
+    struct Node* temp = *head;
+    *head = (*head)->next;
+    free(temp);
+}
+```
+
+---
+
+### 2. Delete by Value
+
+```c
+void deleteByValue(struct Node** head, int key) {
+    struct Node* temp = *head;
+    struct Node* prev = NULL;
+    
+    // If head node contains the key
+    if(temp != NULL && temp->data == key) {
+        *head = temp->next;
+        free(temp);
+        return;
+    }
+    
+    // Search for the key
+    while(temp != NULL && temp->data != key) {
+        prev = temp;
+        temp = temp->next;
+    }
+    
+    // Key not found
+    if(temp == NULL) {
+        printf("%d not found in list\n", key);
+        return;
+    }
+    
+    // Unlink the node
+    prev->next = temp->next;
+    free(temp);
+}
+```
+
+---
+
+### Complete Deletion Example
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void insertAtEnd(struct Node** head, int newData) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = newData;
+    newNode->next = NULL;
+    
+    if(*head == NULL) {
+        *head = newNode;
+        return;
+    }
+    
+    struct Node* temp = *head;
+    while(temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+}
+
+void deleteByValue(struct Node** head, int key) {
+    struct Node* temp = *head;
+    struct Node* prev = NULL;
+    
+    if(temp != NULL && temp->data == key) {
+        *head = temp->next;
+        free(temp);
+        printf("Deleted %d\n", key);
+        return;
+    }
+    
+    while(temp != NULL && temp->data != key) {
+        prev = temp;
+        temp = temp->next;
+    }
+    
+    if(temp == NULL) {
+        printf("%d not found\n", key);
+        return;
+    }
+    
+    prev->next = temp->next;
+    free(temp);
+    printf("Deleted %d\n", key);
+}
+
+void printList(struct Node* head) {
+    struct Node* temp = head;
+    while(temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+    
+    // Create list: 10 -> 20 -> 30 -> 40 -> NULL
+    insertAtEnd(&head, 10);
+    insertAtEnd(&head, 20);
+    insertAtEnd(&head, 30);
+    insertAtEnd(&head, 40);
+    
+    printf("Original list: ");
+    printList(head);
+    
+    deleteByValue(&head, 20);
+    printf("After deleting 20: ");
+    printList(head);
+    
+    deleteByValue(&head, 50);
+    
+    return 0;
+}
+```
+
+**Output:**
+```
+Original list: 10 -> 20 -> 30 -> 40 -> NULL
+Deleted 20
+After deleting 20: 10 -> 30 -> 40 -> NULL
+50 not found
+```
+
+---
+
+## Circular Linked Lists
+
+**In Simple Terms:** The last node points back to the first node instead of NULL, forming a circle!
 
 ```mermaid
 graph LR
-    A[Node A] --> N[Node N<br/>TO DELETE]
-    N --> B[Node B]
+    A["Node 1: 10"] --> B["Node 2: 20"]
+    B --> C["Node 3: 30"]
+    C --> A
     
-    style N fill:#ffcccc
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
 ```
-
-After deletion:
-```mermaid
-graph LR
-    A[Node A] -.-> N[Node N<br/>DELETED]
-    A --> B[Node B]
-    N --> AV[AVAIL List]
-    
-    style N fill:#ffcccc
-```
-
-#### 🗑️ Complete Deletion Process
-
-```mermaid
-graph TB
-    subgraph "Before Deletion"
-        B1["Node A"] --> B2["Node N<br/>(TO DELETE)"]
-        B2 --> B3["Node B"]
-        B3 --> B4["Node C"]
-        
-        style B2 fill:#ffcccc
-    end
-    
-    subgraph "Step 1: Bypass Node"
-        S1["Node A"] -.->|"Old link"| S2["Node N"]
-        S1 -->|"✨ New link"| S3["Node B"]
-        S2 -.-> S3
-        S3 --> S4["Node C"]
-        
-        style S2 fill:#ffcccc
-        style S1 fill:#fff9c4
-    end
-    
-    subgraph "Step 2: Return to AVAIL"
-        A1["Node A"] --> A2["Node B"]
-        A2 --> A3["Node C"]
-        
-        AV["🔄 AVAIL"] --> N1["Node N<br/>(Recycled)"]
-        N1 --> N2["Other free nodes"]
-        
-        style N1 fill:#c8e6c9
-        style AV fill:#4caf50,color:#fff
-    end
-```
-
-> **♻️ Memory Recycling:** Deletion is a 2-step process:
-> 1. **Bypass:** Make the previous node skip over the deleted node
-> 2. **Recycle:** Add the deleted node back to AVAIL for future use
-
-### Key Steps in Any Deletion
-
-**Step 1: Change pointers to skip the deleted node**
-```
-LINK[previous node] = LINK[deleted node]
-```
-
-**Step 2: Return deleted node to AVAIL**
-```
-LINK[deleted node] = AVAIL
-AVAIL = deleted node location
-```
-
-### Example 5.16: Deleting Green from Hospital
-
-**Before:**
-- Fields (bed 11) → Green (bed 8) → Kirk (bed 1)
-- AVAIL = 2
-
-**Changes needed:**
-- LINK[11] = 10 (Fields now points to Jones, skipping Green)
-- LINK[8] = 2 (Green's old link)
-- AVAIL = 8 (Green's bed is now first in AVAIL)
-
-**After:**
-- Fields (bed 11) → Jones (bed 10) → Kirk (bed 1)
-- AVAIL = 8 → 2 → 6
-
-### Method 1: Delete Node After Given Location
-
-**Algorithm 5.8: DEL**
-```
-DEL(INFO, LINK, START, AVAIL, LOC, LOCP)
-Purpose: Delete node at LOC, where LOCP is the previous node
-         (If node is first, LOCP = NULL)
-
-Step 1: [Delete from list]
-        If LOCP = NULL, then:
-            Set START = LINK[START] (delete first node)
-        Else:
-            Set LINK[LOCP] = LINK[LOC] (skip over deleted node)
-            
-Step 2: [Return to AVAIL]
-        Set LINK[LOC] = AVAIL
-        Set AVAIL = LOC
-        
-Step 3: Exit
-```
-
-**Visual: Deleting First Node**
-```
-Before:
-START → [Node 1] → [Node 2] → [Node 3] → NULL
-
-After START = LINK[START]:
-START → [Node 2] → [Node 3] → NULL
-```
-
-### Method 2: Delete Node Containing Specific Item
-First, we need to find the node and its predecessor.
-
-**Procedure 5.9: FINDB**
-```
-FINDB(INFO, LINK, START, ITEM, LOC, LOCP)
-Purpose: Find location LOC of node containing ITEM
-         and location LOCP of the previous node
-
-Step 1: [Empty list?]
-        If START = NULL, then:
-            Set LOC = NULL, LOCP = NULL
-            Return
-            
-Step 2: [First node?]
-        If INFO[START] = ITEM, then:
-            Set LOC = START, LOCP = NULL
-            Return
-            
-Step 3: [Initialize]
-        Set SAVE = START
-        Set PTR = LINK[START]
-        
-Step 4: [Search] While PTR ≠ NULL, repeat:
-    Step 5: If INFO[PTR] = ITEM, then:
-                Set LOC = PTR, LOCP = SAVE
-                Return
-    Step 6: Set SAVE = PTR
-            Set PTR = LINK[PTR]
-            
-Step 7: [Not found]
-        Set LOC = NULL
-        
-Step 8: Return
-```
-
-**Algorithm 5.10: DELETE**
-```
-DELETE(INFO, LINK, START, AVAIL, ITEM)
-Purpose: Delete first node containing ITEM
-
-Step 1: [Find node]
-        Call FINDB(INFO, LINK, START, ITEM, LOC, LOCP)
-        
-Step 2: [Check if found]
-        If LOC = NULL, then:
-            Print "ITEM not in list"
-            Exit
-            
-Step 3: [Delete]
-        If LOCP = NULL, then:
-            Set START = LINK[START]
-        Else:
-            Set LINK[LOCP] = LINK[LOC]
-            
-Step 4: [Return to AVAIL]
-        Set LINK[LOC] = AVAIL
-        Set AVAIL = LOC
-        
-Step 5: Exit
-```
-
-### Example 5.17: Deleting Green (Full Process)
-Patient list: Adams → Dean → Fields → Green → Jones → Kirk → ...
-
-**Step 1: Find Green and predecessor (FINDB)**
-- Start checking: Adams ≠ Green, Dean ≠ Green, Fields ≠ Green
-- Found: Green at bed 8
-- Predecessor: Fields at bed 11
-- Result: LOC = 8, LOCP = 11
-
-**Step 2-4: Delete (DELETE algorithm)**
-- LOC ≠ NULL, so proceed
-- LOCP ≠ NULL, so: LINK[11] = LINK[8] = 10
-- Return to AVAIL: LINK[8] = 2, AVAIL = 8
-
-**After deletion:**
-- Fields (11) → Jones (10) → Kirk (1) → ...
-- AVAIL = 8 → 2 → 6
-
-## 9. Special Types of Linked Lists
-
-### Header Linked Lists (Lists with a Special First Node)
-
-**What's different?**
-
-A header list always has a **special header node** at the very beginning - even when the list is "empty"!
-
-**Think of it like:**
-- A train where the engine (header) is always there, even if there are no passenger cars
-- A necklace where the clasp (header) is always present, even if there are no beads
-
-**Two flavors:**
-
-1. **Grounded Header List:** 
-   - Last node points to NULL (normal ending)
-   - Like a train track that ends at a station
-   
-2. **Circular Header List:** 
-   - Last node points back to the header (forms a circle)
-   - Like a race track that loops back to the start
-
-```mermaid
-graph LR
-    A[Grounded] --> H1[Header] --> N1[Node 1] --> N2[Node 2] --> NULL[NULL]
-    
-    B[Circular] --> H2[Header] --> N3[Node 1] --> N4[Node 2] --> H2
-```
-
-### Why Use Header Lists? (The Benefits)
-
-**Header lists make your life easier!** Here's why:
 
 **Advantages:**
+- [v] Can traverse from any node
+- [v] Useful for round-robin scheduling
+- [v] No NULL pointers to check
 
-1. **No NULL pointer headaches** (in circular version)
-   - You never hit NULL, so no need to constantly check for it
-   - Simpler code with fewer "if" statements
+### C Program: Circular Linked List
 
-2. **Every node has a predecessor**
-   - Even the "first" data node has the header before it
-   - Makes deletion much easier - no special cases!
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
-3. **Simpler algorithms**
-   - Fewer edge cases to worry about
-   - Cleaner, more elegant code
+struct Node {
+    int data;
+    struct Node* next;
+};
 
-4. **Bonus: Store metadata in the header**
-   - Count of nodes
-   - Sum of values
-   - List name or ID
-   - Any summary information you want!
-
-**How to detect an empty list:**
-- **Grounded:** LINK[START] = NULL means empty
-- **Circular:** LINK[START] = START means empty (header points to itself)
-
-#### 🎯 Why Header Lists Are Powerful
-
-```mermaid
-graph TB
-    subgraph "Regular List Problems"
-        R1["❌ Must check for NULL<br/>before every operation"]
-        R2["❌ First node has no<br/>predecessor (special case)"]
-        R3["❌ Empty list needs<br/>special handling"]
-        R4["❌ More complex<br/>algorithms"]
-        
-        style R1 fill:#ffebee
-        style R2 fill:#ffebee
-        style R3 fill:#ffebee
-        style R4 fill:#ffebee
-    end
+void insertCircular(struct Node** head, int newData) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = newData;
     
-    subgraph "Header List Benefits"
-        H1["✅ No NULL checks<br/>(in circular version)"]
-        H2["✅ Every node has<br/>a predecessor"]
-        H3["✅ Empty list still<br/>has header node"]
-        H4["✅ Simpler, cleaner<br/>algorithms"]
-        
-        style H1 fill:#e8f5e9
-        style H2 fill:#e8f5e9
-        style H3 fill:#e8f5e9
-        style H4 fill:#e8f5e9
-    end
-```
-
-#### 📊 Header Node Use Cases
-
-```mermaid
-graph LR
-    H["🎯 Header Node"] --> U1["Store metadata<br/>(count, sum, etc.)"]
-    H --> U2["Simplify algorithms<br/>(no special cases)"]
-    H --> U3["Mark list identity<br/>(name, ID)"]
-    H --> U4["Circular linking<br/>(easier traversal)"]
+    if(*head == NULL) {
+        *head = newNode;
+        newNode->next = *head;  // Points to itself
+        return;
+    }
     
-    style H fill:#4a90e2,color:#fff
-    style U1 fill:#e3f2fd
-    style U2 fill:#e3f2fd
-    style U3 fill:#e3f2fd
-    style U4 fill:#e3f2fd
-```
-
-### Example 5.18: Personnel File with Header
-
-| Index | NAME | SSN | SEX | SALARY | LINK |
-|-------|------|-----|-----|--------|------|
-| 5 | (HEADER) | 9 | | 191,600 | 6 |
-| 6 | Brown | 178-52-1065 | Female | 14,700 | 9 |
-| 9 | Cohen | 177-44-4557 | Male | 19,000 | 2 |
-| 2 | Davis | 192-38-7282 | Female | 22,800 | 12 |
-| ... | ... | ... | ... | ... | ... |
-
-**START = 5** (points to header)
-
-Header holds summary data:
-- SSN[5] = 9 (number of employees)
-- SALARY[5] = 191,600 (total salary)
-
-### Algorithm 5.11: Traversing Circular Header List
-```
-Step 1: Set PTR = LINK[START] (start at first real node, not header)
-Step 2: While PTR ≠ START, repeat: (stop when back at header)
-    Step 3: Process INFO[PTR]
-    Step 4: Set PTR = LINK[PTR]
-Step 5: Exit
-```
-
-### Simpler Searching with Headers
-
-**Algorithm 5.12: SRCHHL (Circular Header)**
-```
-SRCHHL(INFO, LINK, START, ITEM, LOC)
-Purpose: Find ITEM in circular header list
-
-Step 1: Set PTR = LINK[START]
-
-Step 2: While INFO[PTR] ≠ ITEM and PTR ≠ START:
-            Set PTR = LINK[PTR]
-            
-Step 3: If INFO[PTR] = ITEM, then:
-            Set LOC = PTR
-        Else:
-            Set LOC = NULL
-            
-Step 4: Exit
-```
-
-**Why simpler?**
-- Can check both conditions at once (INFO[PTR] is always defined)
-- With regular lists, can't check INFO[PTR] when PTR = NULL
-
-### Simpler Deletion with Headers
-
-**Procedure 5.13: FINDBHL**
-```
-FINDBHL(INFO, LINK, START, ITEM, LOC, LOCP)
-Purpose: Find node and predecessor in header list
-
-Step 1: [Initialize]
-        Set SAVE = START
-        Set PTR = LINK[START]
-        
-Step 2: [Search] While INFO[PTR] ≠ ITEM and PTR ≠ START:
-            Set SAVE = PTR
-            Set PTR = LINK[PTR]
-            
-Step 3: [Check result]
-        If INFO[PTR] = ITEM, then:
-            Set LOC = PTR, LOCP = SAVE
-        Else:
-            Set LOC = NULL, LOCP = SAVE
-            
-Step 4: Return
-```
-
-**Algorithm 5.14: DELLOCHL**
-```
-DELLOCHL(INFO, LINK, START, AVAIL, ITEM)
-Purpose: Delete ITEM from circular header list
-
-Step 1: Call FINDBHL(INFO, LINK, START, ITEM, LOC, LOCP)
-
-Step 2: If LOC = NULL, then:
-            Print "ITEM not in list"
-            Exit
-            
-Step 3: Set LINK[LOCP] = LINK[LOC] (delete node)
-
-Step 4: Set LINK[LOC] = AVAIL (return to AVAIL)
-        Set AVAIL = LOC
-        
-Step 5: Exit
-```
-
-**No special case needed!** Don't need to check if deleting first node because header always exists.
-
-### 📊 Visual Comparison: All List Types
-
-```mermaid
-graph TB
-    subgraph "1. One-Way List (Basic)"
-        O_START["🎯 START"] --> O1["A | →"]
-        O1 --> O2["B | →"]
-        O2 --> O3["C | →"]
-        O3 --> O_NULL["∅"]
-        
-        style O1 fill:#e3f2fd
-        style O2 fill:#e3f2fd
-        style O3 fill:#e3f2fd
-    end
+    struct Node* temp = *head;
+    while(temp->next != *head) {
+        temp = temp->next;
+    }
     
-    subgraph "2. Circular List (No NULL)"
-        C_START["🎯 START"] --> C1["A | →"]
-        C1 --> C2["B | →"]
-        C2 --> C3["C | →"]
-        C3 --> C1
-        
-        style C1 fill:#fff9c4
-        style C2 fill:#fff9c4
-        style C3 fill:#fff9c4
-    end
+    temp->next = newNode;
+    newNode->next = *head;
+}
+
+void printCircular(struct Node* head) {
+    if(head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
     
-    subgraph "3. Header List (Special First)"
-        H_START["🎯 START"] --> H0["🎯 HEADER<br/>(Metadata)"]
-        H0 --> H1["A | →"]
-        H1 --> H2["B | →"]
-        H2 --> H3["C | →"]
-        H3 --> H_NULL["∅"]
-        
-        style H0 fill:#4caf50,color:#fff
-        style H1 fill:#e8f5e9
-        style H2 fill:#e8f5e9
-        style H3 fill:#e8f5e9
-    end
+    struct Node* temp = head;
+    printf("Circular List: ");
+    do {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    } while(temp != head);
+    printf("(back to start)\n");
+}
+
+int main() {
+    struct Node* head = NULL;
     
-    subgraph "4. Two-Way List (Bidirectional)"
-        T_FIRST["🎯 FIRST"] --> T1["← | A | →"]
-        T1 <--> T2["← | B | →"]
-        T2 <--> T3["← | C | →"]
-        T_LAST["🎯 LAST"] --> T3
-        
-        style T1 fill:#f3e5f5
-        style T2 fill:#f3e5f5
-        style T3 fill:#f3e5f5
-        style T_FIRST fill:#4caf50,color:#fff
-        style T_LAST fill:#f44336,color:#fff
-    end
+    insertCircular(&head, 10);
+    insertCircular(&head, 20);
+    insertCircular(&head, 30);
+    
+    printCircular(head);
+    
+    return 0;
+}
 ```
 
-> **🎯 Choosing the Right Type:**
-> - **One-Way:** Simple, memory-efficient, forward-only traversal
-> - **Circular:** No NULL checks, continuous traversal, good for round-robin
-> - **Header:** Simplified algorithms, can store metadata, no special cases
-> - **Two-Way:** Backward traversal, easy deletion, more memory overhead
+**Output:**
+```
+Circular List: 10 -> 20 -> 30 -> (back to start)
+```
 
-### Storing Polynomials
-Header lists are perfect for polynomials because the header can store the polynomial's name/identifier.
+---
 
-**Example:** p(x) = 2x⁸ - 5x⁷ - 3x² + 4
+## Two-Way Linked Lists
+
+**In Simple Terms:** Each node has TWO pointers - one to the next node and one to the previous node!
 
 ```mermaid
 graph LR
-    H[Header<br/>EXP=-1] --> N1[2, 8<br/>coef, exp]
-    N1 --> N2[-5, 7]
-    N2 --> N3[-3, 2]
-    N3 --> N4[4, 0]
-    N4 --> H
+    A["Node 1: 10"] --> B["Node 2: 20"]
+    B --> A
+    B --> C["Node 3: 30"]
+    C --> B
+    
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
 ```
 
-Each node stores:
-- **COEF:** Coefficient of the term
-- **EXP:** Exponent of the term
-- **LINK:** Pointer to next term
+**Advantages:**
+- [v] Can traverse forward AND backward
+- [v] Easier deletion (don't need previous node)
+- [v] Can insert before a node easily
 
-Terms are ordered by decreasing exponent.
+**Disadvantages:**
+- [x] Extra memory for backward pointer
+- [x] More pointers to update
 
-## 10. Two-Way Lists (Doubly-Linked Lists)
+### C Program: Doubly Linked List
 
-### What is a Two-Way List?
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
-**Simple definition:** A two-way list lets you **move in both directions** - forward AND backward!
+struct Node {
+    int data;
+    struct Node* next;
+    struct Node* prev;
+};
 
-**Think of it like:**
-- A two-way street where you can drive in either direction
-- A book where you can flip pages forward or backward
-- A music playlist where you can go to next song OR previous song
+void insertAtEnd(struct Node** head, int newData) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = newData;
+    newNode->next = NULL;
+    
+    if(*head == NULL) {
+        newNode->prev = NULL;
+        *head = newNode;
+        return;
+    }
+    
+    struct Node* temp = *head;
+    while(temp->next != NULL) {
+        temp = temp->next;
+    }
+    
+    temp->next = newNode;
+    newNode->prev = temp;
+}
 
-### Node Structure (Three Parts Instead of Two)
+void printForward(struct Node* head) {
+    printf("Forward: ");
+    while(head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
 
-Each node now has **three compartments:**
+void printBackward(struct Node* head) {
+    if(head == NULL) return;
+    
+    // Go to last node
+    while(head->next != NULL) {
+        head = head->next;
+    }
+    
+    printf("Backward: ");
+    while(head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->prev;
+    }
+    printf("NULL\n");
+}
 
-1. **BACK:** Pointer to the **previous** node (backward direction) ⬅️
-2. **INFO:** The actual data (same as before) 📊
-3. **FORW:** Pointer to the **next** node (forward direction) ➡️
+int main() {
+    struct Node* head = NULL;
+    
+    insertAtEnd(&head, 10);
+    insertAtEnd(&head, 20);
+    insertAtEnd(&head, 30);
+    
+    printForward(head);
+    printBackward(head);
+    
+    return 0;
+}
+```
+
+**Output:**
+```
+Forward: 10 -> 20 -> 30 -> NULL
+Backward: 30 -> 20 -> 10 -> NULL
+```
+
+---
+
+## Practice Exercises
+
+### Exercise 1: Count Nodes
+
+**Question:** Write a function to count the number of nodes in a linked list.
+
+<details>
+<summary>Click for answer</summary>
+
+```c
+int countNodes(struct Node* head) {
+    int count = 0;
+    struct Node* temp = head;
+    
+    while(temp != NULL) {
+        count++;
+        temp = temp->next;
+    }
+    
+    return count;
+}
+```
+</details>
+
+---
+
+### Exercise 2: Find Middle Node
+
+**Question:** Write a function to find the middle node of a linked list.
+
+<details>
+<summary>Click for answer</summary>
+
+```c
+int findMiddle(struct Node* head) {
+    struct Node* slow = head;
+    struct Node* fast = head;
+    
+    // Fast pointer moves twice as fast
+    while(fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    
+    return slow->data;
+}
+```
+
+**Explanation:** Use two pointers - slow moves 1 step, fast moves 2 steps. When fast reaches end, slow is at middle!
+</details>
+
+---
+
+### Exercise 3: Reverse a Linked List
+
+**Question:** Write a function to reverse a linked list.
+
+<details>
+<summary>Click for answer</summary>
+
+```c
+void reverse(struct Node** head) {
+    struct Node* prev = NULL;
+    struct Node* current = *head;
+    struct Node* next = NULL;
+    
+    while(current != NULL) {
+        next = current->next;  // Save next
+        current->next = prev;  // Reverse link
+        prev = current;        // Move prev forward
+        current = next;        // Move current forward
+    }
+    
+    *head = prev;
+}
+```
+
+**Explanation:** Change the direction of all pointers by traversing and reversing each link.
+</details>
+
+---
+
+### Exercise 4: Detect Loop
+
+**Question:** How do you detect if a linked list has a loop?
+
+<details>
+<summary>Click for answer</summary>
+
+```c
+int hasLoop(struct Node* head) {
+    struct Node* slow = head;
+    struct Node* fast = head;
+    
+    while(fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+        
+        if(slow == fast) {
+            return 1;  // Loop detected
+        }
+    }
+    
+    return 0;  // No loop
+}
+```
+
+**Explanation:** Floyd's Cycle Detection (Tortoise and Hare). If there's a loop, fast will eventually catch up to slow!
+</details>
+
+---
+
+## 📚 Algorithms from Chapter 5
+
+This section covers all algorithms from the Schaum's Data Structures textbook Chapter 5, with easy explanations and visual diagrams.
+
+---
+
+## Algorithm 5.1: Traversing a Linked List
+
+### Problem Statement
+**Given:** A linked list in memory with START pointer and NULL end marker  
+**Task:** Visit each node exactly once and process its information
+
+### The Idea (Super Simple!)
+
+Think of visiting houses on a street:
+1. Start at the first house (START)
+2. Visit the house, do what you need to do
+3. Follow the arrow to the next house
+4. Keep going until you reach "END" (NULL)
+
+### Algorithm (Textbook Format)
+
+```
+Algorithm 5.1: TRAVERSING A LINKED LIST
+════════════════════════════════════════
+Let LIST be a linked list in memory. This algorithm 
+traverses LIST, applying an operation PROCESS to each 
+element of LIST. The variable PTR points to the node 
+currently being processed.
+
+1. Set PTR := START. [Initializes pointer PTR.]
+2. Repeat Steps 3 and 4 while PTR ≠ NULL.
+3.     Apply PROCESS to INFO[PTR].
+4.     Set PTR := LINK[PTR]. [PTR now points to the next node.]
+   [End of Step 2 loop.]
+5. Exit.
+```
+
+### Visual Flowchart
+
+```mermaid
+flowchart TD
+    START_NODE([Start]) --> INIT["PTR ← START"]
+    INIT --> CHECK{"PTR ≠ NULL?"}
+    CHECK -->|No| STOP([Stop])
+    CHECK -->|Yes| PROCESS["Process INFO[PTR]"]
+    PROCESS --> UPDATE["PTR ← LINK[PTR]"]
+    UPDATE --> CHECK
+    
+    style START_NODE fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style STOP fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style CHECK fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style PROCESS fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style INIT fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
+```
+
+### Step-by-Step Trace
+
+**Given:** LIST with nodes containing [10, 20, 30]
 
 ```mermaid
 graph LR
-    FIRST[FIRST] --> N1
-    N1[BACK | INFO | FORW] <--> N2[BACK | INFO | FORW]
-    N2 <--> N3[BACK | INFO | FORW]
-    N3 --> LAST[LAST]
+    START["START"] --> N1["INFO: 10<br/>LINK: →"]
+    N1 --> N2["INFO: 20<br/>LINK: →"]
+    N2 --> N3["INFO: 30<br/>LINK: NULL"]
     
-    NULL1[NULL] -.-> N1
-    N3 -.-> NULL2[NULL]
+    style START fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style N1 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style N2 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style N3 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
 ```
 
-#### 🔄 Two-Way List Detailed Structure
+| Step | PTR | INFO[PTR] | Action |
+|------|-----|-----------|--------|
+| 1 | START | - | Initialize PTR |
+| 2 | Node 1 | 10 | PTR ≠ NULL, continue |
+| 3 | Node 1 | 10 | Process data: 10 |
+| 4 | Node 2 | - | Move to next node |
+| 2 | Node 2 | 20 | PTR ≠ NULL, continue |
+| 3 | Node 2 | 20 | Process data: 20 |
+| 4 | Node 3 | - | Move to next node |
+| 2 | Node 3 | 30 | PTR ≠ NULL, continue |
+| 3 | Node 3 | 30 | Process data: 30 |
+| 4 | NULL | - | Move to next (NULL) |
+| 2 | NULL | - | PTR = NULL, exit |
+
+### Complexity Analysis
+
+| Metric | Value | Explanation |
+|--------|-------|-------------|
+| Time Complexity | O(n) | Visit each of n nodes once |
+| Space Complexity | O(1) | Only use PTR variable |
+| Best Case | O(n) | Must visit all nodes |
+| Worst Case | O(n) | Must visit all nodes |
+
+---
+
+## Algorithm 5.2: Searching an Unsorted Linked List
+
+### Problem Statement
+**Given:** An unsorted linked list and an ITEM to find  
+**Task:** Find location LOC where ITEM appears, or set LOC = NULL if not found
+
+### The Idea (Super Simple!)
+
+Looking for a book on a messy shelf:
+1. Start from the first book
+2. Check if it's the one you want
+3. If yes, remember the location
+4. If no, move to the next book
+5. Stop when found or reach the end
+
+### Algorithm (Textbook Format)
+
+```
+Algorithm 5.2: SEARCH (Unsorted List)
+════════════════════════════════════════
+LIST is a linked list in memory. This algorithm finds 
+the location LOC of the node where ITEM first appears 
+in LIST, or sets LOC = NULL.
+
+1. Set PTR := START.
+2. Repeat Step 3 while PTR ≠ NULL:
+3.     If ITEM = INFO[PTR], then:
+           Set LOC := PTR, and Exit.
+       Else:
+           Set PTR := LINK[PTR]. [Move to next node.]
+       [End of If structure.]
+   [End of Step 2 loop.]
+4. [Search is unsuccessful.] Set LOC := NULL.
+5. Exit.
+```
+
+### Visual Flowchart
 
 ```mermaid
-graph TB
-    subgraph "Node Anatomy in Two-Way List"
-        N["Complete Node"]
-        N --> B["⬅️ BACK<br/>(Previous Node Address)"]
-        N --> I["📊 INFO<br/>(Data)"]
-        N --> F["➡️ FORW<br/>(Next Node Address)"]
-        
-        style N fill:#4a90e2,color:#fff
-        style B fill:#ff6b6b,color:#fff
-        style I fill:#50c878,color:#fff
-        style F fill:#ffd93d,color:#fff
-    end
+flowchart TD
+    START_NODE([Start]) --> INIT["PTR ← START"]
+    INIT --> CHECK{"PTR ≠ NULL?"}
+    CHECK -->|No| NOT_FOUND["LOC ← NULL"]
+    NOT_FOUND --> STOP([Stop])
+    CHECK -->|Yes| COMPARE{"ITEM = INFO[PTR]?"}
+    COMPARE -->|Yes| FOUND["LOC ← PTR"]
+    FOUND --> STOP
+    COMPARE -->|No| MOVE["PTR ← LINK[PTR]"]
+    MOVE --> CHECK
     
-    subgraph "Bidirectional Navigation"
-        FIRST["🎯 FIRST"] --> N1
-        N1["⬅️ NULL | A | ➡️"] <-->|"Both directions"| N2["⬅️ | B | ➡️"]
-        N2 <--> N3["⬅️ | C | ➡️ NULL"]
-        LAST["🎯 LAST"] --> N3
-        
-        FWD["➡️ Forward Traversal"] -.-> N1
-        FWD -.-> N2
-        FWD -.-> N3
-        
-        BWD["⬅️ Backward Traversal"] -.-> N3
-        BWD -.-> N2
-        BWD -.-> N1
-        
-        style N1 fill:#e8f5e9
-        style N2 fill:#e8f5e9
-        style N3 fill:#e8f5e9
-        style FIRST fill:#4caf50,color:#fff
-        style LAST fill:#f44336,color:#fff
-        style FWD fill:#2196f3,color:#fff
-        style BWD fill:#9c27b0,color:#fff
-    end
+    style START_NODE fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style STOP fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style CHECK fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style COMPARE fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style FOUND fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style NOT_FOUND fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
 ```
 
-> **🎯 Key Advantage:** With two-way lists, you can move backward without having to restart from the beginning!
+### Example Trace
 
-### Two List Pointers
-- **FIRST:** Points to first node
-- **LAST:** Points to last node
+**Given:** LIST = [45, 23, 78, 12, 89], ITEM = 78
 
-### Important Property
-If node A is at LOCA and node B is at LOCB, then:
+| Step | PTR | INFO[PTR] | ITEM | Comparison | Action |
+|------|-----|-----------|------|------------|--------|
+| 1 | Node 1 | - | 78 | - | Initialize |
+| 2-3 | Node 1 | 45 | 78 | 45 ≠ 78 | Continue |
+| 2-3 | Node 2 | 23 | 78 | 23 ≠ 78 | Continue |
+| 2-3 | Node 3 | 78 | 78 | 78 = 78 ✓ | LOC = Node 3, Exit |
 
-**FORW[LOCA] = LOCB if and only if BACK[LOCB] = LOCA**
+**Result:** LOC = location of Node 3
 
-(If B follows A, then A precedes B)
+**Given:** LIST = [45, 23, 78, 12, 89], ITEM = 99
 
-### Example 5.21: Hospital Two-Way List
+| Step | PTR | INFO[PTR] | Comparison | Action |
+|------|-----|-----------|------------|--------|
+| ... | ... | ... | ... | Check all nodes |
+| 2 | NULL | - | - | PTR = NULL |
+| 4 | - | - | - | LOC = NULL (not found) |
 
-| Bed | Patient | FORW | BACK |
-|-----|---------|------|------|
-| 5 | Adams | 3 | 0 |
-| 3 | Dean | 11 | 5 |
-| 11 | Fields | 8 | 3 |
-| 8 | Green | 1 | 11 |
-| 1 | Kirk | 7 | 8 |
-| 7 | Lane | 4 | 1 |
-| 4 | Maxwell | 12 | 7 |
-| 12 | Nelson | 9 | 4 |
-| 9 | Samuels | 0 | 12 |
+### Complexity Analysis
 
-**FIRST = 5** (Adams)  
-**LAST = 9** (Samuels)
+```mermaid
+graph TD
+    A["Linear Search Complexity"] --> B["Best Case: O(1)<br/>Item is first node"]
+    A --> C["Average Case: O(n/2) ≈ O(n)<br/>Item in middle"]
+    A --> D["Worst Case: O(n)<br/>Item is last or absent"]
+    
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+```
 
-**Forward:** Adams → Dean → Fields → Green → Kirk → Lane → Maxwell → Nelson → Samuels  
-**Backward:** Samuels → Nelson → Maxwell → Lane → Kirk → Green → Fields → Dean → Adams
+---
 
-### Two-Way Circular Header List
-Combines benefits of both:
-- Two-way traversal
-- Circular structure
-- Header node
+## Algorithm 5.3: Searching a Sorted Linked List
+
+### Problem Statement
+**Given:** A **sorted** linked list and an ITEM to find  
+**Task:** Find location LOC where ITEM appears, or set LOC = NULL
+
+### The Idea (Super Simple!)
+
+Looking for a name in an alphabetically sorted phone book:
+1. Start from first name
+2. If current name < ITEM, keep looking
+3. If current name = ITEM, found it!
+4. If current name > ITEM, stop (ITEM doesn't exist)
+
+### Algorithm (Textbook Format)
+
+```
+Algorithm 5.3: SRCHSL (Search Sorted List)
+════════════════════════════════════════
+LIST is a sorted list in memory. This algorithm finds 
+the location LOC of the node where ITEM first appears 
+in LIST, or sets LOC = NULL.
+
+1. Set PTR := START.
+2. Repeat Step 3 while PTR ≠ NULL:
+3.     If ITEM < INFO[PTR], then:
+           Set PTR := LINK[PTR]. [Move to next node.]
+       Else if ITEM = INFO[PTR], then:
+           Set LOC := PTR, and Exit. [Search successful.]
+       Else:
+           Set LOC := NULL, and Exit. [ITEM exceeds INFO[PTR].]
+       [End of If structure.]
+   [End of Step 2 loop.]
+4. Set LOC := NULL.
+5. Exit.
+```
+
+### Visual Flowchart
+
+```mermaid
+flowchart TD
+    START_NODE([Start]) --> INIT["PTR ← START"]
+    INIT --> CHECK{"PTR ≠ NULL?"}
+    CHECK -->|No| NOT_FOUND["LOC ← NULL"]
+    NOT_FOUND --> STOP([Stop])
+    
+    CHECK -->|Yes| COMPARE1{"ITEM < INFO[PTR]?"}
+    COMPARE1 -->|Yes| MOVE["PTR ← LINK[PTR]"]
+    MOVE --> CHECK
+    
+    COMPARE1 -->|No| COMPARE2{"ITEM = INFO[PTR]?"}
+    COMPARE2 -->|Yes| FOUND["LOC ← PTR"]
+    FOUND --> STOP
+    
+    COMPARE2 -->|No| EXCEEDED["LOC ← NULL<br/>(ITEM too large)"]
+    EXCEEDED --> STOP
+    
+    style START_NODE fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style STOP fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style FOUND fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style NOT_FOUND fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style EXCEEDED fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+```
+
+### Example Comparison
+
+**Sorted LIST:** [12, 23, 45, 78, 89]
+
+**Search for 78:**
+- Check 12: 78 > 12, continue
+- Check 23: 78 > 23, continue  
+- Check 45: 78 > 45, continue
+- Check 78: 78 = 78, **Found!** ✓
+
+**Search for 50:**
+- Check 12: 50 > 12, continue
+- Check 23: 50 > 23, continue
+- Check 45: 50 > 45, continue
+- Check 78: 50 < 78, **Stop! Item doesn't exist** ❌
+
+### Advantage Over Unsorted Search
 
 ```mermaid
 graph LR
-    START[START] --> H[Header]
-    H <--> N1[Node 1]
-    N1 <--> N2[Node 2]
-    N2 <--> N3[Node 3]
-    N3 <--> H
+    A["Unsorted List"] --> B["Must check ALL nodes<br/>even if item doesn't exist"]
+    C["Sorted List"] --> D["Can stop early<br/>when exceeding target"]
+    
+    style A fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style B fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
 ```
 
-Only needs one pointer (START) because:
-- Header's FORW points to first node
-- Header's BACK points to last node
+**Note:** We still can't use binary search (need random access), but we can stop early when item is not found!
 
-### Deleting from Two-Way List
+---
 
-**Algorithm 5.15: DELTWL**
+## Algorithm 5.4: Inserting at Beginning of List
+
+### Problem Statement
+**Given:** A linked list and a new ITEM  
+**Task:** Insert ITEM as the **first node** in the list
+
+### The Idea (Super Simple!)
+
+Adding a new first car to a train:
+1. Get a new car from storage (AVAIL list)
+2. Put your cargo in the new car
+3. Connect new car to current first car
+4. Update "First Car" sign to point to new car
+
+### Algorithm (Textbook Format)
+
 ```
-DELTWL(INFO, FORW, BACK, START, AVAIL, LOC)
-Purpose: Delete node at location LOC
+Algorithm 5.4: INSFIRST (Insert at Beginning)
+════════════════════════════════════════
+This algorithm inserts ITEM as the first node in the list.
 
-Step 1: [Remove from list]
-        Set FORW[BACK[LOC]] = FORW[LOC]
-        Set BACK[FORW[LOC]] = BACK[LOC]
-        
-Step 2: [Return to AVAIL]
-        Set FORW[LOC] = AVAIL
-        Set AVAIL = LOC
-        
-Step 3: Exit
-```
-
-**Visual:**
-```
-Before:
-[A] ↔ [N] ↔ [B]
-
-After:
-[A] ↔ [B]     [N] → AVAIL
-```
-
-**Key advantage:** Don't need to traverse to find previous node!
-
-### Inserting into Two-Way List
-
-**Algorithm 5.16: INSTWL**
-```
-INSTWL(INFO, FORW, BACK, START, AVAIL, LOCA, LOCB, ITEM)
-Purpose: Insert ITEM between nodes at LOCA and LOCB
-
-Step 1: [Check space]
-        If AVAIL = NULL, then:
-            Print "OVERFLOW"
-            Exit
-            
-Step 2: [Get new node]
-        Set NEW = AVAIL
-        Set AVAIL = FORW[AVAIL]
-        Set INFO[NEW] = ITEM
-        
-Step 3: [Insert into list]
-        Set FORW[LOCA] = NEW
-        Set FORW[NEW] = LOCB
-        Set BACK[LOCB] = NEW
-        Set BACK[NEW] = LOCA
-        
-Step 4: Exit
+1. [OVERFLOW?] If AVAIL = NULL, then:
+       Write: OVERFLOW, and Exit.
+2. [Remove first node from AVAIL list.]
+   Set NEW := AVAIL and AVAIL := LINK[AVAIL].
+3. Set INFO[NEW] := ITEM. [Copy new data into new node.]
+4. Set LINK[NEW] := START. [New node points to old first node.]
+5. Set START := NEW. [START now points to new node.]
+6. Exit.
 ```
 
-**Visual:**
-```
-Before:
-[A] ↔ [B]
+### Visual Step-by-Step
 
-After inserting X:
-[A] ↔ [X] ↔ [B]
-```
+**Before Insertion:**
 
-Four pointer changes:
-1. A's forward → X
-2. X's forward → B
-3. B's backward → X
-4. X's backward → A
-
-### When to Use Two-Way Lists (Decision Guide)
-
-**Use two-way lists when you need to:**
-
-✅ **Frequently find the node before a given node**
-   - In a one-way list, you'd have to start from the beginning every time
-   - In a two-way list, just follow the BACK pointer - instant access!
-
-✅ **Traverse backward often**
-   - Going through the list in reverse order
-   - Implementing "undo" functionality
-   - Navigation features (previous/next)
-
-✅ **Delete nodes without traversing**
-   - You can delete a node immediately if you know its location
-   - No need to find the previous node first
-
-**Don't use two-way lists if:**
-
-❌ **Only moving forward**
-   - If you never go backward, the extra BACK pointers are wasted
-   - A simple one-way list is more efficient
-
-❌ **Memory is limited**
-   - Two-way lists use **double the pointer space**
-   - Each node needs BACK + FORW instead of just LINK
-
-❌ **Speed is critical for insertions/deletions**
-   - Updating two pointers (BACK and FORW) takes longer
-   - More pointer operations = slightly slower
-
-> **📊 Bottom Line:** Two-way lists trade extra memory and complexity for the convenience of backward navigation. Use them when that convenience is worth the cost!
-
-## 11. Practice Problems and Solutions
-
-### Problem 5.1: Shopping List Characters
-**Given:** Linked list storing "NO EXIT"
-
-| Index | INFO | LINK |
-|-------|------|------|
-| 3 | O | 6 |
-| 4 | T | 0 |
-| 6 | (space) | 11 |
-| 7 | X | 10 |
-| 9 | N | 3 |
-| 10 | I | 4 |
-| 11 | E | 7 |
-
-**START = 9**
-
-**Solution:** Follow the links:
-- 9 → 'N'
-- 3 → 'O'
-- 6 → ' ' (space)
-- 11 → 'E'
-- 7 → 'X'
-- 10 → 'I'
-- 4 → 'T'
-
-**Answer:** "NO EXIT"
-
-### Problem 5.2: Creating Alphabetical List
-**Given names:** Mary, June, Barbara, Paula, Diana, Audrey, Karen, Nancy, Ruth, Eileen, Sandra, Helen
-
-**Create:** Alphabetical linked list
-
-**Solution:**
-
-Alphabetical order: Audrey, Barbara, Diana, Eileen, Helen, June, Karen, Mary, Nancy, Paula, Ruth, Sandra
-
-| Index | Name | LINK |
-|-------|------|------|
-| 1 | Mary | 8 |
-| 2 | June | 7 |
-| 3 | Barbara | 5 |
-| 4 | Paula | 9 |
-| 5 | Diana | 10 |
-| 6 | Audrey | 3 |
-| 7 | Karen | 1 |
-| 8 | Nancy | 4 |
-| 9 | Ruth | 11 |
-| 10 | Eileen | 12 |
-| 11 | Sandra | 0 |
-| 12 | Helen | 2 |
-
-**START = 6** (Audrey)  
-**AVAIL = NULL** (no free space)
-
-### Problem 5.3: Counting Occurrences
-**Task:** Count how many times ITEM appears in a list
-
-**Solution:**
-```
-Procedure: COUNT_ITEM(INFO, LINK, START, ITEM, NUM)
-1. Set NUM = 0
-2. Set PTR = START
-3. While PTR ≠ NULL, repeat:
-   4. If INFO[PTR] = ITEM, then:
-         Set NUM = NUM + 1
-   5. Set PTR = LINK[PTR]
-6. Return
+```mermaid
+graph TD
+    subgraph "Data List"
+        START["START"] --> N1["20"]
+        N1 --> N2["30"]
+        N2 --> NULL1["NULL"]
+    end
+    
+    subgraph "AVAIL List (Free Nodes)"
+        AVAIL["AVAIL"] --> F1["Free"]
+        F1 --> F2["Free"]
+    end
+    
+    style START fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style AVAIL fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
 ```
 
-**Example:** If list is [5, 3, 7, 3, 9, 3] and ITEM = 3, then NUM = 3
+**Step 2: Remove node from AVAIL**
 
-### Problem 5.4: Adding Patient
-Hospital list: Adams → Dean → Fields → Green → Kirk → Lane → Maxwell → Nelson → Samuels
-
-**Task:** Add Walters (after Samuels) then delete Kirk
-
-**Solution Part (a) - Add Walters:**
-- NEW = 10 (first available bed)
-- BED[10] = "Walters"
-- LINK[9] = 10 (Samuels → Walters)
-- LINK[10] = 0 (Walters is last)
-- AVAIL = 2
-
-**Solution Part (b) - Delete Kirk:**
-- Find predecessor: Green (bed 8)
-- LINK[8] = 7 (Green → Lane, skip Kirk)
-- LINK[1] = 2 (return Kirk's bed)
-- AVAIL = 1
-
-**Final list:** Adams → Dean → Fields → Green → Lane → Maxwell → Nelson → Samuels → Walters
-
-### Problem 5.5: Copying a List
-**Task:** Copy NAME1 into NAME2
-
-**Solution:**
-```
-Algorithm: COPY(INFO, LINK, NAME1, NAME2, AVAIL)
-
-1. Set NAME2 = NULL (start with empty list)
-
-2. If NAME1 = NULL, then Exit (nothing to copy)
-
-3. [Copy first node]
-   - Get new node: NEW = AVAIL, AVAIL = LINK[AVAIL]
-   - Copy data: INFO[NEW] = INFO[NAME1]
-   - Make it first: LINK[NEW] = NAME2, NAME2 = NEW
-
-4. Set PTR = LINK[NAME1] (start at second node of NAME1)
-   Set LOC = NAME2 (track last node of NAME2)
-
-5. While PTR ≠ NULL, repeat:
-   - Get new node: NEW = AVAIL, AVAIL = LINK[AVAIL]
-   - Copy data: INFO[NEW] = INFO[PTR]
-   - Add to end: LINK[NEW] = LINK[LOC], LINK[LOC] = NEW
-   - Move: PTR = LINK[PTR], LOC = LINK[LOC]
-
-6. Exit
+```mermaid
+graph LR
+    NEW["NEW"] --> F1["10<br/>(will be new)"]
+    AVAIL["AVAIL"] --> F2["Free"]
+    
+    style NEW fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style AVAIL fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
 ```
 
-### Problem 5.6: Finding Polynomial
-**Given:** POLY1 with header at index 1
+**Step 3-4: Copy data and link to old first**
 
-| Index | COEF | EXP | LINK |
-|-------|------|-----|------|
-| 1 | 0 | -1 | 5 |
-| 5 | 3 | 5 | 8 |
-| 8 | -4 | 3 | 3 |
-| 3 | 6 | 1 | 7 |
-| 7 | -5 | 0 | 1 |
+```mermaid
+graph LR
+    NEW["NEW"] --> F1["10"]
+    F1 --> N1["20"]
+    
+    style NEW fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style F1 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
 
-**Solution:** Follow links from header:
-- Index 5: 3x⁵
-- Index 8: -4x³
-- Index 3: 6x¹
-- Index 7: -5x⁰
+**Step 5: Update START**
 
-**Answer:** P₁(x) = 3x⁵ - 4x³ + 6x - 5
+```mermaid
+graph LR
+    START["START"] --> F1["10"]
+    F1 --> N1["20"]
+    N1 --> N2["30"]
+    N2 --> NULL["NULL"]
+    
+    style START fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style F1 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
 
-### Key Concepts Summary Table
+**After Insertion:** List is now [10, 20, 30]
 
-| Concept | One-Way List | Two-Way List | Header List |
-|---------|--------------|--------------|-------------|
-| Pointers per node | 1 (LINK) | 2 (FORW, BACK) | 1 or 2 |
-| Can traverse backward | No | Yes | Depends |
-| Delete without traversing | No | Yes | No (one-way) |
-| Special first node | No | No | Yes |
-| NULL pointers | Yes | Yes | No (circular) |
-| Memory overhead | Low | High | Medium |
-| Complexity | Simple | Complex | Medium |
+### Why Insert at Beginning is Fast
 
-## Final Tips for Success
+```mermaid
+graph TD
+    A["Insert at Beginning"] --> B["O(1) - Constant Time"]
+    B --> C["Only 3 pointer changes:<br/>1. AVAIL<br/>2. LINK[NEW]<br/>3. START"]
+    
+    D["Insert at End"] --> E["O(n) - Linear Time"]
+    E --> F["Must traverse entire list<br/>to find last node"]
+    
+    style A fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+```
 
-### Understanding Linked Lists
-- **Draw diagrams:** Always sketch the structure before coding
-- **Track pointers:** Know where START, AVAIL, and node pointers point
-- **Check NULL:** Always verify pointers before using them
-- **Update carefully:** Change pointers in the right order
+---
 
-### Common Mistakes to Avoid
-- **Lost nodes:** Forgetting to save a pointer before changing it
-- **Wrong order:** Updating pointers in incorrect sequence
-- **NULL access:** Trying to access data at NULL pointer
-- **Memory leaks:** Not returning deleted nodes to AVAIL
+## Algorithm 5.5: Inserting After a Given Node
 
-### Practice Strategy
-1. Start with small lists (3-5 nodes)
-2. Trace algorithms step-by-step on paper
-3. Draw before and after diagrams
-4. Verify all pointer values
-5. Check special cases (empty list, one node, etc.)
+### Problem Statement
+**Given:** Location LOC of a node (or NULL), and ITEM to insert  
+**Task:** Insert ITEM after node at LOC, or at beginning if LOC = NULL
 
-**Remember:** Linked lists are powerful because they're flexible, not because they're fast. Use them when you need dynamic sizing and frequent insertions/deletions, not when you need random access or minimal memory usage.
+### Algorithm (Textbook Format)
+
+```
+Algorithm 5.5: INSLOC (Insert at Location)
+════════════════════════════════════════
+This algorithm inserts ITEM so that ITEM follows the 
+node with location LOC or inserts ITEM as the first 
+node when LOC = NULL.
+
+1. [OVERFLOW?] If AVAIL = NULL, then:
+       Write: OVERFLOW, and Exit.
+2. [Remove first node from AVAIL list.]
+   Set NEW := AVAIL and AVAIL := LINK[AVAIL].
+3. Set INFO[NEW] := ITEM. [Copy new data into new node.]
+4. If LOC = NULL, then: [Insert as first node.]
+       Set LINK[NEW] := START and START := NEW.
+   Else: [Insert after node with location LOC.]
+       Set LINK[NEW] := LINK[LOC] and LINK[LOC] := NEW.
+   [End of If structure.]
+5. Exit.
+```
+
+### Visual Cases
+
+**Case 1: LOC = NULL (Insert at beginning)**
+
+```mermaid
+graph LR
+    START["START"] --> NEW["NEW: 10"]
+    NEW --> N1["20"]
+    
+    style NEW fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Case 2: LOC points to middle node**
+
+```mermaid
+graph LR
+    N1["10"] -->|"LOC"| N2["20"]
+    N2 --> NEW["NEW: 25"]
+    NEW --> N3["30"]
+    
+    style NEW fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style N2 fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Case 3: LOC points to last node**
+
+```mermaid
+graph LR
+    N1["10"] --> N2["20"]
+    N2 -->|"LOC"| N3["30"]
+    N3 --> NEW["NEW: 40"]
+    NEW --> NULL["NULL"]
+    
+    style NEW fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style N3 fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+```
+
+---
+
+## Procedure 5.6: Finding Location Before Insertion Point
+
+### Problem Statement
+**Given:** A **sorted** list and ITEM to insert  
+**Task:** Find location LOC of last node where INFO[LOC] < ITEM
+
+### The Idea (Super Simple!)
+
+Finding where to insert a book in sorted bookshelf:
+1. Start from first book
+2. Keep moving while current book < your book
+3. Stop when you reach a book ≥ your book
+4. Remember the previous position (that's LOC)
+
+### Procedure (Textbook Format)
+
+```
+Procedure 5.6: FINDA (Find Location A)
+════════════════════════════════════════
+This procedure finds the location LOC of the last node 
+in a sorted list such that INFO[LOC] < ITEM, or sets 
+LOC = NULL.
+
+1. [List empty?] If START = NULL, then:
+       Set LOC := NULL, and Return.
+2. [Special case?] If ITEM < INFO[START], then:
+       Set LOC := NULL, and Return.
+3. Set SAVE := START and PTR := LINK[START].
+   [Initializes pointers.]
+4. Repeat Steps 5 and 6 while PTR ≠ NULL.
+5.     If ITEM < INFO[PTR], then:
+           Set LOC := SAVE, and Return.
+       [End of If structure.]
+6.     Set SAVE := PTR and PTR := LINK[PTR].
+       [Updates pointers.]
+   [End of Step 4 loop.]
+7. Set LOC := SAVE.
+8. Return.
+```
+
+### Visual Flowchart
+
+```mermaid
+flowchart TD
+    START_NODE([Start]) --> EMPTY{"START = NULL?"}
+    EMPTY -->|Yes| LOC_NULL1["LOC ← NULL<br/>Return"]
+    
+    EMPTY -->|No| SPECIAL{"ITEM < INFO[START]?"}
+    SPECIAL -->|Yes| LOC_NULL2["LOC ← NULL<br/>Return"]
+    
+    SPECIAL -->|No| INIT["SAVE ← START<br/>PTR ← LINK[START]"]
+    INIT --> LOOP{"PTR ≠ NULL?"}
+    
+    LOOP -->|No| SET_LOC["LOC ← SAVE<br/>Return"]
+    
+    LOOP -->|Yes| COMPARE{"ITEM < INFO[PTR]?"}
+    COMPARE -->|Yes| FOUND["LOC ← SAVE<br/>Return"]
+    
+    COMPARE -->|No| UPDATE["SAVE ← PTR<br/>PTR ← LINK[PTR]"]
+    UPDATE --> LOOP
+    
+    style START_NODE fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style FOUND fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+### Example Trace
+
+**Given:** Sorted LIST = [10, 20, 30, 40], ITEM = 25
+
+| Step | SAVE | PTR | INFO[PTR] | ITEM | Comparison | Action |
+|------|------|-----|-----------|------|------------|--------|
+| 1 | - | - | - | 25 | START ≠ NULL | Continue |
+| 2 | - | - | 10 | 25 | 25 > 10 | Continue |
+| 3 | Node1 | Node2 | - | 25 | - | Initialize |
+| 4-5 | Node1 | Node2 | 20 | 25 | 25 > 20 | Continue |
+| 6 | Node2 | Node3 | - | 25 | - | Update |
+| 4-5 | Node2 | Node3 | 30 | 25 | 25 < 30 ✓ | LOC = Node2 |
+
+**Result:** LOC = Node2 (value 20), so insert after 20
+
+### Two-Pointer Technique
+
+```mermaid
+graph LR
+    N1["10"] --> N2["20"]
+    N2 --> N3["30"]
+    N3 --> N4["40"]
+    
+    SAVE["SAVE"] -.-> N2
+    PTR["PTR"] -.-> N3
+    
+    style SAVE fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style PTR fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+```
+
+**Why two pointers?**
+- PTR: Checks current node
+- SAVE: Remembers previous node
+- When PTR finds "too large" value, SAVE has the insertion point!
+
+---
+
+## Algorithm 5.7: Inserting into Sorted List
+
+### Problem Statement
+**Given:** A sorted linked list and ITEM to insert  
+**Task:** Insert ITEM while maintaining sorted order
+
+### Algorithm (Textbook Format)
+
+```
+Algorithm 5.7: INSERT (Insert into Sorted List)
+════════════════════════════════════════
+This algorithm inserts ITEM into a sorted linked list.
+
+1. [Use Procedure 5.6 to find location of node preceding ITEM.]
+   Call FINDA(INFO, LINK, START, ITEM, LOC).
+2. [Use Algorithm 5.5 to insert ITEM after node with location LOC.]
+   Call INSLOC(INFO, LINK, START, AVAIL, LOC, ITEM).
+3. Exit.
+```
+
+### Visual Example
+
+**Initial sorted list:** [10, 30, 50]  
+**Insert ITEM = 40**
+
+**Step 1: Find LOC using FINDA**
+
+```mermaid
+graph LR
+    N1["10"] --> N2["30"]
+    N2 --> N3["50"]
+    
+    LOC["LOC"] -.-> N2
+    
+    style LOC fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style N2 fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+```
+
+FINDA returns LOC = Node2 (value 30), because 30 < 40 < 50
+
+**Step 2: Insert using INSLOC**
+
+```mermaid
+graph LR
+    N1["10"] --> N2["30"]
+    N2 --> NEW["40"]
+    NEW --> N3["50"]
+    
+    style NEW fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Result:** [10, 30, **40**, 50] - Sorted order maintained!
+
+### Why This Approach is Modular
+
+```mermaid
+graph TD
+    A["Algorithm 5.7<br/>INSERT"] --> B["Procedure 5.6<br/>FINDA<br/>(Find position)"]
+    A --> C["Algorithm 5.5<br/>INSLOC<br/>(Do insertion)"]
+    
+    B --> D["Separation of Concerns:<br/>Finding vs Inserting"]
+    C --> D
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Benefits:**
+- ✅ Code reuse (INSLOC used by multiple algorithms)
+- ✅ Easier to understand and maintain
+- ✅ Each component does one thing well
+- ✅ Can test components independently
+
+---
+
+## Algorithm 5.8: Deleting a Node
+
+### Problem Statement
+**Given:** Location LOC of node N to delete, and location LOCP of previous node  
+**Task:** Remove node N from list and return it to AVAIL
+
+### Algorithm (Textbook Format)
+
+```
+Algorithm 5.8: DEL (Delete Node)
+════════════════════════════════════════
+This algorithm deletes the node N with location LOC. 
+LOCP is the location of the node which precedes N or, 
+when N is the first node, LOCP = NULL.
+
+1. If LOCP = NULL, then:
+       Set START := LINK[START]. [Deletes first node.]
+   Else:
+       Set LINK[LOCP] := LINK[LOC]. [Deletes node N.]
+   [End of If structure.]
+2. [Return deleted node to the AVAIL list.]
+   Set LINK[LOC] := AVAIL and AVAIL := LOC.
+3. Exit.
+```
+
+### Visual Cases
+
+**Case 1: Deleting First Node (LOCP = NULL)**
+
+**Before:**
+```mermaid
+graph LR
+    START["START"] --> N1["10"]
+    N1 --> N2["20"]
+    N2 --> N3["30"]
+    
+    style N1 fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+```
+
+**After Step 1:** START := LINK[START]
+```mermaid
+graph LR
+    START["START"] --> N2["20"]
+    N2 --> N3["30"]
+    
+    N1["10"] -.-> AVAIL["AVAIL"]
+    
+    style N1 fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
+```
+
+**Case 2: Deleting Middle Node**
+
+**Before:**
+```mermaid
+graph LR
+    N1["10"] --> N2["20"]
+    N2 --> N3["30"]
+    
+    LOCP["LOCP"] -.-> N1
+    LOC["LOC"] -.-> N2
+    
+    style N2 fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style N1 fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+```
+
+**After Step 1:** LINK[LOCP] := LINK[LOC]
+```mermaid
+graph LR
+    N1["10"] --> N3["30"]
+    
+    N2["20"] -.-> AVAIL["AVAIL"]
+    
+    style N2 fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
+```
+
+**Step 2: Return to AVAIL (Both Cases)**
+
+```mermaid
+graph TD
+    subgraph "AVAIL List"
+        AVAIL["AVAIL"] --> DELETED["Deleted Node"]
+        DELETED --> F1["Free"]
+        F1 --> F2["Free"]
+    end
+    
+    style DELETED fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
+    style AVAIL fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
+```
+
+### Key Steps Explained
+
+```mermaid
+graph TD
+    A["Step 1: Unlink Node"] --> B{"First Node?"}
+    B -->|Yes| C["START ← LINK[START]"]
+    B -->|No| D["LINK[LOCP] ← LINK[LOC]"]
+    
+    C --> E["Step 2: Return to AVAIL"]
+    D --> E
+    
+    E --> F["LINK[LOC] ← AVAIL"]
+    F --> G["AVAIL ← LOC"]
+    
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style E fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
+```
+
+---
+
+## Procedure 5.9: Finding Node to Delete
+
+### Problem Statement
+**Given:** ITEM to delete from list  
+**Task:** Find location LOC of node with ITEM and location LOCP of preceding node
+
+### Procedure (Textbook Format)
+
+```
+Procedure 5.9: FINDB (Find Node B)
+════════════════════════════════════════
+This procedure finds the location LOC of the first node N 
+which contains ITEM and the location LOCP of the node 
+preceding N. If ITEM does not appear in the list, then 
+the procedure sets LOC = NULL; and if ITEM appears in 
+the first node, then it sets LOCP = NULL.
+
+1. [List empty?] If START = NULL, then:
+       Set LOC := NULL and LOCP := NULL, and Return.
+   [End of If structure.]
+2. [ITEM in first node?] If INFO[START] = ITEM, then:
+       Set LOC := START and LOCP := NULL, and Return.
+   [End of If structure.]
+3. Set SAVE := START and PTR := LINK[START].
+   [Initializes pointers.]
+4. Repeat Steps 5 and 6 while PTR ≠ NULL.
+5.     If INFO[PTR] = ITEM, then:
+           Set LOC := PTR and LOCP := SAVE, and Return.
+       [End of If structure.]
+6.     Set SAVE := PTR and PTR := LINK[PTR].
+       [Updates pointers.]
+   [End of Step 4 loop.]
+7. Set LOC := NULL. [Search unsuccessful.]
+8. Return.
+```
+
+### Visual Flowchart
+
+```mermaid
+flowchart TD
+    START_NODE([Start]) --> EMPTY{"START = NULL?"}
+    EMPTY -->|Yes| BOTH_NULL["LOC ← NULL<br/>LOCP ← NULL<br/>Return"]
+    
+    EMPTY -->|No| FIRST{"INFO[START] = ITEM?"}
+    FIRST -->|Yes| FIRST_NODE["LOC ← START<br/>LOCP ← NULL<br/>Return"]
+    
+    FIRST -->|No| INIT["SAVE ← START<br/>PTR ← LINK[START]"]
+    INIT --> LOOP{"PTR ≠ NULL?"}
+    
+    LOOP -->|No| NOT_FOUND["LOC ← NULL<br/>Return"]
+    
+    LOOP -->|Yes| MATCH{"INFO[PTR] = ITEM?"}
+    MATCH -->|Yes| FOUND["LOC ← PTR<br/>LOCP ← SAVE<br/>Return"]
+    
+    MATCH -->|No| UPDATE["SAVE ← PTR<br/>PTR ← LINK[PTR]"]
+    UPDATE --> LOOP
+    
+    style START_NODE fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style FOUND fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+### Example Trace
+
+**Given:** LIST = [10, 20, 30, 40], ITEM = 30
+
+| Step | SAVE | PTR | INFO[PTR] | Found? | Result |
+|------|------|-----|-----------|--------|--------|
+| 1 | - | - | - | - | START ≠ NULL |
+| 2 | - | - | 10 | - | 10 ≠ 30 |
+| 3 | Node1 | Node2 | - | - | Initialize |
+| 4-5 | Node1 | Node2 | 20 | No | 20 ≠ 30 |
+| 6 | Node2 | Node3 | - | - | Update |
+| 4-5 | Node2 | Node3 | 30 | **Yes** ✓ | LOC=Node3, LOCP=Node2 |
+
+**Result:** LOC = Node3 (value 30), LOCP = Node2 (value 20)
+
+### Two-Pointer Tracking
+
+```mermaid
+graph LR
+    N1["10"] --> N2["20"]
+    N2 --> N3["30"]
+    N3 --> N4["40"]
+    
+    SAVE["SAVE<br/>(Previous)"] -.-> N2
+    PTR["PTR<br/>(Current)"] -.-> N3
+    
+    style N3 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style N2 fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Why track both?**
+- Need LOC to know which node to delete
+- Need LOCP to update the link that points to the deleted node
+
+---
+
+## Algorithm 5.10: Deleting Node with Given Item
+
+### Problem Statement
+**Given:** ITEM to delete from list  
+**Task:** Delete the first node containing ITEM
+
+### Algorithm (Textbook Format)
+
+```
+Algorithm 5.10: DELETE (Delete by Item)
+════════════════════════════════════════
+This algorithm deletes from a linked list the first 
+node N which contains the given ITEM of information.
+
+1. [Use Procedure 5.9 to find location of N and its preceding node.]
+   Call FINDB(INFO, LINK, START, ITEM, LOC, LOCP)
+2. If LOC = NULL, then:
+       Write: ITEM not in list, and Exit.
+3. [Delete node.]
+   If LOCP = NULL, then:
+       Set START := LINK[START]. [Deletes first node.]
+   Else:
+       Set LINK[LOCP] := LINK[LOC].
+   [End of If structure.]
+4. [Return deleted node to the AVAIL list.]
+   Set LINK[LOC] := AVAIL and AVAIL := LOC.
+5. Exit.
+```
+
+### Complete Example
+
+**Initial List:** [10, 20, 30, 40]  
+**Delete ITEM = 20**
+
+**Step 1: Find node using FINDB**
+
+```mermaid
+graph LR
+    N1["10"] --> N2["20"]
+    N2 --> N3["30"]
+    N3 --> N4["40"]
+    
+    LOCP["LOCP"] -.-> N1
+    LOC["LOC"] -.-> N2
+    
+    style N2 fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style N1 fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Step 2: Check if found**
+- LOC ≠ NULL, so continue
+
+**Step 3: Delete node**
+- LOCP ≠ NULL (not first node)
+- Execute: LINK[LOCP] := LINK[LOC]
+
+```mermaid
+graph LR
+    N1["10"] --> N3["30"]
+    N3 --> N4["40"]
+    
+    N2["20"] -.-> AVAIL["AVAIL"]
+    
+    style N2 fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
+```
+
+**Step 4: Return to AVAIL**
+
+**Final List:** [10, 30, 40]
+
+### Modular Design
+
+```mermaid
+graph TD
+    A["Algorithm 5.10<br/>DELETE"] --> B["Procedure 5.9<br/>FINDB<br/>(Find node & predecessor)"]
+    A --> C["Algorithm 5.8<br/>DEL<br/>(Remove from list)"]
+    
+    D["Benefit: Reusable Components"]
+    B --> D
+    C --> D
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
+```
+
+---
+
+## Algorithm 5.11: Traversing Circular Header List
+
+### Problem Statement
+**Given:** A circular header list (last node points to header)  
+**Task:** Traverse all ordinary nodes (skip header)
+
+### What is a Header List?
+
+```mermaid
+graph LR
+    START["START"] --> H["HEADER<br/>(Special Node)"]
+    H --> N1["Data: 10"]
+    N1 --> N2["Data: 20"]
+    N2 --> N3["Data: 30"]
+    N3 --> H
+    
+    style H fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
+    style START fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+```
+
+**Key Differences from Regular List:**
+- First node is LINK[START] (not START)
+- Loop ends when PTR = START (not NULL)
+- Circular: no NULL pointer
+
+### Algorithm (Textbook Format)
+
+```
+Algorithm 5.11: TRAVERSING A CIRCULAR HEADER LIST
+════════════════════════════════════════
+Let LIST be a circular header list in memory. This 
+algorithm traverses LIST, applying an operation PROCESS 
+to each node of LIST.
+
+1. Set PTR := LINK[START]. [Initializes pointer PTR.]
+2. Repeat Steps 3 and 4 while PTR ≠ START:
+3.     Apply PROCESS to INFO[PTR].
+4.     Set PTR := LINK[PTR]. [PTR now points to next node.]
+   [End of Step 2 loop.]
+5. Exit.
+```
+
+### Comparison: Regular vs Header List
+
+**Regular List Traversal:**
+```
+PTR := START
+while PTR ≠ NULL:
+    Process INFO[PTR]
+    PTR := LINK[PTR]
+```
+
+**Header List Traversal:**
+```
+PTR := LINK[START]  ← Skip header
+while PTR ≠ START:  ← Stop at header
+    Process INFO[PTR]
+    PTR := LINK[PTR]
+```
+
+### Why Use Header Lists?
+
+```mermaid
+graph TD
+    A["Advantages of Header Lists"] --> B["No NULL pointers<br/>All pointers valid"]
+    A --> C["Every node has predecessor<br/>No special cases"]
+    A --> D["Can store metadata<br/>in header node"]
+    
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Example metadata in header:**
+- Number of nodes in list
+- Sum of all values
+- Last modification time
+
+---
+
+## Algorithm 5.15: Deleting from Two-Way List
+
+### What is a Two-Way (Doubly Linked) List?
+
+```mermaid
+graph LR
+    N1["←|10|→"] <--> N2["←|20|→"]
+    N2 <--> N3["←|30|→"]
+    
+    style N1 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style N2 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style N3 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+```
+
+**Each node has:**
+- BACK pointer (to previous node)
+- INFO (data)
+- FORW pointer (to next node)
+
+### Algorithm (Textbook Format)
+
+```
+Algorithm 5.15: DELTWL (Delete from Two-Way List)
+════════════════════════════════════════
+This algorithm deletes node N with location LOC from a 
+two-way circular header list.
+
+1. [Delete node.]
+   Set FORW[BACK[LOC]] := FORW[LOC] and
+       BACK[FORW[LOC]] := BACK[LOC].
+2. [Return node to AVAIL list.]
+   Set FORW[LOC] := AVAIL and AVAIL := LOC.
+3. Exit.
+```
+
+### Visual Explanation
+
+**Before Deletion:**
+
+```mermaid
+graph LR
+    A["Node A"] <-->|"BACK/FORW"| B["Node N<br/>(to delete)"]
+    B <-->|"BACK/FORW"| C["Node C"]
+    
+    style B fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+```
+
+**Step 1a: FORW[BACK[LOC]] := FORW[LOC]**
+
+Make Node A point forward to Node C:
+
+```mermaid
+graph LR
+    A["Node A"] -->|"FORW"| C["Node C"]
+    A <--> B["Node N"]
+    B <--> C
+    
+    style B fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+```
+
+**Step 1b: BACK[FORW[LOC]] := BACK[LOC]**
+
+Make Node C point back to Node A:
+
+```mermaid
+graph LR
+    A["Node A"] <-->|"Complete"| C["Node C"]
+    
+    B["Node N<br/>(isolated)"]
+    
+    style B fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
+```
+
+**After Deletion:**
+
+```mermaid
+graph LR
+    A["Node A"] <--> C["Node C"]
+    
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+```
+
+### Why Two-Way Lists are Easier to Delete From
+
+**Singly Linked List:**
+```
+Need to traverse to find previous node
+Time: O(n)
+```
+
+**Doubly Linked List:**
+```
+Have direct access to previous node via BACK pointer
+Time: O(1)
+```
+
+```mermaid
+graph TD
+    A["Deletion Complexity"] --> B["Singly Linked: O(n)<br/>Must find predecessor"]
+    A --> C["Doubly Linked: O(1)<br/>BACK pointer gives predecessor"]
+    
+    style B fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+### Trade-offs
+
+**Advantages:**
+- ✅ Fast deletion O(1)
+- ✅ Can traverse both directions
+- ✅ No need to track predecessor
+
+**Disadvantages:**
+- ❌ Extra memory for BACK pointers
+- ❌ More pointers to update on insert/delete
+- ❌ Slightly more complex code
+
+---
+
+## Algorithm 5.16: Inserting into Two-Way List
+
+### Algorithm (Textbook Format)
+
+```
+Algorithm 5.16: INSTWL (Insert into Two-Way List)
+════════════════════════════════════════
+This algorithm inserts ITEM between nodes A and B of a 
+two-way circular header list, where LOCA and LOCB are 
+the locations of A and B.
+
+1. [OVERFLOW?] If AVAIL = NULL, then:
+       Write: OVERFLOW, and Exit.
+2. [Remove node from AVAIL list and copy new data into node.]
+   Set NEW := AVAIL, AVAIL := FORW[AVAIL], INFO[NEW] := ITEM.
+3. [Insert node into list.]
+   Set FORW[LOCA] := NEW, FORW[NEW] := LOCB,
+       BACK[LOCB] := NEW, BACK[NEW] := LOCA.
+4. Exit.
+```
+
+### Visual Step-by-Step
+
+**Before Insertion:**
+
+```mermaid
+graph LR
+    A["Node A"] <--> B["Node B"]
+    
+    LOCA["LOCA"] -.-> A
+    LOCB["LOCB"] -.-> B
+    
+    style LOCA fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style LOCB fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Step 3a: FORW[LOCA] := NEW**
+
+```mermaid
+graph LR
+    A["Node A"] -->|"FORW"| N["NEW"]
+    A <--> B["Node B"]
+    
+    style N fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Step 3b: FORW[NEW] := LOCB**
+
+```mermaid
+graph LR
+    A["Node A"] --> N["NEW"]
+    N -->|"FORW"| B["Node B"]
+    A <--> B
+    
+    style N fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Step 3c: BACK[LOCB] := NEW**
+
+```mermaid
+graph LR
+    A["Node A"] --> N["NEW"]
+    N --> B["Node B"]
+    B -->|"BACK"| N
+    A <--> B
+    
+    style N fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Step 3d: BACK[NEW] := LOCA**
+
+```mermaid
+graph LR
+    A["Node A"] <--> N["NEW"]
+    N <--> B["Node B"]
+    
+    style N fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+**After Insertion:** Complete two-way links established!
+
+### Four Pointer Updates
+
+```mermaid
+graph TD
+    A["Step 3: Insert Node"] --> B["1. FORW[LOCA] ← NEW"]
+    A --> C["2. FORW[NEW] ← LOCB"]
+    A --> D["3. BACK[LOCB] ← NEW"]
+    A --> E["4. BACK[NEW] ← LOCA"]
+    
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style E fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Memory Aid:** Connect NEW to neighbors, then neighbors to NEW
+1. NEW → forward neighbor
+2. NEW → backward neighbor  
+3. Forward neighbor → NEW
+4. Backward neighbor → NEW
+
+---
+
+## 📊 Algorithm Complexity Summary
+
+### Time Complexity Table
+
+| Algorithm | Operation | Singly Linked | Doubly Linked | Array |
+|-----------|-----------|---------------|---------------|-------|
+| 5.1 | Traverse | O(n) | O(n) | O(n) |
+| 5.2 | Search Unsorted | O(n) | O(n) | O(n) |
+| 5.3 | Search Sorted | O(n) | O(n) | O(log n) |
+| 5.4 | Insert at Begin | O(1) | O(1) | O(n) |
+| 5.7 | Insert Sorted | O(n) | O(n) | O(n) |
+| 5.8 | Delete (with LOCP) | O(1) | O(1) | O(n) |
+| 5.10 | Delete by Item | O(n) | O(n) | O(n) |
+| 5.15 | Delete (two-way) | **O(1)** | **O(1)** | O(n) |
+
+### Space Complexity
+
+```mermaid
+graph TD
+    A["Memory Usage"] --> B["Singly Linked<br/>n nodes × 2 fields"]
+    A --> C["Doubly Linked<br/>n nodes × 3 fields"]
+    A --> D["Array<br/>n elements × 1 field"]
+    
+    B --> E["Extra: AVAIL list"]
+    C --> E
+    
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+---
+
+## 🎯 When to Use Each List Type
+
+### Decision Tree
+
+```mermaid
+graph TD
+    START["Choose Data Structure"] --> Q1{"Need dynamic size?"}
+    Q1 -->|No| ARR["Use Array"]
+    Q1 -->|Yes| Q2{"Frequent insertions<br/>at beginning?"}
+    
+    Q2 -->|Yes| Q3{"Need backward<br/>traversal?"}
+    Q2 -->|No| Q4{"Random access<br/>needed?"}
+    
+    Q3 -->|Yes| DBL["Doubly Linked List"]
+    Q3 -->|No| SGL["Singly Linked List"]
+    
+    Q4 -->|Yes| ARR2["Use Array"]
+    Q4 -->|No| Q5{"Circular<br/>behavior?"}
+    
+    Q5 -->|Yes| CIR["Circular Linked List"]
+    Q5 -->|No| SGL2["Singly Linked List"]
+    
+    style START fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style ARR fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style ARR2 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style SGL fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style SGL2 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style DBL fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style CIR fill:#9B59B6,stroke:#333,stroke-width:2px,color:#fff
+```
+
+### Use Cases
+
+| List Type | Best For | Example Applications |
+|-----------|----------|---------------------|
+| **Singly Linked** | Insert at front, one-way traversal | Stack, Queue, Simple lists |
+| **Doubly Linked** | Bi-directional traversal, easy deletion | Browser history, Undo/Redo |
+| **Circular** | Round-robin, no end | Task scheduling, Music playlist |
+| **Header List** | Need metadata, avoid null checks | File systems, Database indices |
+
+---
+
+## Summary
+
+### Key Concepts Learned
+
+- **Linked List Basics:** Nodes with data and pointers  
+- **Operations:** Traversal, search, insertion, deletion  
+- **Circular Lists:** Last node points to first  
+- **Doubly Linked Lists:** Two-way navigation  
+- **Memory Management:** Dynamic allocation with malloc/free  
+- **AVAIL List:** Free storage management
+- **Header Lists:** Special first node for metadata
+- **Algorithm Modularity:** Reusable procedure components
+
+### Comparison: Array vs Linked List
+
+| Feature | Array | Linked List |
+|---------|-------|-------------|
+| Size | Fixed | Dynamic |
+| Access | O(1) | O(n) |
+| Insert/Delete | O(n) | O(1) at known position |
+| Memory | Contiguous | Scattered |
+| Extra Space | None | Pointers |
+| Binary Search | Yes | No |
+
+### Time Complexity
+
+| Operation | Singly Linked | Doubly Linked | Array |
+|-----------|---------------|---------------|-------|
+| Access | O(n) | O(n) | O(1) |
+| Search | O(n) | O(n) | O(n) unsorted, O(log n) sorted |
+| Insert (beginning) | O(1) | O(1) | O(n) |
+| Insert (end) | O(n) | O(1)* | O(1) |
+| Delete (beginning) | O(1) | O(1) | O(n) |
+| Delete (end) | O(n) | O(1)* | O(1) |
+| Delete (known position) | O(1)** | O(1) | O(n) |
+
+*With tail pointer  
+**With predecessor pointer (LOCP)
+
+### Important Takeaways
+
+1. **Always check for NULL** before accessing nodes
+2. **Free memory** when deleting nodes to avoid memory leaks
+3. **Use doubly linked lists** when you need backward traversal or O(1) deletion
+4. **Circular lists** are useful for round-robin applications
+5. **Linked lists excel** at frequent insertions/deletions at known positions
+6. **Header lists** simplify algorithms by eliminating special cases
+7. **AVAIL list** enables efficient memory reuse
+8. **Binary search not possible** on linked lists (no random access)
+9. **Two-pointer technique** (SAVE, PTR) essential for many operations
+10. **Modular design** makes algorithms easier to understand and maintain
+
+---
+
+**End of Chapter 5**
+
+*Continue to Chapter 6: Stacks and Queues*
