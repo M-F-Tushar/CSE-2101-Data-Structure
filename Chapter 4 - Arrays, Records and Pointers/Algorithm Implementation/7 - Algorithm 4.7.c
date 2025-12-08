@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 int main()
 {
     int M = 2, P = 3, N = 2;
@@ -37,4 +38,5 @@ int main()
         }
         printf("\n");
     }
+
 }
