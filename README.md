@@ -4,10 +4,10 @@
 
 **A comprehensive repository for the university course on Data Structures**
 
-[![Course](https://img.shields.io/badge/Course-CSE%202101-blue.svg)](https://github.com/M-F-Tushar)
-[![Credits](https://img.shields.io/badge/Credits-3.00-green.svg)](https://github.com/M-F-Tushar)
-[![Language](https://img.shields.io/badge/Language-C-orange.svg)](https://github.com/M-F-Tushar)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Course](https://img.shields.io/badge/Course-CSE%202101-007bff?style=for-the-badge&logo=google-classroom&logoColor=white)](https://github.com/M-F-Tushar)
+[![Credits](https://img.shields.io/badge/Credits-3.00-28a745?style=for-the-badge&logo=target&logoColor=white)](https://github.com/M-F-Tushar)
+[![Language](https://img.shields.io/badge/Language-C-A8B9CC?style=for-the-badge&logo=c&logoColor=black)](https://github.com/M-F-Tushar)
+[![License](https://img.shields.io/badge/License-MIT-ffc107?style=for-the-badge&logo=open-source-initiative&logoColor=black)](LICENSE)
 
 </div>
 
@@ -22,7 +22,49 @@
 
 This repository contains comprehensive materials, implementations, and resources for the Data Structures course. The course provides an in-depth study of fundamental and advanced data structures, their operations, and algorithmic analysis.
 
-### Course Topics
+### 🗺️ Course Roadmap
+
+```mermaid
+graph TB
+    %% Styles
+    classDef phase fill:#f1f2f6,stroke:#cbd5e0,stroke-width:2px,color:#2d3436
+    classDef start fill:#e17055,stroke:#333,stroke-width:2px,color:white
+    classDef endNode fill:#2d3436,stroke:#333,stroke-width:2px,color:white
+    classDef topic fill:#74b9ff,stroke:#0984e3,stroke-width:1px,color:black
+
+    Start([🚀 Start Journey]):::start
+    
+    subgraph P1 [Phase 1: Foundations]
+        direction TB
+        C1[Intro & Terms]:::topic --> C2[Preliminaries]:::topic
+        C2 --> C3[String Processing]:::topic
+    end
+    
+    subgraph P2 [Phase 2: Linear Structures]
+        direction TB
+        C4[Arrays & Records]:::topic --> C5[Linked Lists]:::topic
+        C5 --> C6[Stacks & Queues]:::topic
+    end
+    
+    subgraph P3 [Phase 3: Advanced Structures]
+        direction TB
+        C7[Trees & Heaps]:::topic --> C8[Graphs]:::topic
+        C8 --> C9[Sorting & Searching]:::topic
+    end
+    
+    End([🎓 Mastery Achieved]):::endNode
+
+    %% Flow
+    Start --> P1
+    P1 --> P2
+    P2 --> P3
+    P3 --> End
+    
+    %% Style Subgraphs
+    class P1,P2,P3 phase
+```
+
+### 🧠 Course Topics
 
 - Internal data representation
 - Abstract data types
@@ -33,73 +75,77 @@ This repository contains comprehensive materials, implementations, and resources
 - Advanced data structures: balanced binary search trees (AVL trees, red-black trees, splay trees, skip lists), advanced heaps (Fibonacci heaps, binomial heaps)
 - Hashing
 
----
+<br>
 
-## 📖 Repository Structure
+<div align="center">
 
-This repository is organized according to the chapters in *Data Structures with C* by Seymour Lipschutz:
+```mermaid
+graph TD
+    %% Styles
+    classDef root fill:#2d3436,stroke:#dfe6e9,stroke-width:4px,color:white
+    classDef linear fill:#0984e3,stroke:#74b9ff,stroke-width:2px,color:white
+    classDef nonlinear fill:#d63031,stroke:#ff7675,stroke-width:2px,color:white
+    classDef sub fill:#00b894,stroke:#55efc4,stroke-width:1px,color:white
 
-```
-CSE-2101-Data-Structures/
-│
-├── Chapter-01-Introduction-and-Overview/
-│   ├── README.md
-│   ├── examples/
-│   └── exercises/
-│
-├── Chapter-02-Preliminaries/
-│   ├── README.md
-│   ├── examples/
-│   └── exercises/
-│
-├── Chapter-03-String-Processing/
-│   ├── README.md
-│   ├── examples/
-│   └── exercises/
-│
-├── Chapter-04-Arrays-Records-Pointers/
-│   ├── README.md
-│   ├── examples/
-│   └── exercises/
-│
-├── Chapter-05-Linked-Lists/
-│   ├── README.md
-│   ├── examples/
-│   └── exercises/
-│
-├── Chapter-06-Stacks-Queues-Recursion/
-│   ├── README.md
-│   ├── examples/
-│   └── exercises/
-│
-├── Chapter-07-Trees/
-│   ├── README.md
-│   ├── examples/
-│   └── exercises/
-│
-├── Chapter-08-Graphs-and-Applications/
-│   ├── README.md
-│   ├── examples/
-│   └── exercises/
-│
-└── Chapter-09-Sorting-and-Searching/
-    ├── README.md
-    ├── examples/
-    └── exercises/
+    Root((Data Structures)):::root
+    
+    %% Branches
+    Root --> Linear([Linear DS]):::linear
+    Root --> NonLinear([Non-Linear DS]):::nonlinear
+    
+    %% Linear Nodes
+    Linear --> Arr[Arrays]:::sub
+    Linear --> LL[Linked Lists]:::sub
+    Linear --> St[Stacks]:::sub
+    Linear --> Qu[Queues]:::sub
+    
+    %% Non-Linear Nodes
+    NonLinear --> Trees[Trees]:::sub
+    NonLinear --> Graphs[Graphs]:::sub
+    
+    %% Sub-details
+    Trees --- Bin[Binary Trees]:::sub
+    Trees --- Heaps[Heaps]:::sub
+    
+    Graphs --- Dir[Directed]:::sub
+    Graphs --- Undir[Undirected]:::sub
 ```
 
+</div>
+
 ---
+
+## 👨‍🏫 Instructors
+
+<div align="center">
+
+| **Md. Jahidul Islam** |
+| :---: |
+| Chairman, Department of Computer Science and Engineering |
+| Chandpur Science and Technology University |
+
+</div>
+
+---
+
 
 ## 📋 Course Content
 
-### 1. INTRODUCTION AND OVERVIEW (1.1-1.19)
+### 1. 📘 INTRODUCTION AND OVERVIEW (1.1-1.19)
+<details>
+<summary>Click to view topics</summary>
+
 - 1.1 Introduction
 - 1.2 Basic Terminology; Elementary Data Organization
 - 1.3 Data Structures
 - 1.4 Data Structure Operations
 - 1.5 Algorithms: Complexity, Time-Space Tradeoff
+</details>
 
-### 2. PRELIMINARIES (2.1-2.31)
+### 2. 📐 PRELIMINARIES (2.1-2.31)
+<details>
+<summary>Click to view topics</summary>
+
 - 2.1 Introduction
 - 2.2 Mathematical Notation and Functions
 - 2.3 Algorithmic Notation
@@ -108,8 +154,12 @@ CSE-2101-Data-Structures/
 - 2.6 Other Asymptotic Notations (Ω, O, Θ)
 - 2.7 Subalgorithms
 - 2.8 Variables, Data Types
+</details>
 
-### 3. STRING PROCESSING (3.1-3.31)
+### 3. 🧵 STRING PROCESSING (3.1-3.31)
+<details>
+<summary>Click to view topics</summary>
+
 - 3.1 Introduction
 - 3.2 Basic Terminology
 - 3.3 Storing Strings
@@ -117,8 +167,12 @@ CSE-2101-Data-Structures/
 - 3.5 String Operations
 - 3.6 Word Processing
 - 3.7 Pattern Matching Algorithms
+</details>
 
-### 4. ARRAYS, RECORDS AND POINTERS (4.1-4.56)
+### 4. 🔢 ARRAYS, RECORDS AND POINTERS (4.1-4.56)
+<details>
+<summary>Click to view topics</summary>
+
 - 4.1 Introduction
 - 4.2 Linear Arrays
 - 4.3 Representation of Linear Arrays in Memory
@@ -133,8 +187,12 @@ CSE-2101-Data-Structures/
 - 4.12 Representation of Records in Memory; Parallel Arrays
 - 4.13 Matrices
 - 4.14 Sparse Matrices
+</details>
 
-### 5. LINKED LISTS (5.1-5.57)
+### 5. 🔗 LINKED LISTS (5.1-5.57)
+<details>
+<summary>Click to view topics</summary>
+
 - 5.1 Introduction
 - 5.2 Linked Lists
 - 5.3 Representation of Linked Lists in Memory
@@ -145,8 +203,12 @@ CSE-2101-Data-Structures/
 - 5.8 Deletion from a Linked List
 - 5.9 Header Linked Lists
 - 5.10 Two-way Lists
+</details>
 
-### 6. STACKS, QUEUES, RECURSION (6.1-6.66)
+### 6. 📚 STACKS, QUEUES, RECURSION (6.1-6.66)
+<details>
+<summary>Click to view topics</summary>
+
 - 6.1 Introduction
 - 6.2 Stacks
 - 6.3 Array Representation of Stacks
@@ -160,8 +222,12 @@ CSE-2101-Data-Structures/
 - 6.11 Linked Representation of Queues
 - 6.12 Deques
 - 6.13 Priority Queues
+</details>
 
-### 7. TREES (7.1-7.101)
+### 7. 🌲 TREES (7.1-7.101)
+<details>
+<summary>Click to view topics</summary>
+
 - 7.1 Introduction
 - 7.2 Binary Trees
 - 7.3 Representing Binary Trees in Memory
@@ -181,8 +247,12 @@ CSE-2101-Data-Structures/
 - 7.17 Heap; Heapsort
 - 7.18 Path Lengths; Huffman's Algorithm
 - 7.19 General Trees
+</details>
 
-### 8. GRAPHS AND THEIR APPLICATIONS (8.1-8.47)
+### 8. 🕸️ GRAPHS AND THEIR APPLICATIONS (8.1-8.47)
+<details>
+<summary>Click to view topics</summary>
+
 - 8.1 Introduction
 - 8.2 Graph Theory Terminology
 - 8.3 Sequential Representation of Graphs; Adjacency Matrix; Path Matrix
@@ -191,8 +261,12 @@ CSE-2101-Data-Structures/
 - 8.6 Operations on Graphs
 - 8.7 Traversing a Graph
 - 8.8 Posets; Topological Sorting
+</details>
 
-### 9. SORTING AND SEARCHING (9.1-9.27)
+### 9. ⚡ SORTING AND SEARCHING (9.1-9.27)
+<details>
+<summary>Click to view topics</summary>
+
 - 9.1 Introduction
 - 9.2 Sorting
 - 9.3 Insertion Sort
@@ -202,6 +276,7 @@ CSE-2101-Data-Structures/
 - 9.7 Radix Sort
 - 9.8 Searching and Data Modification
 - 9.9 Hashing
+</details>
 
 ---
 
@@ -353,13 +428,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📊 Repository Stats
 
+<div align="center">
+
 ![GitHub stars](https://img.shields.io/github/stars/M-F-Tushar/CSE-2101-Data-Structure?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/M-F-Tushar/CSE-2101-Data-Structure?style=social)
 ![GitHub watchers](https://img.shields.io/github/watchers/M-F-Tushar/CSE-2101-Data-Structure?style=social)
-![GitHub last commit](https://img.shields.io/github/last-commit/M-F-Tushar/CSE-2101-Data-Structure)
-![GitHub repo size](https://img.shields.io/github/repo-size/M-F-Tushar/CSE-2101-Data-Structure)
-![GitHub language count](https://img.shields.io/github/languages/count/M-F-Tushar/CSE-2101-Data-Structure)
-![GitHub top language](https://img.shields.io/github/languages/top/M-F-Tushar/CSE-2101-Data-Structure)
+<br>
+![GitHub last commit](https://img.shields.io/github/last-commit/M-F-Tushar/CSE-2101-Data-Structure?style=flat-square&color=blue)
+![GitHub repo size](https://img.shields.io/github/repo-size/M-F-Tushar/CSE-2101-Data-Structure?style=flat-square&color=green)
+![GitHub language count](https://img.shields.io/github/languages/count/M-F-Tushar/CSE-2101-Data-Structure?style=flat-square&color=orange)
+![GitHub top language](https://img.shields.io/github/languages/top/M-F-Tushar/CSE-2101-Data-Structure?style=flat-square&color=yellow)
+
+</div>
 
 ---
 
