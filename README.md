@@ -7,7 +7,7 @@
 [![Course](https://img.shields.io/badge/Course-CSE%202101-007bff?style=for-the-badge&logo=google-classroom&logoColor=white)](https://github.com/M-F-Tushar)
 [![Credits](https://img.shields.io/badge/Credits-3.00-28a745?style=for-the-badge&logo=target&logoColor=white)](https://github.com/M-F-Tushar)
 [![Language](https://img.shields.io/badge/Language-C-A8B9CC?style=for-the-badge&logo=c&logoColor=black)](https://github.com/M-F-Tushar)
-[![License](https://img.shields.io/badge/License-MIT-ffc107?style=for-the-badge&logo=open-source-initiative&logoColor=black)](LICENSE)
+<!--[![License](https://img.shields.io/badge/License-MIT-ffc107?style=for-the-badge&logo=open-source-initiative&logoColor=black)](LICENSE)-->
 
 </div>
 
