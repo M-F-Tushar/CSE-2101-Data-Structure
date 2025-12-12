@@ -1,178 +1,133 @@
-# Chapter 1: Introduction to Data Structures
+# Chapter 1: Introduction and Overview
 
 ## Table of Contents
 
-1. [Introduction](#introduction)
-2. [Basic Terminology](#basic-terminology)
-3. [Data Organization Hierarchy](#data-organization-hierarchy)
-4. [Data Structures Classification](#data-structures-classification)
-5. [Linear Data Structures](#linear-data-structures)
-   - Arrays
-   - Linked Lists
-6. [Non-Linear Data Structures](#non-linear-data-structures)
-   - Trees
-   - Graphs
-7. [Other Important Structures](#other-important-structures)
-   - Stacks
-   - Queues
-8. [Data Structure Operations](#data-structure-operations)
-9. [Abstract Data Types (ADT)](#abstract-data-types-adt)
-10. [Algorithms and Complexity](#algorithms-and-complexity)
-11. [Time-Space Tradeoff](#time-space-tradeoff)
-12. [Practice Exercises](#practice-exercises)
+1. [Introduction](#11-introduction)
+2. [Basic Terminology and Data Organization](#12-basic-terminology-elementary-data-organization)
+3. [Data Structures](#13-data-structures)
+4. [Data Structure Operations](#14-data-structure-operations)
+5. [Algorithms: Complexity and Time-Space Tradeoff](#15-algorithms-complexity-time-space-tradeoff)
+6. [Solved Problems](#solved-problems)
 
 ---
 
-## Introduction
+## 1.1 INTRODUCTION
 
-### What are Data Structures?
+This chapter introduces **data structures** - ways to organize information in a computer.
 
-**In Simple Terms:** Data structures are like different ways to organize your closet. You can hang clothes, fold them in drawers, or put them in boxes. Similarly, data structures are different ways to organize information in a computer so it's easy to find and use.
-
-**Formal Definition:** A data structure is a way of organizing and storing data in a computer so that it can be accessed and modified efficiently.
-
-### Why Study Data Structures?
+### What You Will Learn:
 
 ```mermaid
 graph TD
-    A["Why Data Structures?"] --> B["Efficient Storage"]
-    A --> C["Fast Access"]
-    A --> D["Easy Modification"]
-    A --> E["Better Programs"]
+    A["Chapter 1 Overview"] --> B["Basic Terms & Concepts"]
+    A --> C["Data Organization"]
+    A --> D["Types of Data Structures"]
+    A --> E["Operations on Data"]
+    A --> F["Algorithms & Complexity"]
+    A --> G["Time-Space Tradeoff"]
     
     style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
     style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
     style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
     style D fill:#50C878,stroke:#333,stroke-width:2px,color:#000
     style E fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style F fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style G fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
 
-**Benefits:**
-- ✅ Organize data efficiently
-- ✅ Access data quickly
-- ✅ Save memory space
-- ✅ Write better programs
+**In Simple Words:** This chapter teaches you different ways to store and organize information so computers can work with it quickly and efficiently.
 
 ---
 
-## Basic Terminology
+## 1.2 BASIC TERMINOLOGY; ELEMENTARY DATA ORGANIZATION
 
-### Data and Data Items
+### What is Data?
 
-**Data:** Values or sets of values  
-**Data Item:** A single unit of value
+**Data** = Values or sets of values  
+**Data Item** = A single piece of data
 
 ### Types of Data Items
 
 ```mermaid
-graph LR
+graph TD
     A["Data Items"] --> B["Elementary Items"]
     A --> C["Group Items"]
     
-    B --> D["Cannot be divided<br/>Example: SSN 123-45-6789"]
-    C --> E["Can be divided<br/>Example: Name = First + Last"]
+    B --> D["Cannot be broken down further"]
+    B --> E["Example: Social Security Number<br/>134-24-5533"]
+    
+    C --> F["Can be broken into smaller parts"]
+    C --> G["Example: Employee Name"]
+    G --> H["First Name"]
+    G --> I["Middle Initial"]
+    G --> J["Last Name"]
     
     style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
     style B fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
     style C fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
     style D fill:#F5E663,stroke:#333,stroke-width:2px,color:#000
     style E fill:#F5E663,stroke:#333,stroke-width:2px,color:#000
+    style F fill:#F5E663,stroke:#333,stroke-width:2px,color:#000
+    style G fill:#F5E663,stroke:#333,stroke-width:2px,color:#000
+    style H fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style I fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style J fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
 
-**1. Elementary Items** - Cannot be divided further
-- Example: Social Security Number (134-24-5533)
-- Example: Age (25)
-
-**2. Group Items** - Can be divided into sub-items
-- Example: Employee Name
-  - First Name
-  - Middle Initial
-  - Last Name
-
-### Important Concepts
-
-**Entity:** Something that has certain properties
-- Example: An employee, a student, a product
-
-**Attributes:** Properties of an entity
-- Example: Name, Age, Address
-
-**Values:** Actual data assigned to attributes
-- Example: Name = "John Smith", Age = 25
-
-### C Program: Basic Data Representation
-
-```c
-#include <stdio.h>
-#include <string.h>
-
-// Structure to represent an Employee (Entity)
-struct Employee {
-    int id;                    // Elementary item
-    char firstName[50];        // Part of group item (Name)
-    char lastName[50];         // Part of group item (Name)
-    int age;                   // Elementary item
-    float salary;              // Elementary item
-};
-
-int main() {
-    // Create an employee record
-    struct Employee emp1;
-    
-    // Assign values to attributes
-    emp1.id = 1001;
-    strcpy(emp1.firstName, "John");
-    strcpy(emp1.lastName, "Smith");
-    emp1.age = 30;
-    emp1.salary = 50000.00;
-    
-    // Display employee information
-    printf("Employee Information:\n");
-    printf("-------------------\n");
-    printf("ID: %d\n", emp1.id);
-    printf("Name: %s %s\n", emp1.firstName, emp1.lastName);
-    printf("Age: %d\n", emp1.age);
-    printf("Salary: $%.2f\n", emp1.salary);
-    
-    return 0;
-}
-```
-
-**Output:**
-```
-Employee Information:
--------------------
-ID: 1001
-Name: John Smith
-Age: 30
-Salary: $50000.00
-```
+**In Simple Words:**
+- **Elementary Items** = Items that stay as one piece (like an age number: 34)
+- **Group Items** = Items made of smaller pieces (like a full name: First + Middle + Last)
 
 ---
 
-## Data Organization Hierarchy
+### Entity, Attributes, and Values
 
-### The Hierarchy
+**Entity** = Something that has properties we can describe  
+**Attributes** = The properties of that thing  
+**Values** = The actual information for each property
 
-**In Simple Terms:** Think of data organization like a filing system:
-- **File** = Filing cabinet (contains all documents)
-- **Record** = One folder (contains one person's info)
-- **Field** = One piece of paper (contains one piece of info)
-- **Value** = The actual writing on the paper
+```mermaid
+graph LR
+    A["Entity: Employee"] --> B["Attribute: Name"]
+    A --> C["Attribute: Age"]
+    A --> D["Attribute: Sex"]
+    A --> E["Attribute: SSN"]
+    
+    B --> F["Value: ROHLAND, GAIL"]
+    C --> G["Value: 34"]
+    D --> H["Value: F"]
+    E --> I["Value: 134-24-5533"]
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style E fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style F fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style G fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style H fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style I fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Entity Set** = A group of similar entities (example: all employees in a company)
+
+**Information** = Data that has meaning or has been processed
+
+---
+
+### Fields, Records, and Files
+
+Data is organized in a hierarchy (levels from small to big):
 
 ```mermaid
 graph TD
-    A["FILE<br/>(All Employees)"] --> B["RECORD 1<br/>(Employee #1)"]
-    A --> C["RECORD 2<br/>(Employee #2)"]
-    A --> D["RECORD 3<br/>(Employee #3)"]
+    A["FILE<br/>(Collection of all records)<br/>Example: All Employee Records"] --> B["RECORD 1<br/>(One entity's data)<br/>Example: John's Info"]
+    A --> C["RECORD 2<br/>Example: Mary's Info"]
+    A --> D["RECORD 3<br/>Example: Bob's Info"]
     
-    B --> E["FIELD: Name"]
-    B --> F["FIELD: Age"]
-    B --> G["FIELD: Salary"]
-    
-    E --> H["VALUE: John Smith"]
-    F --> I["VALUE: 30"]
-    G --> J["VALUE: 50000"]
+    B --> E["FIELD: Name<br/>Value: John Smith"]
+    B --> F["FIELD: Age<br/>Value: 30"]
+    B --> G["FIELD: Salary<br/>Value: 50000"]
     
     style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
     style B fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
@@ -181,921 +136,1077 @@ graph TD
     style E fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
     style F fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
     style G fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
-    style H fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style I fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style J fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
 
-### Primary Keys
-
-**In Simple Terms:** A primary key is like a unique ID card number - no two people can have the same one.
-
-**Definition:** A field that uniquely identifies each record
-
-**Example:** In a student database:
-- ✅ Student ID (unique for each student)
-- ❌ Name (two students might have same name)
-- ❌ Age (many students have same age)
-
-### C Program: File with Primary Key
-
-```c
-#include <stdio.h>
-#include <string.h>
-
-#define MAX_STUDENTS 100
-
-struct Student {
-    int studentID;      // Primary Key
-    char name[50];
-    int age;
-    float gpa;
-};
-
-// Function to search by primary key
-int searchByID(struct Student students[], int count, int searchID) {
-    for(int i = 0; i < count; i++) {
-        if(students[i].studentID == searchID) {
-            return i;  // Found at index i
-        }
-    }
-    return -1;  // Not found
-}
-
-int main() {
-    struct Student students[MAX_STUDENTS];
-    int count = 3;
-    
-    // Add some students
-    students[0].studentID = 1001;
-    strcpy(students[0].name, "Alice");
-    students[0].age = 20;
-    students[0].gpa = 3.8;
-    
-    students[1].studentID = 1002;
-    strcpy(students[1].name, "Bob");
-    students[1].age = 21;
-    students[1].gpa = 3.5;
-    
-    students[2].studentID = 1003;
-    strcpy(students[2].name, "Charlie");
-    students[2].age = 20;
-    students[2].gpa = 3.9;
-    
-    // Search for student with ID 1002
-    int searchID = 1002;
-    int index = searchByID(students, count, searchID);
-    
-    if(index != -1) {
-        printf("Student Found:\n");
-        printf("ID: %d\n", students[index].studentID);
-        printf("Name: %s\n", students[index].name);
-        printf("GPA: %.2f\n", students[index].gpa);
-    } else {
-        printf("Student with ID %d not found.\n", searchID);
-    }
-    
-    return 0;
-}
-```
+**In Simple Words:**
+- **Field** = One piece of information (like "Name" or "Age")
+- **Record** = All information about one thing (like all info about one employee)
+- **File** = Collection of all records (like a list of all employees)
 
 ---
 
-## Data Structures Classification
+### Primary Key
 
-### Main Categories
+A **Primary Key** is a field that uniquely identifies each record - no two records can have the same value for this field.
 
 ```mermaid
 graph TD
-    ROOT["DATA STRUCTURES"] --> PRIM["Primitive"]
-    ROOT --> NONPRIM["Non-Primitive"]
+    A["Primary Key Examples"] --> B["✅ Serial Number<br/>(Each car has unique one)"]
+    A --> C["✅ Student ID<br/>(Each student has unique one)"]
+    A --> D["❌ Address<br/>(Multiple people can share)"]
+    A --> E["❌ Age<br/>(Many people have same age)"]
     
-    PRIM --> INT["Integer"]
-    PRIM --> REAL["Float/Real"]
-    PRIM --> CHAR["Character"]
-    PRIM --> BOOL["Boolean"]
-    
-    NONPRIM --> LINEAR["Linear"]
-    NONPRIM --> NONLINEAR["Non-Linear"]
-    
-    LINEAR --> ARR["Arrays"]
-    LINEAR --> LL["Linked Lists"]
-    LINEAR --> STK["Stacks"]
-    LINEAR --> QUE["Queues"]
-    
-    NONLINEAR --> TREE["Trees"]
-    NONLINEAR --> GRAPH["Graphs"]
-    
-    style ROOT fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
-    style PRIM fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
-    style NONPRIM fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
-    style LINEAR fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
-    style NONLINEAR fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
-    style INT fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style REAL fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style CHAR fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style BOOL fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style ARR fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style LL fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style STK fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style QUE fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style TREE fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style GRAPH fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style E fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
 ```
 
-### Primitive vs Non-Primitive
+#### Example 1.1
 
-| Primitive | Non-Primitive |
-|-----------|---------------|
-| Basic data types | Complex structures |
-| Cannot be divided | Made of primitive types |
-| Examples: int, float, char | Examples: arrays, trees |
-| Built into language | Created by programmer |
+**(a) Automobile Dealership File:**
+- Data: Serial Number, Type, Year, Price, Accessories
+- **Primary Key: Serial Number** (each car has a unique serial number)
 
-### Linear vs Non-Linear
-
-**Linear:** Elements form a sequence (like a line)
-- Arrays, Linked Lists, Stacks, Queues
-
-**Non-Linear:** Elements don't form a simple sequence
-- Trees, Graphs
+**(b) Membership File:**
+- Data: Name, Address, Telephone Number, Dues Owed
+- **Primary Key: Name** (assuming no duplicate names)
+- Note: Address and Phone cannot be primary keys because family members might share them
 
 ---
 
-## Linear Data Structures
-
-### Arrays
-
-**In Simple Terms:** An array is like a row of numbered boxes, where each box holds one value.
+### Fixed-Length vs Variable-Length Records
 
 ```mermaid
 graph LR
-    A["Index: 0 | Value: 10"] --> B["Index: 1 | Value: 20"]
-    B --> C["Index: 2 | Value: 30"]
-    C --> D["Index: 3 | Value: 40"]
-    D --> E["Index: 4 | Value: 50"]
+    A["Record Types"] --> B["Fixed-Length Records"]
+    A --> C["Variable-Length Records"]
+    
+    B --> D["All records same size<br/>Same space for each field"]
+    C --> E["Records can be different sizes<br/>Example: Student courses<br/>(different students take<br/>different number of courses)"]
+    
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#F5E663,stroke:#333,stroke-width:2px,color:#000
+    style E fill:#F5E663,stroke:#333,stroke-width:2px,color:#000
+```
+
+---
+
+### Three Steps in Studying Data Structures
+
+```mermaid
+graph LR
+    A["Step 1"] --> B["Logical Description<br/>(How it works in theory)"]
+    B --> C["Step 2"]
+    C --> D["Implementation<br/>(How to build it on computer)"]
+    D --> E["Step 3"]
+    E --> F["Analysis<br/>(How much memory and time<br/>does it need?)"]
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style E fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style F fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Note:** This text focuses on data stored in main memory (RAM), not secondary storage like hard drives. Database management (secondary storage) is a different subject.
+
+---
+
+## 1.3 DATA STRUCTURES
+
+A **data structure** is a way of organizing data - like a blueprint for how information is stored and connected.
+
+### Choosing the Right Data Structure
+
+When picking a data structure, think about two things:
+
+```mermaid
+graph TD
+    A["Choosing a Data Structure"] --> B["Must match real-world data<br/>(Rich enough to show relationships)"]
+    A --> C["Must be simple enough<br/>(Easy to work with and process)"]
+    
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+---
+
+### Arrays
+
+An **array** is a list of similar items stored in numbered boxes.
+
+```mermaid
+graph LR
+    subgraph "STUDENT Array"
+        A["[1] John Brown"]
+        B["[2] Sandra Gold"]
+        C["[3] Tom Jones"]
+        D["[4] June Kelly"]
+        E["[5] Mary Reed"]
+        F["[6] Alan Smith"]
+    end
     
     style A fill:#50C878,stroke:#333,stroke-width:2px,color:#000
     style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
     style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
     style D fill:#50C878,stroke:#333,stroke-width:2px,color:#000
     style E fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style F fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
 
-**Characteristics:**
-- Fixed size
-- Same data type for all elements
-- Fast access by index
-- Sequential memory storage
+**Key Points:**
+- Elements are numbered (1, 2, 3, ... n)
+- Access any element using its number: STUDENT[3] = "Tom Jones"
+- The number is called a **subscript** or **index**
 
-### C Program: Array Basics
+#### Array Notation
 
-```c
-#include <stdio.h>
+Arrays can be written in three ways:
+- Subscript notation: A₁, A₂, A₃, ..., Aₙ
+- Parenthesis notation: A(1), A(2), A(3), ..., A(N)
+- Bracket notation: A[1], A[2], A[3], ..., A[N]
 
-int main() {
-    // Declare and initialize array
-    int numbers[5] = {10, 20, 30, 40, 50};
+---
+
+#### Two-Dimensional Arrays (Tables/Matrices)
+
+A 2D array has rows and columns, like a spreadsheet:
+
+```mermaid
+graph TD
+    subgraph "SALES Array (28 stores × 4 departments)"
+        A["SALES[1,1]=2872 | SALES[1,2]=805 | SALES[1,3]=3211 | SALES[1,4]=1560"]
+        B["SALES[2,1]=2196 | SALES[2,2]=1223 | SALES[2,3]=2525 | SALES[2,4]=1951"]
+        C["SALES[3,1]=1744 | SALES[3,2]=3257 | SALES[3,3]=1017 | SALES[3,4]=3686"]
+        D["... more rows ..."]
+        E["SALES[28,1]=2618 | SALES[28,2]=931 | SALES[28,3]=2333 | SALES[28,4]=982"]
+    end
     
-    // Access elements
-    printf("Array Elements:\n");
-    for(int i = 0; i < 5; i++) {
-        printf("numbers[%d] = %d\n", i, numbers[i]);
-    }
-    
-    // Modify element
-    numbers[2] = 99;
-    printf("\nAfter modification:\n");
-    printf("numbers[2] = %d\n", numbers[2]);
-    
-    // Calculate sum
-    int sum = 0;
-    for(int i = 0; i < 5; i++) {
-        sum += numbers[i];
-    }
-    printf("\nSum of all elements: %d\n", sum);
-    
-    return 0;
-}
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#95A5A6,stroke:#333,stroke-width:2px,color:#fff
+    style E fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
 ```
 
-### Two-Dimensional Arrays
-
-**In Simple Terms:** A 2D array is like a spreadsheet with rows and columns.
-
-```c
-#include <stdio.h>
-
-int main() {
-    // 3x4 array (3 rows, 4 columns)
-    int matrix[3][4] = {
-        {1, 2, 3, 4},
-        {5, 6, 7, 8},
-        {9, 10, 11, 12}
-    };
-    
-    // Print matrix
-    printf("Matrix:\n");
-    for(int i = 0; i < 3; i++) {
-        for(int j = 0; j < 4; j++) {
-            printf("%4d ", matrix[i][j]);
-        }
-        printf("\n");
-    }
-    
-    // Access specific element
-    printf("\nElement at [1][2]: %d\n", matrix[1][2]);
-    
-    return 0;
-}
-```
+- First subscript = Store number (row)
+- Second subscript = Department number (column)
+- Size: 28 × 4 (28 rows, 4 columns)
 
 ---
 
 ### Linked Lists
 
-**In Simple Terms:** A linked list is like a treasure hunt where each clue points to the next location.
+A **linked list** connects data items using pointers (arrows that point to the next item).
+
+#### Example: Customer-Salesperson Relationship
+
+**Original Data:**
+
+| Customer | Salesperson |
+|----------|-------------|
+| Adams    | Smith       |
+| Brown    | Ray         |
+| Clark    | Jones       |
+| Drew     | Ray         |
+| Evans    | Smith       |
+| Farmer   | Jones       |
+| Geller   | Ray         |
+| Hill     | Smith       |
+| Infeld   | Ray         |
+
+#### Method 1: Using Pointers to Save Space
+
+Instead of storing the salesperson name for each customer, use a number (pointer) that points to the salesperson:
 
 ```mermaid
 graph LR
-    HEAD["HEAD"] -.-> N1["Data: 10 | Next"]
-    N1 --> N2["Data: 20 | Next"]
-    N2 --> N3["Data: 30 | Next"]
-    N3 --> NULL["NULL"]
+    subgraph "Customer File"
+        C1["Adams → 3"]
+        C2["Brown → 2"]
+        C3["Clark → 1"]
+        C4["Drew → 2"]
+        C5["Evans → 3"]
+    end
     
-    style HEAD fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
-    style N1 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
-    style N2 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
-    style N3 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
-    style NULL fill:#95A5A6,stroke:#333,stroke-width:2px,color:#fff
-```
-
-**Characteristics:**
-- Dynamic size
-- Elements not stored contiguously
-- Each element points to next
-- Easy insertion/deletion
-
-### C Program: Linked List Basics
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-// Node structure
-struct Node {
-    int data;
-    struct Node* next;
-};
-
-// Function to create new node
-struct Node* createNode(int data) {
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->data = data;
-    newNode->next = NULL;
-    return newNode;
-}
-
-// Function to print list
-void printList(struct Node* head) {
-    struct Node* current = head;
-    printf("List: ");
-    while(current != NULL) {
-        printf("%d -> ", current->data);
-        current = current->next;
-    }
-    printf("NULL\n");
-}
-
-int main() {
-    // Create nodes
-    struct Node* head = createNode(10);
-    head->next = createNode(20);
-    head->next->next = createNode(30);
+    subgraph "Salesperson Array"
+        S1["1: Jones"]
+        S2["2: Ray"]
+        S3["3: Smith"]
+    end
     
-    // Print list
-    printList(head);
+    C1 -.-> S3
+    C2 -.-> S2
+    C3 -.-> S1
+    C4 -.-> S2
+    C5 -.-> S3
     
-    return 0;
-}
+    style C1 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C2 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C3 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C4 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C5 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style S1 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style S2 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style S3 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
 
-**Output:**
+**Advantage:** A number takes less space than a name.
+
+#### Method 2: Linked List Structure
+
+Each salesperson points to their first customer, and each customer points to the next customer of the same salesperson:
+
+```mermaid
+graph LR
+    subgraph "Salesperson Ray's Customers"
+        R["Ray"] --> B["Brown"]
+        B --> D["Drew"]
+        D --> G["Geller"]
+        G --> I["Infeld"]
+        I --> END["0 (End)"]
+    end
+    
+    style R fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style G fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style I fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style END fill:#95A5A6,stroke:#333,stroke-width:2px,color:#fff
 ```
-List: 10 -> 20 -> 30 -> NULL
-```
+
+**Terminology:**
+- **Pointer**: Points from one list to another list
+- **Link**: Points from one item to another item in the same list
 
 ---
-
-## Non-Linear Data Structures
 
 ### Trees
 
-**In Simple Terms:** A tree is like a family tree - one parent can have multiple children, and each child can have their own children.
+A **tree** shows data with parent-child relationships (hierarchical data).
+
+#### Example 1.4: Employee Record Structure
 
 ```mermaid
 graph TD
-    ROOT["Root: 50"] --> L1["Left: 30"]
-    ROOT --> R1["Right: 70"]
+    A["Employee"] --> B["Soc. Sec. No."]
+    A --> C["Name"]
+    A --> D["Address"]
+    A --> E["Age"]
+    A --> F["Salary"]
+    A --> G["Dependents"]
     
-    L1 --> L2["20"]
-    L1 --> L3["40"]
+    C --> H["Last"]
+    C --> I["First"]
+    C --> J["MI"]
     
-    R1 --> R2["60"]
-    R1 --> R3["80"]
+    D --> K["Street"]
+    D --> L["Area"]
     
-    style ROOT fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
-    style L1 fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
-    style R1 fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
-    style L2 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style L3 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style R2 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style R3 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    L --> M["City"]
+    L --> N["State"]
+    L --> O["ZIP"]
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style E fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style F fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style G fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style H fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style I fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style J fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style K fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style L fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style M fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style N fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style O fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
 
-**Characteristics:**
-- Hierarchical structure
-- One root node
-- Parent-child relationships
-- No cycles
+**Level Number Format:**
+```
+01 Employee
+  02 Social Security Number
+  02 Name
+    03 Last
+    03 First
+    03 Middle Initial
+  02 Address
+    03 Street
+    03 Area
+      04 City
+      04 State
+      04 ZIP
+  02 Age
+  02 Salary
+  02 Dependents
+```
 
-**Applications:**
-- File systems
-- Organization charts
-- HTML DOM
-- Decision trees
+#### Example 1.5: Algebraic Expression Tree
+
+The expression **(2x + y)(a - 7b)³** can be shown as a tree:
+
+```mermaid
+graph TD
+    A["*"] --> B["+"]
+    A --> C["↑"]
+    
+    B --> D["*"]
+    B --> E["y"]
+    
+    D --> F["2"]
+    D --> G["x"]
+    
+    C --> H["-"]
+    C --> I["3"]
+    
+    H --> J["a"]
+    H --> K["*"]
+    
+    K --> L["7"]
+    K --> M["b"]
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style E fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style F fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style G fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style H fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style I fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style J fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style K fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style L fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style M fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Note:** The tree shows the order of operations - operations lower in the tree happen first.
 
 ---
 
-### Graphs
+### Other Important Data Structures
 
-**In Simple Terms:** A graph is like a map of cities connected by roads - you can go from any city to any other city through different paths.
+#### (a) Stack (LIFO - Last In, First Out)
+
+Like a stack of plates - you add and remove only from the top.
+
+```mermaid
+graph BT
+    A["Bottom: Plate 1"] --> B["Plate 2"]
+    B --> C["Plate 3"]
+    C --> D["Top: Plate 4"]
+    
+    E["New Plate"] -.->|"PUSH (add)"| D
+    D -.->|"POP (remove)"| F["Remove"]
+    
+    style A fill:#95A5A6,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style E fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style F fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Real-life examples:**
+- Browser back button (last page visited, first to go back)
+- Undo feature in programs
+
+---
+
+#### (b) Queue (FIFO - First In, First Out)
+
+Like a line of people waiting for a bus - first person in line gets on first.
+
+```mermaid
+graph LR
+    A["Front: Person 1"] --> B["Person 2"]
+    B --> C["Person 3"]
+    C --> D["Rear: Person 4"]
+    
+    A -.->|"EXIT (remove)"| E["Gets on bus"]
+    F["New Person"] -.->|"JOIN (add)"| D
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style E fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style F fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Real-life examples:**
+- Print queue (first document sent, first to print)
+- Cars at a traffic light
+
+---
+
+#### (c) Graph
+
+Shows connections between items - not necessarily in a hierarchy.
 
 ```mermaid
 graph TD
-    A["City A"] --- B["City B"]
-    A --- C["City C"]
-    B --- D["City D"]
+    A["Boston"] --- B["New York"]
+    A --- C["Chicago"]
+    B --- D["Philadelphia"]
     C --- D
-    C --- E["City E"]
-    D --- E
+    D --- E["Miami"]
+    C --- F["Los Angeles"]
     
     style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
     style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
     style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
     style D fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
     style E fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style F fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
 ```
 
-**Characteristics:**
-- Nodes (vertices) connected by edges
-- Can have cycles
-- Multiple paths between nodes
-- No hierarchical structure
+**Example:** Airline routes between cities
 
-**Applications:**
-- Social networks
+**Real-life examples:**
+- Social networks (friends connected to friends)
 - Road maps
 - Computer networks
-- Recommendation systems
 
 ---
 
-## Other Important Structures
+### Common Names for Data Elements
 
-### Stacks (LIFO - Last In, First Out)
-
-**In Simple Terms:** A stack is like a stack of plates - you can only add or remove from the top.
-
-```mermaid
-graph BT
-    BOTTOM["Bottom: Item 1"] --> MID1["Item 2"]
-    MID1 --> MID2["Item 3"]
-    MID2 --> TOP["Top: Item 4"]
-    
-    NEW["New Item"] -.->|PUSH| TOP
-    TOP -.->|POP| REMOVE["Remove"]
-    
-    style BOTTOM fill:#95A5A6,stroke:#333,stroke-width:2px,color:#fff
-    style MID1 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
-    style MID2 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
-    style TOP fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
-    style NEW fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style REMOVE fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
-```
-
-**Operations:**
-- **Push:** Add to top
-- **Pop:** Remove from top
-- **Peek:** View top without removing
-
-### C Program: Stack Implementation
-
-```c
-#include <stdio.h>
-#define MAX 100
-
-int stack[MAX];
-int top = -1;
-
-void push(int value) {
-    if(top >= MAX - 1) {
-        printf("Stack Overflow!\n");
-        return;
-    }
-    stack[++top] = value;
-    printf("Pushed %d\n", value);
-}
-
-int pop() {
-    if(top < 0) {
-        printf("Stack Underflow!\n");
-        return -1;
-    }
-    return stack[top--];
-}
-
-void display() {
-    if(top < 0) {
-        printf("Stack is empty\n");
-        return;
-    }
-    printf("Stack: ");
-    for(int i = 0; i <= top; i++) {
-        printf("%d ", stack[i]);
-    }
-    printf("\n");
-}
-
-int main() {
-    push(10);
-    push(20);
-    push(30);
-    display();
-    
-    printf("Popped: %d\n", pop());
-    display();
-    
-    return 0;
-}
-```
+Different names are used depending on the situation:
+- **Data element** or **Data item** - general terms
+- **Record** - when talking about files
+- **Node** - when talking about linked lists, trees, and graphs
 
 ---
 
-### Queues (FIFO - First In, First Out)
+## 1.4 DATA STRUCTURE OPERATIONS
 
-**In Simple Terms:** A queue is like a line at a store - first person in line is first to be served.
+The data in our structures is processed using specific operations. The choice of data structure depends on which operations you need to do most often.
 
-```mermaid
-graph LR
-    FRONT["Front: Person 1"] --> P2["Person 2"]
-    P2 --> P3["Person 3"]
-    P3 --> REAR["Rear: Person 4"]
-    
-    FRONT -.->|DEQUEUE| EXIT["Exit"]
-    NEW["New Person"] -.->|ENQUEUE| REAR
-    
-    style FRONT fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
-    style P2 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
-    style P3 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
-    style REAR fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style NEW fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
-    style EXIT fill:#95A5A6,stroke:#333,stroke-width:2px,color:#fff
-```
-
-**Operations:**
-- **Enqueue:** Add to rear
-- **Dequeue:** Remove from front
-
-### C Program: Queue Implementation
-
-```c
-#include <stdio.h>
-#define MAX 100
-
-int queue[MAX];
-int front = -1, rear = -1;
-
-void enqueue(int value) {
-    if(rear >= MAX - 1) {
-        printf("Queue Full!\n");
-        return;
-    }
-    if(front == -1) front = 0;
-    queue[++rear] = value;
-    printf("Enqueued %d\n", value);
-}
-
-int dequeue() {
-    if(front == -1 || front > rear) {
-        printf("Queue Empty!\n");
-        return -1;
-    }
-    return queue[front++];
-}
-
-void display() {
-    if(front == -1 || front > rear) {
-        printf("Queue is empty\n");
-        return;
-    }
-    printf("Queue: ");
-    for(int i = front; i <= rear; i++) {
-        printf("%d ", queue[i]);
-    }
-    printf("\n");
-}
-
-int main() {
-    enqueue(10);
-    enqueue(20);
-    enqueue(30);
-    display();
-    
-    printf("Dequeued: %d\n", dequeue());
-    display();
-    
-    return 0;
-}
-```
-
----
-
-## Data Structure Operations
-
-### Major Operations
+### Main Operations
 
 ```mermaid
 graph TD
-    OPS["Data Structure Operations"] --> TRAV["Traversing"]
-    OPS --> SEARCH["Searching"]
-    OPS --> INSERT["Inserting"]
-    OPS --> DELETE["Deleting"]
-    OPS --> SORT["Sorting"]
-    OPS --> MERGE["Merging"]
+    A["Data Structure Operations"] --> B["Primary Operations"]
+    A --> C["Special Operations"]
     
-    style OPS fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
-    style TRAV fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style SEARCH fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style INSERT fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style DELETE fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style SORT fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style MERGE fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    B --> D["1. Traversing"]
+    B --> E["2. Searching"]
+    B --> F["3. Inserting"]
+    B --> G["4. Deleting"]
+    
+    C --> H["5. Sorting"]
+    C --> I["6. Merging"]
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style E fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style F fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style G fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style H fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style I fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
 ```
 
-### 1. Traversing
+### Operation Descriptions
 
-**Definition:** Visiting each element exactly once
-
-```c
-#include <stdio.h>
-
-void traverseArray(int arr[], int n) {
-    printf("Traversing array:\n");
-    for(int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-}
-
-int main() {
-    int arr[] = {10, 20, 30, 40, 50};
-    int n = 5;
-    traverseArray(arr, n);
-    return 0;
-}
-```
-
-### 2. Searching
-
-**Definition:** Finding location of an element
-
-```c
-#include <stdio.h>
-
-int linearSearch(int arr[], int n, int target) {
-    for(int i = 0; i < n; i++) {
-        if(arr[i] == target) {
-            return i;  // Found at index i
-        }
-    }
-    return -1;  // Not found
-}
-
-int main() {
-    int arr[] = {10, 20, 30, 40, 50};
-    int n = 5;
-    int target = 30;
-    
-    int result = linearSearch(arr, n, target);
-    if(result != -1) {
-        printf("Found %d at index %d\n", target, result);
-    } else {
-        printf("%d not found\n", target);
-    }
-    
-    return 0;
-}
-```
-
-### 3. Inserting
-
-**Definition:** Adding a new element
-
-```c
-#include <stdio.h>
-
-void insertElement(int arr[], int *n, int pos, int value) {
-    // Shift elements to right
-    for(int i = *n; i > pos; i--) {
-        arr[i] = arr[i-1];
-    }
-    arr[pos] = value;
-    (*n)++;
-}
-
-int main() {
-    int arr[10] = {10, 20, 30, 40, 50};
-    int n = 5;
-    
-    printf("Before insertion: ");
-    for(int i = 0; i < n; i++) printf("%d ", arr[i]);
-    
-    insertElement(arr, &n, 2, 25);
-    
-    printf("\nAfter inserting 25 at position 2: ");
-    for(int i = 0; i < n; i++) printf("%d ", arr[i]);
-    printf("\n");
-    
-    return 0;
-}
-```
-
-### 4. Deleting
-
-**Definition:** Removing an element
-
-```c
-#include <stdio.h>
-
-void deleteElement(int arr[], int *n, int pos) {
-    // Shift elements to left
-    for(int i = pos; i < *n - 1; i++) {
-        arr[i] = arr[i+1];
-    }
-    (*n)--;
-}
-
-int main() {
-    int arr[] = {10, 20, 30, 40, 50};
-    int n = 5;
-    
-    printf("Before deletion: ");
-    for(int i = 0; i < n; i++) printf("%d ", arr[i]);
-    
-    deleteElement(arr, &n, 2);
-    
-    printf("\nAfter deleting element at position 2: ");
-    for(int i = 0; i < n; i++) printf("%d ", arr[i]);
-    printf("\n");
-    
-    return 0;
-}
-```
+| Operation | What It Does | Simple Example |
+|-----------|--------------|----------------|
+| **Traversing** | Visit each item exactly once | Reading every name in a phone book |
+| **Searching** | Find an item with a specific value | Looking up a phone number by name |
+| **Inserting** | Add a new item | Adding a new contact |
+| **Deleting** | Remove an item | Removing an old contact |
+| **Sorting** | Arrange items in order | Putting names in alphabetical order |
+| **Merging** | Combine two sorted lists into one | Combining two sorted contact lists |
 
 ---
 
-## Abstract Data Types (ADT)
+### Example 1.6: Membership File Operations
 
-### What is an ADT?
-
-**In Simple Terms:** An ADT is like a TV remote - you know WHAT each button does, but you don't need to know HOW it works inside.
+A membership file contains: **Name, Address, Telephone Number, Age, Sex**
 
 ```mermaid
 graph TD
-    USER["User/Application"] --> INTERFACE["Public Interface<br/>(What you can do)"]
-    INTERFACE --> IMPL["Implementation<br/>(How it works)"]
-    IMPL --> DATA["Data Storage<br/>(Hidden from user)"]
+    A["Membership File Operations"] --> B["(a) Send mail to all members"]
+    A --> C["(b) Find members in certain area"]
+    A --> D["(c) Find address for a name"]
+    A --> E["(d) New member joins"]
+    A --> F["(e) Member leaves"]
+    A --> G["(f) Member moves"]
+    A --> H["(g) Count members 65+"]
     
-    style USER fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
-    style INTERFACE fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style IMPL fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
-    style DATA fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    B --> B1["TRAVERSE - visit each record"]
+    C --> C1["TRAVERSE - check each record"]
+    D --> D1["SEARCH - find specific record"]
+    E --> E1["INSERT - add new record"]
+    F --> F1["DELETE - remove record"]
+    G --> G1["SEARCH then UPDATE"]
+    H --> H1["TRAVERSE and COUNT"]
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style E fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style F fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style G fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style H fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B1 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style C1 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style D1 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style E1 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style F1 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style G1 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style H1 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
 
-**ADT Components:**
-1. **Data:** What information is stored
-2. **Operations:** What you can do with the data
-3. **Implementation:** Hidden from user
-
-**Benefits:**
-- ✅ Easier to use
-- ✅ Can change implementation without affecting users
-- ✅ Reduces complexity
-- ✅ Reusable code
+**Note:** Sometimes you need multiple operations. For example, to delete a specific record, you must first SEARCH for it, then DELETE it.
 
 ---
 
-## Algorithms and Complexity
+## 1.5 ALGORITHMS: COMPLEXITY, TIME-SPACE TRADEOFF
 
 ### What is an Algorithm?
 
-**Definition:** A step-by-step procedure to solve a problem
+An **algorithm** is a clear, step-by-step list of instructions to solve a problem.
 
-### Complexity Analysis
+### Measuring Algorithm Efficiency
 
-**Time Complexity:** How long does it take?  
-**Space Complexity:** How much memory does it use?
-
-### Linear Search vs Binary Search
+We measure algorithms by:
 
 ```mermaid
 graph LR
-    A["Searching Algorithms"] --> B["Linear Search<br/>O(n)"]
-    A --> C["Binary Search<br/>O(log n)"]
+    A["Algorithm Efficiency"] --> B["Time<br/>(How long does it take?)"]
+    A --> C["Space<br/>(How much memory does it use?)"]
     
-    B --> D["Works on unsorted data<br/>Slower for large data"]
-    C --> E["Requires sorted data<br/>Much faster"]
+    B --> D["Complexity = f(n)<br/>Time based on input size"]
+    C --> E["Complexity = f(n)<br/>Space based on input size"]
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style E fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Complexity** = A function that tells us how much time or space an algorithm needs based on the size of the input (n).
+
+---
+
+### Searching Algorithms
+
+#### Linear Search
+
+**How it works:** Check each item one by one until you find what you're looking for.
+
+```
+Algorithm: LINEAR SEARCH
+Step 1: Start from the first item
+Step 2: Compare current item with target
+Step 3: If match found, STOP
+Step 4: If not, move to next item
+Step 5: Repeat until found or end of list
+```
+
+```mermaid
+graph LR
+    A["Start"] --> B["Check Item 1"]
+    B -->|"Not found"| C["Check Item 2"]
+    C -->|"Not found"| D["Check Item 3"]
+    D -->|"Found!"| E["Stop"]
+    
+    style A fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style E fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+```
+
+**Complexity:** Average = n/2 comparisons (for n items)
+- For 1000 items: about 500 comparisons on average
+
+---
+
+#### Binary Search
+
+**Requirement:** The list must be SORTED first!
+
+**How it works:** Keep dividing the list in half until you find the target.
+
+```
+Algorithm: BINARY SEARCH
+Step 1: Compare target with MIDDLE item
+Step 2: If equal, FOUND!
+Step 3: If target < middle, search LEFT half
+Step 4: If target > middle, search RIGHT half
+Step 5: Repeat with the smaller half
+```
+
+```mermaid
+graph TD
+    A["Full List (1-1000)"] --> B["Compare with Middle (500)"]
+    B -->|"Target > 500"| C["Right Half (501-1000)"]
+    B -->|"Target < 500"| D["Left Half (1-499)"]
+    C --> E["Compare with Middle (750)"]
+    E -->|"Target < 750"| F["Left Half (501-749)"]
+    F --> G["Keep halving..."]
+    G --> H["Found!"]
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style E fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style F fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style G fill:#95A5A6,stroke:#333,stroke-width:2px,color:#fff
+    style H fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Complexity:** log₂(n) comparisons
+- For 1000 items: about 10 comparisons
+- For 25,000 items: only 15 comparisons!
+
+---
+
+### Comparison: Linear vs Binary Search
+
+| Number of Items | Linear Search | Binary Search |
+|-----------------|---------------|---------------|
+| 100             | 50            | 7             |
+| 1,000           | 500           | 10            |
+| 10,000          | 5,000         | 14            |
+| 25,000          | 12,500        | 15            |
+| 1,000,000       | 500,000       | 20            |
+
+**Binary search is MUCH faster!** But it has drawbacks:
+- List must be sorted
+- Must be stored in an array (direct access to middle element)
+- Inserting/deleting items requires moving other items
+
+---
+
+### Time-Space Tradeoff
+
+Sometimes you can trade memory space for speed, or speed for memory space.
+
+#### Example: Searching by Two Different Keys
+
+**Problem:** A file has Name and Social Security Number. 
+- File is sorted by SSN (fast SSN search)
+- But searching by Name is slow!
+
+```mermaid
+graph TD
+    A["Solutions"] --> B["Solution 1: Two Complete Files"]
+    A --> C["Solution 2: Main File + Index"]
+    
+    B --> D["✅ Fast for both keys"]
+    B --> E["❌ Double the storage space"]
+    
+    C --> F["✅ Fast for both keys"]
+    C --> G["✅ Minimal extra space"]
     
     style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
     style B fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
     style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
     style D fill:#F5E663,stroke:#333,stroke-width:2px,color:#000
     style E fill:#F5E663,stroke:#333,stroke-width:2px,color:#000
+    style F fill:#F5E663,stroke:#333,stroke-width:2px,color:#000
+    style G fill:#F5E663,stroke:#333,stroke-width:2px,color:#000
 ```
 
-### Comparison Table
-
-| Data Size | Linear Search | Binary Search |
-|-----------|---------------|---------------|
-| 100       | 50            | 7             |
-| 1,000     | 500           | 10            |
-| 10,000    | 5,000         | 14            |
-| 1,000,000 | 500,000       | 20            |
-
-**Huge difference!**
-
-### C Program: Binary Search
-
-```c
-#include <stdio.h>
-
-int binarySearch(int arr[], int n, int target) {
-    int left = 0, right = n - 1;
-    
-    while(left <= right) {
-        int mid = left + (right - left) / 2;
-        
-        if(arr[mid] == target) {
-            return mid;  // Found
-        }
-        
-        if(arr[mid] < target) {
-            left = mid + 1;  // Search right half
-        } else {
-            right = mid - 1;  // Search left half
-        }
-    }
-    
-    return -1;  // Not found
-}
-
-int main() {
-    int arr[] = {10, 20, 30, 40, 50, 60, 70, 80, 90};
-    int n = 9;
-    int target = 50;
-    
-    int result = binarySearch(arr, n, target);
-    if(result != -1) {
-        printf("Found %d at index %d\n", target, result);
-    } else {
-        printf("%d not found\n", target);
-    }
-    
-    return 0;
-}
-```
-
----
-
-## Time-Space Tradeoff
-
-### The Concept
-
-**In Simple Terms:** Sometimes you can use more memory to make your program faster, or use less memory but make it slower.
-
-**Example:** Caching
-- Store frequently used data in memory (uses more space)
-- Access it quickly without recalculating (saves time)
-
-### Real-World Example
-
-**Problem:** Search by Name OR Social Security Number
-
-**Solution 1:** One sorted file
-- Fast for one key, slow for other
-
-**Solution 2:** Two complete files
-- Fast for both keys
-- Uses 2x space
-
-**Solution 3:** Main file + Index (BEST!)
-- Fast for both keys
-- Uses minimal extra space
+**Best Solution:** Main file sorted by SSN + Small index sorted by Name (with pointers to main file)
 
 ```mermaid
 graph LR
-    A["Main File<br/>(Sorted by SSN)"] 
-    B["Index<br/>(Sorted by Name)"] -.->|Points to| A
+    subgraph "Auxiliary Array (Sorted by Name)"
+        I1["Abbey → 2"]
+        I2["Brown → 4"]
+        I3["Carey → 546"]
+        I4["Davis → 1"]
+    end
     
-    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
-    style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    subgraph "Main File (Sorted by SSN)"
+        M1["1: 013-44-5555, Davis"]
+        M2["2: 025-55-6198, Abbey"]
+        M3["3: 027-73-3961, Lane"]
+        M4["4: 174-62-3485, Brown"]
+    end
+    
+    I1 -.-> M2
+    I2 -.-> M4
+    I4 -.-> M1
+    
+    style I1 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style I2 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style I3 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style I4 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style M1 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style M2 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style M3 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style M4 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Hashing:** Another solution uses a special function to calculate the memory address directly from the key. This will be covered in Chapter 9.
+
+---
+
+## SOLVED PROBLEMS
+
+### Problem 1.1: Class List
+
+A professor's class list contains: **Name, Major, Student Number, Test Scores, Final Grade**
+
+**(a) What are the entities, attributes, and entity set?**
+- **Entity:** Each student
+- **Entity Set:** Collection of all students
+- **Attributes:** Name, Major, Student Number, Test Scores, Final Grade
+
+**(b) Describe the field values, records, and file.**
+- **Field Values:** Actual data (e.g., "John Smith", 85, "A")
+- **Record:** All data for one student
+- **File:** All student records together
+
+**(c) Which attributes can be primary keys?**
+- ✅ **Name** (if no duplicates) or **Student Number** (always unique)
+- Professors usually use Name; registrar uses Student Number
+
+---
+
+### Problem 1.2: Patient File
+
+Hospital patient file contains: **Name, Admission Date, SSN, Room, Bed Number, Doctor**
+
+**(a) Which items can serve as primary keys?**
+- ✅ Name (assuming no duplicates)
+- ✅ Social Security Number
+
+**(b) Which pair of items can serve as a primary key?**
+- ✅ Room + Bed Number together (only one patient per bed)
+
+**(c) Which items can be group items?**
+- Name (First, Last)
+- Admission Date (Month, Day, Year)
+- Doctor (might include specialty)
+
+---
+
+### Problem 1.3: Variable-Length Records
+
+Which items may cause variable-length records?
+- (a) age ❌
+- (b) sex ❌
+- (c) name of spouse ❌
+- (d) names of children ✅ (different number of children)
+- (e) education ✅ (different levels of detail)
+- (f) previous employers ✅ (different number of jobs)
+
+---
+
+### Problem 1.4: Database Systems
+
+**Why are database systems only briefly covered in this text?**
+
+Database systems deal with data stored in secondary memory (hard drives). The way we implement and analyze data structures in secondary memory is very different from main memory (RAM). This book focuses on main memory data structures.
+
+---
+
+### Problem 1.5: Brief Descriptions
+
+**(a) Traversing:** Going through and processing each record exactly once
+
+**(b) Sorting:** Putting records in a specific order (alphabetical, numerical, etc.)
+
+**(c) Searching:** Finding the location of a record with a specific key
+
+---
+
+### Problem 1.6: Brief Descriptions
+
+**(a) Inserting:** Adding a new record while keeping the structure organized
+
+**(b) Deleting:** Removing a specific record from the structure
+
+---
+
+### Problem 1.7: Array Operations
+
+Given array NAME (sorted alphabetically):
+
+| Index | NAME |
+|-------|------|
+| 1 | Adam |
+| 2 | Clark |
+| 3 | Evans |
+| 4 | Gupta |
+| 5 | Jones |
+| 6 | Lane |
+| 7 | Pace |
+| 8 | Smith |
+
+**(a) Find NAME[2], NAME[4], NAME[7]**
+- NAME[2] = Clark
+- NAME[4] = Gupta
+- NAME[7] = Pace
+
+**(b) Insert "Davis" - how many names must move?**
+- Davis goes after Clark (position 3)
+- Evans through Smith must move down
+- **6 names moved**
+
+**(c) Delete "Gupta" - how many names must move?**
+- Jones through Smith move up
+- **4 names moved**
+
+---
+
+### Problem 1.8: Following Links
+
+Given FIRST = 5 and the following data:
+
+| Index | NAME | LINK |
+|-------|------|------|
+| 1 | Rogers | 7 |
+| 2 | Clark | 8 |
+| 4 | Hansen | 10 |
+| 5 | Brooks | 2 |
+| 6 | Pitt | 1 |
+| 7 | Walker | 0 |
+| 8 | Fisher | 4 |
+| 10 | Leary | 6 |
+
+**Find the order:**
+
+```mermaid
+graph LR
+    A["FIRST=5<br/>Brooks"] --> B["LINK=2<br/>Clark"]
+    B --> C["LINK=8<br/>Fisher"]
+    C --> D["LINK=4<br/>Hansen"]
+    D --> E["LINK=10<br/>Leary"]
+    E --> F["LINK=6<br/>Pitt"]
+    F --> G["LINK=1<br/>Rogers"]
+    G --> H["LINK=7<br/>Walker"]
+    H --> I["LINK=0<br/>END"]
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style E fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style F fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style G fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style H fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style I fill:#95A5A6,stroke:#333,stroke-width:2px,color:#fff
+```
+
+**Order:** Brooks, Clark, Fisher, Hansen, Leary, Pitt, Rogers, Walker (alphabetical!)
+
+---
+
+### Problem 1.9: Expression Tree
+
+Draw tree for: **(7x + y)(5a - b)³**
+
+```mermaid
+graph TD
+    A["*"] --> B["+"]
+    A --> C["↑"]
+    
+    B --> D["*"]
+    B --> E["y"]
+    
+    D --> F["7"]
+    D --> G["x"]
+    
+    C --> H["-"]
+    C --> I["3"]
+    
+    H --> J["*"]
+    H --> K["b"]
+    
+    J --> L["5"]
+    J --> M["a"]
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+```
+
+**Scope of ↑ (exponentiation):** The subtree containing -, 5, a, b, and 3 → represents (5a - b)³
+
+---
+
+### Problem 1.10: Tree from Level Numbers
+
+```
+01 Employee
+  02 Name
+  02 Number
+  02 Hours
+    03 Regular
+    03 Overtime
+  02 Rate
+```
+
+```mermaid
+graph TD
+    A["Employee"] --> B["Name"]
+    A --> C["Number"]
+    A --> D["Hours"]
+    A --> E["Rate"]
+    
+    D --> F["Regular"]
+    D --> G["Overtime"]
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style E fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style F fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style G fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
 
 ---
 
-## Practice Exercises
+### Problem 1.11: Stack or Queue?
 
-### Exercise 1: Basic Concepts
+**(a) Batch computer programs submitted:**
+- **Queue** - First come, first served
 
-**Question:** What is the difference between elementary and group data items?
+**(b) Program A calls B, B calls C, etc.:**
+- **Stack** - Last called program finishes first
 
-<details>
-<summary>Click for answer</summary>
+**(c) Seniority system for hiring/firing:**
+- **Stack** - Last hired is first to be discharged
 
-**Elementary items** cannot be divided further (e.g., age, SSN)  
-**Group items** can be divided into sub-items (e.g., name = first + last)
-</details>
+---
 
-### Exercise 2: Primary Keys
+### Problem 1.12: Airline Flights Graph
 
-**Question:** In a library system with books, which field(s) could serve as primary key?
-- Title
-- ISBN
-- Author
-- Publication Year
+Given the flight data, draw a directed graph:
 
-<details>
-<summary>Click for answer</summary>
+```mermaid
+graph LR
+    Boston -->|"701"| Chicago
+    Chicago -->|"702"| Boston
+    Philadelphia -->|"705"| Chicago
+    Chicago -->|"708"| Miami
+    Boston -->|"711"| Philadelphia
+    Philadelphia -->|"712"| Boston
+    Philadelphia -->|"713"| Atlanta
+    Atlanta -->|"715"| Miami
+    Philadelphia -->|"717"| Miami
+    Miami -->|"718"| Philadelphia
+    
+    style Boston fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style Chicago fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style Philadelphia fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style Miami fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style Atlanta fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+```
 
-**ISBN** is the best primary key because:
-- ✅ Unique for each book
-- ✅ Standardized format
-- ❌ Title: Multiple books can have same title
-- ❌ Author: One author writes many books
-- ❌ Year: Many books published same year
-</details>
+---
 
-### Exercise 3: Data Structures
+### Problem 1.13: Complexity Concepts
 
-**Question:** Which data structure would you use for:
-1. Browser back button?
-2. Print job queue?
-3. Family tree?
+**(a) Complexity of an algorithm:**
+A function f(n) that measures time and/or space used based on input size n.
 
-<details>
-<summary>Click for answer</summary>
+**(b) Space-time tradeoff:**
+The choice between using more memory to run faster, or using less memory but running slower.
 
-1. **Stack** (LIFO - last page visited is first to go back to)
-2. **Queue** (FIFO - first job submitted prints first)
-3. **Tree** (hierarchical parent-child relationships)
-</details>
+---
 
-### Exercise 4: Algorithm Complexity
+### Problem 1.14: Search Comparison
 
-**Question:** If linear search takes 500 comparisons for 1000 items, how many comparisons does binary search need?
+For a data set with n elements:
 
-<details>
-<summary>Click for answer</summary>
+| n | Linear Search (n/2) | Binary Search (log₂n) |
+|---|---------------------|----------------------|
+| 1,000 | 500 | 10 |
+| 10,000 | 5,000 | 14 |
 
-**Binary Search:** log₂(1000) ≈ **10 comparisons**
+**Note:** Binary search cannot be used on a linked list because you can't directly access the middle element.
 
-Much faster than 500!
-</details>
+---
+
+### Problem 1.15: Storing Flight Data Efficiently
+
+**(a) To quickly find origin and destination given flight number:**
+Store data in arrays ORIG and DEST where the flight number is the subscript (index).
+
+**(b) To quickly find if flight exists between two cities:**
+Use a 2D array FLIGHT where FLIGHT[J, K] contains the flight number from CITY[J] to CITY[K], or 0 if no flight exists.
+
+---
+
+### Problem 1.16: Drawbacks of Data Representations
+
+**(a) Subscript-based arrays:**
+If flight numbers are spaced far apart (e.g., 701, 2500, 9999), most array positions are wasted.
+
+**(b) 2D flight array:**
+If there are very few flights compared to city pairs, the array contains mostly zeros (called a **sparse matrix**) - wasted space.
 
 ---
 
 ## Summary
 
-### Key Concepts Learned
+### Key Concepts
 
-✅ **Data Organization:** Fields → Records → Files  
-✅ **Data Structures:** Arrays, Lists, Trees, Graphs, Stacks, Queues  
-✅ **Operations:** Traverse, Search, Insert, Delete, Sort  
-✅ **ADT:** Separation of interface from implementation  
-✅ **Complexity:** Time vs Space tradeoffs  
-✅ **Algorithms:** Linear search vs Binary search  
+```mermaid
+graph TD
+    A["Chapter 1 Summary"] --> B["Data Organization"]
+    A --> C["Data Structures"]
+    A --> D["Operations"]
+    A --> E["Algorithms"]
+    
+    B --> B1["Fields → Records → Files"]
+    B --> B2["Primary Keys"]
+    
+    C --> C1["Arrays"]
+    C --> C2["Linked Lists"]
+    C --> C3["Trees"]
+    C --> C4["Stacks & Queues"]
+    C --> C5["Graphs"]
+    
+    D --> D1["Traverse, Search"]
+    D --> D2["Insert, Delete"]
+    D --> D3["Sort, Merge"]
+    
+    E --> E1["Time & Space Complexity"]
+    E --> E2["Linear vs Binary Search"]
+    E --> E3["Time-Space Tradeoff"]
+    
+    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style E fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+```
 
-### Important Takeaways
+### Remember:
 
-1. **Choose the right structure** for your problem
-2. **Understand tradeoffs** between time and space
-3. **Use ADTs** for better code organization
-4. **Analyze complexity** before implementing
+1. **Data** = Values organized in structures
+2. **Choose the right structure** for your problem
+3. **Primary key** = Unique identifier for each record
+4. **Stack** = Last in, first out (LIFO)
+5. **Queue** = First in, first out (FIFO)
+6. **Binary search** is much faster than linear search (but needs sorted data)
+7. **Time-space tradeoff** = Balance between speed and memory usage
 
 ---
 
 **End of Chapter 1**
 
-*Continue to [Chapter 2: Complexity and Asymptotic Notation](../Chapter%202%20-%20Complexity%20and%20Asymptotic%20Notation/README.md)*
+*Continue to [Chapter 2: Preliminaries](../Chapter%202%20-%20Preliminaries/README.md)*
 
