@@ -15,56 +15,88 @@
 11. [Records and Record Structures](#records-and-record-structures)
 12. [Matrices](#matrices)
 13. [Sparse Matrices](#sparse-matrices)
-14. [Practice Exercises](#practice-exercises)
 
 ---
 
 ## Introduction
 
-### What are Data Structures?
+### Understanding Data Structures
 
-**In Simple Terms:** Think of data structures as different ways to organize your stuff. Just like you might organize books on a shelf (in a line) or arrange photos in an album (in a grid), we organize data in different patterns in computer memory.
+Data structures are ways we organize and store information in a computer. Think of them like different containers for your stuff - some are like a straight line of boxes, others are more complex like a family tree.
 
-Data structures are classified into two main types:
+We divide data structures into two main groups:
 
 ```mermaid
 graph TD
-    A[Data Structures] --> B[Linear]
-    A --> C[Nonlinear]
-    B --> D[Arrays]
-    B --> E[Linked Lists]
-    C --> F[Trees]
-    C --> G[Graphs]
+    A[Data Structures] --> B[Linear Structures]
+    A --> C[Nonlinear Structures]
+    B --> D["Elements form a line<br/>(one after another)"]
+    C --> E["Elements have complex<br/>relationships"]
+    D --> F[Arrays]
+    D --> G[Linked Lists]
+    E --> H[Trees]
+    E --> I[Graphs]
     
     style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
     style B fill:#F5A623,stroke:#333,stroke-width:2px,color:#000
     style C fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
-    style D fill:#7ED321,stroke:#333,stroke-width:2px,color:#000
-    style E fill:#7ED321,stroke:#333,stroke-width:2px,color:#000
-    style F fill:#BD10E0,stroke:#333,stroke-width:2px,color:#fff
-    style G fill:#BD10E0,stroke:#333,stroke-width:2px,color:#fff
+    style F fill:#7ED321,stroke:#333,stroke-width:2px,color:#000
+    style G fill:#7ED321,stroke:#333,stroke-width:2px,color:#000
+    style H fill:#BD10E0,stroke:#333,stroke-width:2px,color:#fff
+    style I fill:#BD10E0,stroke:#333,stroke-width:2px,color:#fff
 ```
 
-**Linear Data Structures:** Elements form a sequence (like a line of people)
-- Arrays
-- Linked Lists
+**Linear Structures** are simple - elements are arranged in a straight sequence, like people standing in a queue. There are two ways to create this sequence in computer memory:
 
-**Nonlinear Data Structures:** Elements don't form a simple sequence
-- Trees
-- Graphs
+```mermaid
+graph LR
+    subgraph "Way 1: Arrays"
+        A1[Element 1] --> A2[Element 2]
+        A2 --> A3[Element 3]
+        A3 --> A4[Element 4]
+    end
+    
+    subgraph "Way 2: Linked Lists"
+        L1[Element + Link] -.->|pointer| L2[Element + Link]
+        L2 -.->|pointer| L3[Element + Link]
+    end
+```
 
-### Common Operations on Linear Structures
+- **Arrays**: Elements sit next to each other in memory (like houses on the same street)
+- **Linked Lists**: Elements can be anywhere in memory but point to each other (like a treasure hunt with clues)
 
-No matter which linear structure you use, you'll typically perform these operations:
+**Nonlinear Structures** like trees and graphs are covered in later chapters.
 
-| Operation | Description | Example |
-|-----------|-------------|---------|
-| **Traversal** | Visit each element one by one | Print all student names |
-| **Search** | Find an element with a specific value | Find student with ID 12345 |
-| **Insertion** | Add a new element | Add a new student to the list |
-| **Deletion** | Remove an element | Remove a student who graduated |
-| **Sorting** | Arrange elements in order | Sort students by name |
-| **Merging** | Combine two lists | Merge two class lists |
+### What Can We Do With Linear Structures?
+
+No matter if we use an array or linked list, we usually need to do these things:
+
+```mermaid
+graph TD
+    A[Operations on Linear Structures] --> B[Traversal]
+    A --> C[Search]
+    A --> D[Insertion]
+    A --> E[Deletion]
+    A --> F[Sorting]
+    A --> G[Merging]
+    
+    B --> B1["Go through each element<br/>one by one"]
+    C --> C1["Find where a specific<br/>element is located"]
+    D --> D1["Add a new element<br/>to the list"]
+    E --> E1["Remove an element<br/>from the list"]
+    F --> F1["Put elements in order<br/>(like A-Z or 1-100)"]
+    G --> G1["Join two lists<br/>into one list"]
+    
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style E fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style F fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style G fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+Which structure you choose depends on what operations you do most often. Arrays are great when your data stays mostly the same. Linked lists are better when you add and remove items frequently.
 
 ---
 
@@ -72,19 +104,22 @@ No matter which linear structure you use, you'll typically perform these operati
 
 ### What is a Linear Array?
 
-**In Simple Terms:** A linear array is like a row of numbered boxes where each box holds one piece of data. All boxes hold the same type of data (all numbers, or all names, etc.).
+A **linear array** is a list with a specific number of items, where all items are the same type (all numbers, all names, etc.). Two important features:
 
-**Formal Definition:** A linear array is a list of a finite number `n` of homogeneous data elements where:
-1. Elements are referenced by consecutive index numbers
-2. Elements are stored in successive memory locations
+1. **Each element has a number (index)** - We use consecutive numbers like 1, 2, 3... or 0, 1, 2... to identify each element
+2. **Elements sit next to each other in memory** - The computer stores them in a row of memory locations
 
 ```mermaid
-graph LR
-    A["Index: 1 | Value: 247"] --> B["Index: 2 | Value: 56"]
-    B --> C["Index: 3 | Value: 429"]
-    C --> D["Index: 4 | Value: 135"]
-    D --> E["Index: 5 | Value: 87"]
-    E --> F["Index: 6 | Value: 156"]
+graph TB
+    subgraph "Array: DATA with 6 elements"
+        direction LR
+        A["Index 1<br/>Value: 247"] 
+        B["Index 2<br/>Value: 56"]
+        C["Index 3<br/>Value: 429"]
+        D["Index 4<br/>Value: 135"]
+        E["Index 5<br/>Value: 87"]
+        F["Index 6<br/>Value: 156"]
+    end
     
     style A fill:#50C878,stroke:#333,stroke-width:2px,color:#000
     style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
@@ -94,146 +129,134 @@ graph LR
     style F fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
 
-### Array Properties
+We write array elements as:
+- **Subscript notation**: A₁, A₂, A₃, ... Aₙ
+- **Bracket notation**: A[1], A[2], A[3], ... A[N]
 
-**Length Formula:**
+The number inside the brackets is called the **subscript** or **index**.
+
+### How to Calculate Array Length
+
+The number of elements in an array is called its **length** or **size**.
+
 ```
 Length = Upper Bound - Lower Bound + 1
 ```
 
-**Example:** If an array has indices from 1932 to 1984:
-```
-Length = 1984 - 1932 + 1 = 53 elements
-```
+Where:
+- **Upper Bound (UB)** = The largest index
+- **Lower Bound (LB)** = The smallest index
 
-### Array Declaration in C
-
-```c
-#include <stdio.h>
-
-int main() {
-    // Method 1: Declare and initialize
-    int numbers[5] = {10, 20, 30, 40, 50};
+```mermaid
+graph LR
+    subgraph "Example: AUTO array (Years 1932-1984)"
+        A["AUTO[1932]<br/>First Year"] 
+        B["..."]
+        C["AUTO[1984]<br/>Last Year"]
+    end
     
-    // Method 2: Declare then assign
-    float prices[3];
-    prices[0] = 19.99;
-    prices[1] = 29.99;
-    prices[2] = 39.99;
+    D["LB = 1932"] --> A
+    E["UB = 1984"] --> C
+    F["Length = 1984 - 1932 + 1 = 53 elements"]
     
-    // Method 3: Let compiler count elements
-    char grades[] = {'A', 'B', 'C', 'D', 'F'};
-    
-    // Print array elements
-    printf("Numbers: ");
-    for(int i = 0; i < 5; i++) {
-        printf("%d ", numbers[i]);
-    }
-    
-    return 0;
-}
+    style A fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style F fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
 ```
 
-**Output:**
-```
-Numbers: 10 20 30 40 50
-```
+### Static vs Dynamic Arrays
 
-### Real-World Example
-
-```c
-#include <stdio.h>
-
-int main() {
-    // Store automobile sales from 1932 to 1936
-    int AUTO[5] = {1200, 1450, 980, 1650, 1820};
-    int years[5] = {1932, 1933, 1934, 1935, 1936};
+```mermaid
+graph TD
+    A[Array Memory Allocation] --> B[Static Allocation]
+    A --> C[Dynamic Allocation]
     
-    printf("Automobile Sales Report\n");
-    printf("------------------------\n");
+    B --> B1["Size is fixed when<br/>program is compiled"]
+    B --> B2["Cannot change size<br/>while running"]
+    B --> B3["Used in FORTRAN, Pascal"]
     
-    for(int i = 0; i < 5; i++) {
-        printf("Year %d: %d cars sold\n", years[i], AUTO[i]);
-    }
+    C --> C1["Size is decided when<br/>program runs"]
+    C --> C2["Can read a number n<br/>and create array with n elements"]
+    C --> C3["More flexible"]
     
-    return 0;
-}
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
 
 ---
 
 ## Array Representation in Memory
 
-### How Arrays are Stored
+### How the Computer Stores Arrays
 
-**In Simple Terms:** Computer memory is like a long street with numbered houses. When you create an array, the computer reserves several houses in a row and remembers only the address of the first house.
+Computer memory is like a long street with numbered houses. Each house (memory location) has an address.
 
 ```mermaid
-graph TD
-    A["Array: DATA"] --> B["Base Address: 1000"]
-    B --> C["Element 0 at 1000"]
-    C --> D["Element 1 at 1004"]
-    D --> E["Element 2 at 1008"]
-    E --> F["Element 3 at 1012"]
+graph TB
+    subgraph "Computer Memory"
+        M1["Address 1000"]
+        M2["Address 1001"]
+        M3["Address 1002"]
+        M4["Address 1003"]
+        M5["Address 1004"]
+        M6["Address 1005"]
+    end
     
-    style A fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
-    style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
-    style D fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
-    style E fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
-    style F fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style M1 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style M2 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style M3 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style M4 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style M5 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style M6 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
 ```
+
+The computer doesn't remember where every element is stored. Instead, it only remembers:
+- **Base Address** = Where the first element is stored
+
+Then it calculates where any other element is using this formula:
 
 ### Address Calculation Formula
 
 ```
-LOC(LA[K]) = Base(LA) + w × (K - lower_bound)
+LOC(LA[K]) = Base(LA) + w × (K - Lower Bound)
 ```
 
 Where:
-- `LOC(LA[K])` = Memory address of element K
-- `Base(LA)` = Address of first element
-- `w` = Number of bytes per element
-- `K` = Index of element we want
+- **LOC(LA[K])** = Memory address of element K
+- **Base(LA)** = Address of first element
+- **w** = How many bytes each element takes
+- **K** = Index of the element we want
+- **Lower Bound** = First index (often 0 or 1)
 
-### Example Calculation
-
-```c
-#include <stdio.h>
-
-int main() {
-    int arr[5] = {10, 20, 30, 40, 50};
+```mermaid
+graph TD
+    A["Want to find: AUTO[1965]"] --> B["Base Address = 200"]
+    B --> C["Element size (w) = 4 bytes"]
+    C --> D["Lower Bound = 1932"]
+    D --> E["Calculate: 200 + 4 × (1965 - 1932)"]
+    E --> F["= 200 + 4 × 33"]
+    F --> G["= 200 + 132 = 332"]
+    G --> H["AUTO[1965] is at address 332"]
     
-    // Print addresses of array elements
-    printf("Array Element Addresses:\n");
-    printf("------------------------\n");
-    
-    for(int i = 0; i < 5; i++) {
-        printf("arr[%d] = %d, Address = %p\n", 
-               i, arr[i], (void*)&arr[i]);
-    }
-    
-    // Calculate size of each element
-    printf("\nSize of each int: %lu bytes\n", sizeof(int));
-    
-    return 0;
-}
+    style A fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style H fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
 
-**Sample Output:**
-```
-Array Element Addresses:
-------------------------
-arr[0] = 10, Address = 0x7ffd5c8e4a20
-arr[1] = 20, Address = 0x7ffd5c8e4a24
-arr[2] = 30, Address = 0x7ffd5c8e4a28
-arr[3] = 40, Address = 0x7ffd5c8e4a2c
-arr[4] = 50, Address = 0x7ffd5c8e4a30
+### Why This is Important: Indexing Property
 
-Size of each int: 4 bytes
+Because we can calculate any element's address using a simple formula, we can access any element in the **same amount of time** - no matter if it's the first element or the millionth element!
+
+```mermaid
+graph LR
+    A["Access A[1]"] --> B["Same time!"]
+    C["Access A[500]"] --> B
+    D["Access A[1000000]"] --> B
+    
+    style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
 
-**Notice:** Each address increases by 4 bytes (size of int on most systems).
+This is called the **indexing property** of arrays. Linked lists don't have this property - to find the 1000th element, you must go through all 999 elements before it.
 
 ---
 
@@ -241,7 +264,19 @@ Size of each int: 4 bytes
 
 ### What is Traversal?
 
-**In Simple Terms:** Traversal means visiting each element in the array one by one, like checking each box in a row of boxes.
+**Traversal** means visiting every element in the array exactly once. It's like a teacher taking attendance - you go through the list and do something with each name.
+
+```mermaid
+graph LR
+    A["Start at<br/>first element"] --> B["Do something<br/>with it"]
+    B --> C["Move to<br/>next element"]
+    C --> D{"More<br/>elements?"}
+    D -->|Yes| B
+    D -->|No| E["Done!"]
+    
+    style A fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style E fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
 
 ---
 
@@ -249,7 +284,7 @@ Size of each int: 4 bytes
 
 > **Purpose:** Visit every element in an array exactly once and apply some operation (like printing or counting).
 
-#### Pseudocode (from textbook)
+#### Pseudocode
 
 ```
 Algorithm 4.1: TRAVERSE(LA, LB, UB)
@@ -266,25 +301,14 @@ UB    = Upper Bound (last index)
 5. Exit
 ```
 
-#### 🔍 Step-by-Step Explanation
-
-| Step | What Happens | Example (array of 5 elements) |
-|------|--------------|-------------------------------|
-| 1 | Start at first element | K = 1 (or 0 in C) |
-| 2 | Check if more elements exist | Is K ≤ 5? Yes! |
-| 3 | Do something with current element | Print LA[1] |
-| 4 | Move to next element | K = 2 |
-| 2-4 | Repeat until done | Continue until K > 5 |
-| 5 | Finished! | All elements visited |
-
 #### 🎯 Visual Flowchart
 
 ```mermaid
 flowchart TD
-    START([🟢 Start]) --> INIT["K = LB<br/>(Initialize counter)"]
-    INIT --> CHECK{K ≤ UB?}
+    START([🟢 Start]) --> INIT["K = LB<br/>(Start at first element)"]
+    INIT --> CHECK{"K ≤ UB?<br/>(More elements left?)"}
     CHECK -->|✅ Yes| PROCESS["Apply PROCESS<br/>to LA[K]"]
-    PROCESS --> INCREMENT["K = K + 1"]
+    PROCESS --> INCREMENT["K = K + 1<br/>(Move to next)"]
     INCREMENT --> CHECK
     CHECK -->|❌ No| EXIT([🔴 Exit])
     
@@ -294,96 +318,113 @@ flowchart TD
     style CHECK fill:#f39c12,stroke:#e67e22,color:#000
 ```
 
-#### 💡 Why This Works
+#### Alternative Form (using for loop)
 
-- **K starts at the first index** → We don't skip any element
-- **K increases by 1 each time** → We visit elements in order
-- **Loop stops when K > UB** → We don't go past the array
-
----
-
-### C Program: Array Traversal
-
-```c
-#include <stdio.h>
-
-// Function to traverse and print array
-void traverseArray(int arr[], int n) {
-    printf("Array elements: ");
-    for(int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-}
-
-// Function to count elements greater than a value
-int countGreaterThan(int arr[], int n, int value) {
-    int count = 0;
-    for(int i = 0; i < n; i++) {
-        if(arr[i] > value) {
-            count++;
-        }
-    }
-    return count;
-}
-
-// Function to find sum of all elements
-int sumArray(int arr[], int n) {
-    int sum = 0;
-    for(int i = 0; i < n; i++) {
-        sum += arr[i];
-    }
-    return sum;
-}
-
-int main() {
-    int numbers[] = {45, 23, 67, 12, 89, 34, 56};
-    int n = 7;
-    
-    // Traverse and print
-    traverseArray(numbers, n);
-    
-    // Count elements greater than 50
-    int count = countGreaterThan(numbers, n, 50);
-    printf("Elements greater than 50: %d\n", count);
-    
-    // Find sum
-    int total = sumArray(numbers, n);
-    printf("Sum of all elements: %d\n", total);
-    
-    // Find average
-    float average = (float)total / n;
-    printf("Average: %.2f\n", average);
-    
-    return 0;
-}
+```
+Algorithm 4.1': TRAVERSE(LA, LB, UB)
+─────────────────────────────────────
+1. Repeat for K = LB to UB:
+       Apply PROCESS to LA[K]
+   [End of loop]
+2. Exit
 ```
 
-**Output:**
+#### 📝 Practical Examples
+
+**Example 1: Count years with more than 300 cars sold**
+
 ```
-Array elements: 45 23 67 12 89 34 56
-Elements greater than 50: 3
-Sum of all elements: 326
-Average: 46.57
+1. [Initialize] Set NUM := 0
+2. Repeat for K = 1932 to 1984:
+       If AUTO[K] > 300, then: Set NUM := NUM + 1
+   [End of loop]
+3. Return
 ```
+
+**Example 2: Print each year and sales**
+
+```
+1. Repeat for K = 1932 to 1984:
+       Write: K, AUTO[K]
+   [End of loop]
+2. Return
+```
+
+⚠️ **Important Note:** If your process needs a starting value (like NUM := 0 for counting), you must set it before starting the traversal!
 
 ---
 
 ## Inserting and Deleting Elements
 
-### Insertion in Arrays
+### Understanding Insertion
 
-**In Simple Terms:** To insert an element in the middle of an array, you need to shift elements to make space, like making room for someone in a line of people.
+**Inserting** means adding a new element to the array.
 
 ```mermaid
 graph TD
-    A["Original Array: 10, 20, 30, 40"] --> B["Want to insert 25 at position 2"]
-    B --> C["Shift 30, 40 right"]
-    C --> D["New Array: 10, 20, 25, 30, 40"]
+    subgraph "Easy Case: Insert at End"
+        A1["Array: 10, 20, 30, _, _"] --> A2["Insert 40 at end"]
+        A2 --> A3["Array: 10, 20, 30, 40, _"]
+    end
     
-    style A fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
-    style D fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    subgraph "Hard Case: Insert in Middle"
+        B1["Array: 10, 20, 30, 40"] --> B2["Want to insert 25 at position 2"]
+        B2 --> B3["Must shift 30, 40 to make room"]
+        B3 --> B4["Array: 10, 20, 25, 30, 40"]
+    end
+    
+    style A3 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style B4 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
+
+- **Inserting at the end** is easy - just put the new element in the next empty spot
+- **Inserting in the middle** is harder - you must move elements to create space
+
+### Understanding Deletion
+
+**Deleting** means removing an element from the array.
+
+```mermaid
+graph TD
+    subgraph "Easy Case: Delete from End"
+        A1["Array: 10, 20, 30, 40"] --> A2["Delete last element"]
+        A2 --> A3["Array: 10, 20, 30"]
+    end
+    
+    subgraph "Hard Case: Delete from Middle"
+        B1["Array: 10, 20, 30, 40"] --> B2["Delete 20 (position 2)"]
+        B2 --> B3["Must shift 30, 40 to fill gap"]
+        B3 --> B4["Array: 10, 30, 40"]
+    end
+    
+    style A3 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style B4 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
+
+### Visual Example: Managing a Name List
+
+```mermaid
+graph LR
+    subgraph "Step 1: Original List"
+        A["Brown<br/>Davis<br/>Johnson<br/>Smith<br/>Wagner"]
+    end
+    
+    subgraph "Step 2: Insert Ford"
+        B["Brown<br/>Davis<br/>Ford ✨<br/>Johnson ↓<br/>Smith ↓<br/>Wagner ↓"]
+    end
+    
+    subgraph "Step 3: Insert Taylor"
+        C["Brown<br/>Davis<br/>Ford<br/>Johnson<br/>Smith<br/>Taylor ✨<br/>Wagner ↓"]
+    end
+    
+    subgraph "Step 4: Delete Davis"
+        D["Brown<br/>Ford ↑<br/>Johnson ↑<br/>Smith ↑<br/>Taylor ↑<br/>Wagner ↑"]
+    end
+    
+    A --> B --> C --> D
+```
+
+Moving data around is **expensive** when you have thousands of elements!
 
 ---
 
@@ -391,7 +432,7 @@ graph TD
 
 > **Purpose:** Insert a new element ITEM at position K in array LA that has N elements.
 
-#### Pseudocode (from textbook)
+#### Pseudocode
 
 ```
 Algorithm 4.2: INSERT(LA, N, K, ITEM)
@@ -409,23 +450,6 @@ ITEM = Element to insert
 6. [Reset N] Set N := N + 1
 7. Exit
 ```
-
-#### 🔍 Step-by-Step Example
-
-**Insert 25 at position 3 in array [10, 20, 30, 40, 50]**
-
-| Step | J | Action | Array State |
-|------|---|--------|-------------|
-| Start | - | Original array | [10, 20, 30, 40, 50, _] |
-| 1 | 5 | J = N = 5 | - |
-| 3 | 5 | LA[6] = LA[5] = 50 | [10, 20, 30, 40, 50, **50**] |
-| 4 | 4 | J = 4 | - |
-| 3 | 4 | LA[5] = LA[4] = 40 | [10, 20, 30, **40**, 50, 50] |
-| 4 | 3 | J = 3 | - |
-| 3 | 3 | LA[4] = LA[3] = 30 | [10, 20, **30**, 40, 50, 50] |
-| 4 | 2 | J = 2, now J < K, exit loop | - |
-| 5 | - | LA[3] = 25 | [10, 20, **25**, 30, 40, 50] |
-| 6 | - | N = 6 | Done! |
 
 #### 🎯 Visual Flowchart
 
@@ -446,14 +470,25 @@ flowchart TD
     style INSERT fill:#9b59b6,stroke:#8e44ad,color:#fff
 ```
 
-#### ⚠️ Important: Why Shift in Reverse Order?
+#### ⚠️ Critical: Why Shift in Reverse Order?
 
 We shift from **right to left** (starting from the last element) because:
 - If we shifted left to right, we would **overwrite** data before saving it!
 
-```
-❌ Wrong (left to right): LA[4] = LA[3] → We lose LA[4]'s value!
-✅ Correct (right to left): LA[6] = LA[5], then LA[5] = LA[4], etc.
+```mermaid
+graph TD
+    subgraph "❌ WRONG: Left to Right"
+        W1["LA[4] = LA[3]"] --> W2["Oops! LA[4] is lost!"]
+    end
+    
+    subgraph "✅ CORRECT: Right to Left"
+        C1["LA[6] = LA[5]"] --> C2["LA[5] = LA[4]"]
+        C2 --> C3["LA[4] = LA[3]"]
+        C3 --> C4["All data preserved!"]
+    end
+    
+    style W2 fill:#e74c3c,stroke:#c0392b,color:#fff
+    style C4 fill:#2ecc71,stroke:#27ae60,color:#fff
 ```
 
 ---
@@ -462,7 +497,7 @@ We shift from **right to left** (starting from the last element) because:
 
 > **Purpose:** Delete the element at position K from array LA and store it in ITEM.
 
-#### Pseudocode (from textbook)
+#### Pseudocode
 
 ```
 Algorithm 4.3: DELETE(LA, N, K, ITEM)
@@ -478,19 +513,6 @@ ITEM = Will store the deleted element
 3. [Reset N] Set N := N - 1
 4. Exit
 ```
-
-#### 🔍 Step-by-Step Example
-
-**Delete element at position 2 from array [10, 20, 30, 40, 50]**
-
-| Step | J | Action | Array State |
-|------|---|--------|-------------|
-| Start | - | Original array | [10, 20, 30, 40, 50] |
-| 1 | - | ITEM = LA[2] = 20 | Saved: 20 |
-| 2 | 2 | LA[2] = LA[3] = 30 | [10, **30**, 30, 40, 50] |
-| 2 | 3 | LA[3] = LA[4] = 40 | [10, 30, **40**, 40, 50] |
-| 2 | 4 | LA[4] = LA[5] = 50 | [10, 30, 40, **50**, 50] |
-| 3 | - | N = 4 | [10, 30, 40, 50] ✅ |
 
 #### 🎯 Visual Flowchart
 
@@ -511,174 +533,62 @@ flowchart TD
     style SAVE fill:#e74c3c,stroke:#c0392b,color:#fff
 ```
 
-#### 💡 Key Difference from Insertion
+#### 💡 Comparing Insert vs Delete
 
-| Operation | Shift Direction | Reason |
-|-----------|-----------------|--------|
+| Operation | Shift Direction | Why |
+|-----------|-----------------|-----|
 | **Insert** | Right → Left (reverse) | Create space for new element |
 | **Delete** | Left → Right (forward) | Fill the gap left by removed element |
 
----
-
-### C Program: Insertion
-
-```c
-#include <stdio.h>
-
-void insertElement(int arr[], int *n, int pos, int value) {
-    // Shift elements to the right
-    for(int i = *n; i > pos; i--) {
-        arr[i] = arr[i-1];
-    }
-    
-    // Insert new element
-    arr[pos] = value;
-    
-    // Increase array size
-    (*n)++;
-}
-
-void printArray(int arr[], int n) {
-    for(int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-}
-
-int main() {
-    int arr[10] = {10, 20, 30, 40, 50};
-    int n = 5;
-    
-    printf("Original array: ");
-    printArray(arr, n);
-    
-    // Insert 25 at position 2
-    insertElement(arr, &n, 2, 25);
-    
-    printf("After inserting 25 at position 2: ");
-    printArray(arr, n);
-    
-    // Insert 5 at position 0
-    insertElement(arr, &n, 0, 5);
-    
-    printf("After inserting 5 at position 0: ");
-    printArray(arr, n);
-    
-    return 0;
-}
-```
-
-**Output:**
-```
-Original array: 10 20 30 40 50
-After inserting 25 at position 2: 10 20 25 30 40 50
-After inserting 5 at position 0: 5 10 20 25 30 40 50
-```
-
-### Deletion from Arrays
-
-**In Simple Terms:** To delete an element, you remove it and shift the remaining elements left to fill the gap.
-
-```mermaid
-graph TD
-    A["Original Array: 10, 20, 30, 40, 50"] --> B["Delete element at position 2"]
-    B --> C["Shift elements left"]
-    C --> D["New Array: 10, 20, 40, 50"]
-    
-    style A fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
-    style D fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-```
-
-### C Program: Deletion
-
-```c
-#include <stdio.h>
-
-int deleteElement(int arr[], int *n, int pos) {
-    if(pos < 0 || pos >= *n) {
-        printf("Invalid position!\n");
-        return -1;
-    }
-    
-    int deleted = arr[pos];
-    
-    // Shift elements to the left
-    for(int i = pos; i < *n - 1; i++) {
-        arr[i] = arr[i+1];
-    }
-    
-    // Decrease array size
-    (*n)--;
-    
-    return deleted;
-}
-
-void printArray(int arr[], int n) {
-    for(int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-}
-
-int main() {
-    int arr[10] = {10, 20, 30, 40, 50};
-    int n = 5;
-    
-    printf("Original array: ");
-    printArray(arr, n);
-    
-    // Delete element at position 2
-    int deleted = deleteElement(arr, &n, 2);
-    printf("Deleted element: %d\n", deleted);
-    printf("After deletion: ");
-    printArray(arr, n);
-    
-    // Delete first element
-    deleted = deleteElement(arr, &n, 0);
-    printf("Deleted element: %d\n", deleted);
-    printf("After deletion: ");
-    printArray(arr, n);
-    
-    return 0;
-}
-```
-
-**Output:**
-```
-Original array: 10 20 30 40 50
-Deleted element: 30
-After deletion: 10 20 40 50
-Deleted element: 10
-After deletion: 20 40 50
-```
+⚠️ **Remember:** If you do many insertions and deletions, an array might not be the best choice. Consider using a linked list instead!
 
 ---
 
 ## Sorting: Bubble Sort
 
+### What is Sorting?
+
+**Sorting** means arranging elements in a specific order - usually from smallest to largest (ascending) or largest to smallest (descending).
+
+```mermaid
+graph LR
+    A["Unsorted: 8, 4, 19, 2, 7"] --> B["Sorting Process"]
+    B --> C["Sorted: 2, 4, 7, 8, 19"]
+    
+    style A fill:#e74c3c,stroke:#c0392b,color:#fff
+    style C fill:#2ecc71,stroke:#27ae60,color:#fff
+```
+
 ### How Bubble Sort Works
 
-**In Simple Terms:** Bubble sort is like organizing a line of people by height. You compare two people at a time and swap them if they're in the wrong order. The tallest person "bubbles up" to the end.
+Think of it like organizing people by height in a line:
+1. Compare two people next to each other
+2. If they're in wrong order, swap them
+3. Keep doing this until the tallest person "bubbles up" to the end
+4. Repeat for remaining people
 
 ```mermaid
 graph TD
-    A["Pass 1: Largest element bubbles to end"] --> B["Pass 2: Second largest bubbles to position n-1"]
-    B --> C["Pass 3: Third largest bubbles to position n-2"]
-    C --> D["Continue until array is sorted"]
+    A["Pass 1"] --> A1["Compare pairs, swap if needed"]
+    A1 --> A2["Largest element 'bubbles' to end"]
     
-    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
-    style B fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
-    style C fill:#F5E663,stroke:#333,stroke-width:2px,color:#000
-    style D fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    B["Pass 2"] --> B1["Repeat (ignore last element)"]
+    B1 --> B2["Second largest finds its place"]
+    
+    C["Pass N-1"] --> C1["Array is now sorted!"]
+    
+    style A2 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style B2 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style C1 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
 
 ---
 
 ### 📘 Algorithm 4.4: Bubble Sort
 
-> **Purpose:** Sort an array DATA with N elements in ascending order by repeatedly comparing adjacent elements and swapping if needed.
+> **Purpose:** Sort an array DATA with N elements in ascending order.
 
-#### Pseudocode (from textbook)
+#### Pseudocode
 
 ```
 Algorithm 4.4: BUBBLE(DATA, N)
@@ -696,16 +606,6 @@ DATA = Array with N elements
    [End of Step 1 outer loop]
 4. Exit
 ```
-
-#### 🔍 Understanding the Algorithm
-
-**Two Loops:**
-- **Outer loop (K):** Controls the number of passes (N-1 passes total)
-- **Inner loop (PTR):** Compares adjacent elements in each pass
-
-**Why `PTR ≤ N - K`?**
-- After each pass, the largest unsorted element is in its final position
-- So we don't need to check it again!
 
 #### 🎯 Visual Flowchart
 
@@ -732,7 +632,7 @@ flowchart TD
 
 #### 📊 Complete Example: Sort [32, 51, 27, 85, 66, 23, 13, 57]
 
-**Pass 1 (K=1): Find largest element (bubbles to position 8)**
+**Pass 1 - Finding the largest (85):**
 ```
 [32, 51, 27, 85, 66, 23, 13, 57]  Compare 32,51 → No swap
 [32, 51, 27, 85, 66, 23, 13, 57]  Compare 51,27 → Swap!
@@ -741,20 +641,20 @@ flowchart TD
 [32, 27, 51, 66, 85, 23, 13, 57]  Compare 85,23 → Swap!
 [32, 27, 51, 66, 23, 85, 13, 57]  Compare 85,13 → Swap!
 [32, 27, 51, 66, 23, 13, 85, 57]  Compare 85,57 → Swap!
-[32, 27, 51, 66, 23, 13, 57, 85]  ← 85 is now in correct position! ✅
+[32, 27, 51, 66, 23, 13, 57, 85]  ← 85 is now in position! ✅
 ```
 
-**Pass 2-7:** Continue until fully sorted
+**After all passes:**
 ```
-After Pass 2: [27, 32, 51, 23, 13, 57, 66, 85]
-After Pass 3: [27, 32, 23, 13, 51, 57, 66, 85]
-After Pass 4: [27, 23, 13, 32, 51, 57, 66, 85]
-After Pass 5: [23, 13, 27, 32, 51, 57, 66, 85]
-After Pass 6: [13, 23, 27, 32, 51, 57, 66, 85]
-After Pass 7: [13, 23, 27, 32, 51, 57, 66, 85] ✅ Sorted!
+Pass 1: [32, 27, 51, 66, 23, 13, 57, 85]  ← 85 in place
+Pass 2: [27, 32, 51, 23, 13, 57, 66, 85]  ← 66 in place
+Pass 3: [27, 32, 23, 13, 51, 57, 66, 85]  ← 57 in place
+Pass 4: [27, 23, 13, 32, 51, 57, 66, 85]  ← 51 in place
+Pass 5: [23, 13, 27, 32, 51, 57, 66, 85]  ← 32 in place
+Pass 6: [13, 23, 27, 32, 51, 57, 66, 85]  ← Sorted! ✅
 ```
 
-#### ⏱️ Time Complexity Analysis
+#### ⏱️ Time Complexity
 
 **Counting Comparisons:**
 ```
@@ -767,101 +667,51 @@ Pass n-1: 1 comparison
 Total = (n-1) + (n-2) + ... + 1 = n(n-1)/2 ≈ n²/2
 ```
 
-| Case | Complexity | When |
-|------|------------|------|
-| **Best** | O(n) | Array already sorted (with FLAG optimization) |
-| **Average** | O(n²) | Random order |
-| **Worst** | O(n²) | Array in reverse order |
+**Complexity: O(n²)** - This means if you double the array size, sorting takes about 4 times longer!
 
----
+#### 💡 Optimization: Using a FLAG
 
-### Step-by-Step Example
-
-**Original Array:** `[64, 34, 25, 12, 22, 11, 90]`
-
-**Pass 1:**
-- Compare 64 & 34 → Swap → `[34, 64, 25, 12, 22, 11, 90]`
-- Compare 64 & 25 → Swap → `[34, 25, 64, 12, 22, 11, 90]`
-- Compare 64 & 12 → Swap → `[34, 25, 12, 64, 22, 11, 90]`
-- Compare 64 & 22 → Swap → `[34, 25, 12, 22, 64, 11, 90]`
-- Compare 64 & 11 → Swap → `[34, 25, 12, 22, 11, 64, 90]`
-- Compare 64 & 90 → No swap → `[34, 25, 12, 22, 11, 64, 90]`
-
-After Pass 1: **90 is in correct position**
-
-### C Program: Bubble Sort
-
-```c
-#include <stdio.h>
-
-void bubbleSort(int arr[], int n) {
-    int i, j, temp;
-    int swapped;
-    
-    for(i = 0; i < n-1; i++) {
-        swapped = 0;
-        
-        // Last i elements are already sorted
-        for(j = 0; j < n-i-1; j++) {
-            if(arr[j] > arr[j+1]) {
-                // Swap arr[j] and arr[j+1]
-                temp = arr[j];
-                arr[j] = arr[j+1];
-                arr[j+1] = temp;
-                swapped = 1;
-            }
-        }
-        
-        // If no swapping happened, array is sorted
-        if(swapped == 0)
-            break;
-    }
-}
-
-void printArray(int arr[], int n) {
-    for(int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-}
-
-int main() {
-    int arr[] = {64, 34, 25, 12, 22, 11, 90};
-    int n = sizeof(arr)/sizeof(arr[0]);
-    
-    printf("Original array: ");
-    printArray(arr, n);
-    
-    bubbleSort(arr, n);
-    
-    printf("Sorted array: ");
-    printArray(arr, n);
-    
-    return 0;
-}
-```
-
-**Output:**
-```
-Original array: 64 34 25 12 22 11 90
-Sorted array: 11 12 22 25 34 64 90
-```
-
-### Time Complexity
-
-- **Best Case:** O(n) - when array is already sorted
-- **Average Case:** O(n²)
-- **Worst Case:** O(n²) - when array is reverse sorted
-
-**Number of comparisons:** `n(n-1)/2 ≈ n²/2`
+Some versions use a FLAG variable:
+- If no swaps happen during a pass, the array is already sorted
+- Can stop early and save time
+- But checking the flag adds some overhead
 
 ---
 
 ## Searching: Linear Search
 
+### What is Searching?
+
+**Searching** means finding where a specific item is located in a collection of data.
+- **Successful search**: We find the item
+- **Unsuccessful search**: The item is not there
+
+```mermaid
+graph TD
+    A[Search for ITEM in DATA] --> B{Found?}
+    B -->|Yes| C["Return location LOC"]
+    B -->|No| D["Return 'not found' message"]
+    
+    style C fill:#2ecc71,stroke:#27ae60,color:#fff
+    style D fill:#e74c3c,stroke:#c0392b,color:#fff
+```
+
 ### How Linear Search Works
 
-**In Simple Terms:** Linear search is like looking for a book on a shelf by checking each book one by one from left to right until you find it.
+**Linear search** is the simplest method - check each element one by one from the beginning until you find it or reach the end.
+
+```mermaid
+graph LR
+    A["Start at<br/>first element"] --> B{"Match?"}
+    B -->|No| C["Next element"]
+    C --> D{"End of<br/>array?"}
+    D -->|No| B
+    D -->|Yes| E["Not found"]
+    B -->|Yes| F["Found!"]
+    
+    style F fill:#2ecc71,stroke:#27ae60,color:#fff
+    style E fill:#e74c3c,stroke:#c0392b,color:#fff
+```
 
 ---
 
@@ -869,7 +719,7 @@ Sorted array: 11 12 22 25 34 64 90
 
 > **Purpose:** Find the location LOC of ITEM in array DATA with N elements. Returns LOC=0 if not found.
 
-#### Pseudocode (from textbook)
+#### Pseudocode
 
 ```
 Algorithm 4.5: LINEAR(DATA, N, ITEM, LOC)
@@ -888,30 +738,42 @@ LOC  = Will store location of ITEM (or 0 if not found)
 5. Exit
 ```
 
-#### 🔍 Understanding the Sentinel Trick
+#### 🔍 The Sentinel Trick Explained
 
-**Why add ITEM at the end (Step 1)?**
-- This is called a **sentinel** - a guard value
-- It guarantees the loop will always terminate
-- Without it, we'd need two checks: `LOC ≤ N` AND `DATA[LOC] ≠ ITEM`
-- With sentinel, we only need one check: `DATA[LOC] ≠ ITEM`
+**Why do we add ITEM at the end (Step 1)?**
 
+This is called a **sentinel** - a guard that guarantees the loop will stop.
+
+```mermaid
+graph TD
+    subgraph "Without Sentinel (2 checks per loop)"
+        W1["Check 1: Is LOC ≤ N?"]
+        W2["Check 2: Is DATA[LOC] = ITEM?"]
+        W1 --> W2
+    end
+    
+    subgraph "With Sentinel (1 check per loop)"
+        S1["Check: Is DATA[LOC] = ITEM?"]
+        S2["Always finds ITEM (either real or sentinel)"]
+        S1 --> S2
+    end
+    
+    style S2 fill:#2ecc71,stroke:#27ae60,color:#fff
 ```
-Without sentinel: while (LOC ≤ N AND DATA[LOC] ≠ ITEM)  ← 2 checks
-With sentinel:    while (DATA[LOC] ≠ ITEM)              ← 1 check (faster!)
-```
+
+With the sentinel, the search **always succeeds** - we just check if we found the real item or the sentinel afterward!
 
 #### 🎯 Visual Flowchart
 
 ```mermaid
 flowchart TD
-    START([🟢 Start]) --> SENTINEL["DATA[N+1] = ITEM<br/>(Place sentinel)"]
+    START([🟢 Start]) --> SENTINEL["DATA[N+1] = ITEM<br/>(Place sentinel at end)"]
     SENTINEL --> INIT["LOC = 1"]
     INIT --> CHECK{"DATA[LOC] ≠ ITEM?<br/>(Not found yet?)"}
     CHECK -->|✅ Yes| NEXT["LOC = LOC + 1<br/>(Check next)"]
     NEXT --> CHECK
     CHECK -->|❌ No, Found!| VERIFY{"LOC = N+1?<br/>(Hit sentinel?)"}
-    VERIFY -->|✅ Yes| NOTFOUND["LOC = 0<br/>(Not in array)"]
+    VERIFY -->|✅ Yes| NOTFOUND["LOC = 0<br/>(Not in original array)"]
     VERIFY -->|❌ No| FOUND["LOC = position<br/>(Found it!)"]
     NOTFOUND --> EXIT([🔴 Exit])
     FOUND --> EXIT
@@ -923,29 +785,18 @@ flowchart TD
     style SENTINEL fill:#9b59b6,stroke:#8e44ad,color:#fff
 ```
 
-#### 📊 Example: Search for "Susan" in [Mary, Jane, Diane, Susan, Karen, Edith]
+#### 📊 Example: Search for "Susan"
+
+Array: [Mary, Jane, Diane, Susan, Karen, Edith]
 
 | Step | LOC | DATA[LOC] | Action |
 |------|-----|-----------|--------|
-| 1 | - | - | Place "Susan" at DATA[7] (sentinel) |
+| 1 | - | - | Place "Susan" at DATA[7] |
 | 2 | 1 | Mary | Mary ≠ Susan → continue |
 | 3 | 2 | Jane | Jane ≠ Susan → continue |
 | 3 | 3 | Diane | Diane ≠ Susan → continue |
 | 3 | 4 | Susan | Susan = Susan → **Found!** |
-| 4 | 4 | - | LOC=4 ≠ N+1=7, so keep LOC=4 |
-
-**Result:** Susan found at position 4 ✅
-
-#### 📊 Example: Search for "Paula" (not in array)
-
-| Step | LOC | DATA[LOC] | Action |
-|------|-----|-----------|--------|
-| 1 | - | - | Place "Paula" at DATA[7] |
-| 3 | 1-6 | ... | Keep searching, not found |
-| 3 | 7 | Paula | Paula = Paula → "Found" (sentinel) |
-| 4 | 7 | - | LOC=7 = N+1=7, so LOC = 0 |
-
-**Result:** Paula not found (LOC = 0) ❌
+| 4 | 4 | - | LOC=4 ≠ 7, keep LOC=4 ✅ |
 
 #### ⏱️ Time Complexity
 
@@ -953,92 +804,37 @@ flowchart TD
 |------|-------------|------|
 | **Best** | O(1) | ITEM is first element |
 | **Average** | O(n/2) ≈ O(n) | ITEM is in middle |
-| **Worst** | O(n) | ITEM is last or not present |
+| **Worst** | O(n+1) | ITEM is not present |
 
----
-
-```mermaid
-graph LR
-    A["Start at index 0"] --> B["Check if current element matches"]
-    B -->|Match| C["Found! Return index"]
-    B -->|"No match"| D["Move to next element"]
-    D --> E{"More elements?"}
-    E -->|Yes| B
-    E -->|No| F["Not found! Return -1"]
-    
-    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style F fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
-```
-
-### C Program: Linear Search
-
-```c
-#include <stdio.h>
-
-int linearSearch(int arr[], int n, int target) {
-    for(int i = 0; i < n; i++) {
-        if(arr[i] == target) {
-            return i;  // Return index where found
-        }
-    }
-    return -1;  // Not found
-}
-
-int main() {
-    int arr[] = {45, 23, 67, 12, 89, 34, 56};
-    int n = sizeof(arr)/sizeof(arr[0]);
-    int target;
-    
-    printf("Array: ");
-    for(int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-    
-    // Search for 89
-    target = 89;
-    int result = linearSearch(arr, n, target);
-    if(result != -1) {
-        printf("%d found at index %d\n", target, result);
-    } else {
-        printf("%d not found\n", target);
-    }
-    
-    // Search for 100
-    target = 100;
-    result = linearSearch(arr, n, target);
-    if(result != -1) {
-        printf("%d found at index %d\n", target, result);
-    } else {
-        printf("%d not found\n", target);
-    }
-    
-    return 0;
-}
-```
-
-**Output:**
-```
-Array: 45 23 67 12 89 34 56
-89 found at index 4
-100 not found
-```
-
-### Time Complexity
-
-- **Best Case:** O(1) - element is at first position
-- **Average Case:** O(n/2) ≈ O(n)
-- **Worst Case:** O(n) - element is at last position or not present
+If ITEM is equally likely to be anywhere, average comparisons = (n+1)/2
 
 ---
 
 ## Searching: Binary Search
 
-### How Binary Search Works
+### The Power of Divide and Conquer
 
-**In Simple Terms:** Binary search is like finding a word in a dictionary. You open it in the middle, check if your word comes before or after, then repeat with the appropriate half. Much faster than checking every page!
+**Binary search** is much faster than linear search, but it only works on **sorted arrays**.
 
-**Important:** Binary search only works on **sorted arrays**.
+Think about finding a word in a dictionary:
+1. Open to the middle
+2. Is your word before or after this page?
+3. Go to the middle of the correct half
+4. Repeat until you find it
+
+Each step cuts your search area in **half**!
+
+```mermaid
+graph TD
+    A["1,000,000 elements"] --> B["After 1 comparison: 500,000"]
+    B --> C["After 2 comparisons: 250,000"]
+    C --> D["After 3 comparisons: 125,000"]
+    D --> E["..."]
+    E --> F["After 20 comparisons: 1 element"]
+    
+    style A fill:#e74c3c,stroke:#c0392b,color:#fff
+    style F fill:#2ecc71,stroke:#27ae60,color:#fff
+```
 
 ---
 
@@ -1046,7 +842,7 @@ Array: 45 23 67 12 89 34 56
 
 > **Purpose:** Find ITEM in a **sorted** array DATA. Returns LOC (position) or NULL (0) if not found.
 
-#### Pseudocode (from textbook)
+#### Pseudocode
 
 ```
 Algorithm 4.6: BINARY(DATA, LB, UB, ITEM, LOC)
@@ -1080,19 +876,6 @@ BEG, END, MID = Beginning, end, and middle of current segment
 6. Exit
 ```
 
-#### 🔍 The Key Insight
-
-**Each comparison eliminates HALF the remaining elements!**
-
-```
-Start:    1,000,000 elements
-After 1:    500,000 elements
-After 2:    250,000 elements
-After 3:    125,000 elements
-...
-After 20:        ~1 element  ← Found in just 20 steps!
-```
-
 #### 🎯 Visual Flowchart
 
 ```mermaid
@@ -1119,7 +902,7 @@ flowchart TD
     style RIGHT fill:#e67e22,stroke:#d35400,color:#fff
 ```
 
-#### 📊 Complete Example: Find 40 in [11, 22, 30, 33, 40, 44, 55, 60, 66, 77, 80, 88, 99]
+#### 📊 Example: Find 40 in [11, 22, 30, 33, 40, 44, 55, 60, 66, 77, 80, 88, 99]
 
 ```
 Array indices: 1   2   3   4   5   6   7   8   9  10  11  12  13
@@ -1141,317 +924,124 @@ Values:       11  22  30  33  40  44  55  60  66  77  80  88  99
 | 1 | 1 | 13 | 7 | 55 | 85 > 55 | Search RIGHT: BEG = 8 |
 | 2 | 8 | 13 | 10 | 77 | 85 > 77 | Search RIGHT: BEG = 11 |
 | 3 | 11 | 13 | 12 | 88 | 85 < 88 | Search LEFT: END = 11 |
-| 4 | 11 | 11 | 11 | 80 | 85 > 80 | Search RIGHT: BEG = 12 |
+| 4 | 11 | 11 | 11 | 80 | 85 > 80 | BEG = 12 |
 | 5 | 12 | 11 | - | - | BEG > END | **NOT FOUND** ❌ |
 
 #### ⏱️ Time Complexity Comparison
 
-| Array Size | Linear Search | Binary Search |
-|------------|---------------|---------------|
+| Array Size | Linear Search (worst) | Binary Search (worst) |
+|------------|----------------------|----------------------|
 | 10 | 10 | 4 |
 | 100 | 100 | 7 |
 | 1,000 | 1,000 | 10 |
 | 1,000,000 | 1,000,000 | **20** |
 
-**Formula:** Binary search needs at most $\lceil \log_2 n \rceil + 1$ comparisons
+Binary search needs at most **⌈log₂ n⌉ + 1** comparisons.
 
-#### ⚠️ Limitations of Binary Search
+#### ⚠️ When NOT to Use Binary Search
 
 | Requirement | Why It Matters |
 |-------------|----------------|
 | **Array must be sorted** | Can't compare with middle if unsorted |
-| **Direct access needed** | Must jump to middle (arrays: ✅, linked lists: ❌) |
-| **Static data preferred** | Inserting/deleting requires maintaining sort order |
-
----
-
-```mermaid
-graph TD
-    A[Start: Check middle element] --> B{Target = Middle?}
-    B -->|Yes| C[Found!]
-    B -->|No| D{Target < Middle?}
-    D -->|Yes| E[Search left half]
-    D -->|No| F[Search right half]
-    E --> A
-    F --> A
-    
-    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
-```
-
-### Step-by-Step Example
-
-**Sorted Array:** `[11, 22, 30, 33, 40, 44, 55, 60, 66, 77, 80, 88, 99]`
-**Target:** 40
-
-**Step 1:**
-- Left = 0, Right = 12, Mid = 6
-- arr[6] = 55
-- 40 < 55, search left half
-
-**Step 2:**
-- Left = 0, Right = 5, Mid = 2
-- arr[2] = 30
-- 40 > 30, search right half
-
-**Step 3:**
-- Left = 3, Right = 5, Mid = 4
-- arr[4] = 40
-- **Found at index 4!**
-
-### C Program: Binary Search
-
-```c
-#include <stdio.h>
-
-int binarySearch(int arr[], int n, int target) {
-    int left = 0;
-    int right = n - 1;
-    
-    while(left <= right) {
-        int mid = left + (right - left) / 2;
-        
-        // Check if target is at mid
-        if(arr[mid] == target) {
-            return mid;
-        }
-        
-        // If target is greater, ignore left half
-        if(arr[mid] < target) {
-            left = mid + 1;
-        }
-        // If target is smaller, ignore right half
-        else {
-            right = mid - 1;
-        }
-    }
-    
-    return -1;  // Not found
-}
-
-void printArray(int arr[], int n) {
-    for(int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-}
-
-int main() {
-    int arr[] = {11, 22, 30, 33, 40, 44, 55, 60, 66, 77, 80, 88, 99};
-    int n = sizeof(arr)/sizeof(arr[0]);
-    
-    printf("Sorted Array: ");
-    printArray(arr, n);
-    
-    // Search for 40
-    int target = 40;
-    int result = binarySearch(arr, n, target);
-    if(result != -1) {
-        printf("%d found at index %d\n", target, result);
-    } else {
-        printf("%d not found\n", target);
-    }
-    
-    // Search for 85
-    target = 85;
-    result = binarySearch(arr, n, target);
-    if(result != -1) {
-        printf("%d found at index %d\n", target, result);
-    } else {
-        printf("%d not found\n", target);
-    }
-    
-    return 0;
-}
-```
-
-**Output:**
-```
-Sorted Array: 11 22 30 33 40 44 55 60 66 77 80 88 99
-40 found at index 4
-85 not found
-```
-
-### Time Complexity
-
-- **Best Case:** O(1) - element is at middle
-- **Average Case:** O(log n)
-- **Worst Case:** O(log n)
-
-**Example:** For 1,000,000 elements:
-- Linear search: up to 1,000,000 comparisons
-- Binary search: only about 20 comparisons!
+| **Need direct access** | Must jump to middle (arrays: ✅, linked lists: ❌) |
+| **Data changes rarely** | Keeping sorted order is expensive with many insertions/deletions |
 
 ---
 
 ## Multidimensional Arrays
 
-### Two-Dimensional Arrays (2D Arrays)
+### Two-Dimensional Arrays
 
-**In Simple Terms:** A 2D array is like a table or spreadsheet with rows and columns. Think of it as a grid where you need two numbers (row and column) to find any element.
+A **two-dimensional array** is like a table with rows and columns. Each element needs TWO numbers to identify it: row number and column number.
 
 ```mermaid
 graph TD
-    A[2D Array: 3x4 Matrix] --> B[Row 0: 4 elements]
-    A --> C[Row 1: 4 elements]
-    A --> D[Row 2: 4 elements]
+    subgraph "2D Array A (3 rows × 4 columns)"
+        R1["Row 1: A[1,1] A[1,2] A[1,3] A[1,4]"]
+        R2["Row 2: A[2,1] A[2,2] A[2,3] A[2,4]"]
+        R3["Row 3: A[3,1] A[3,2] A[3,3] A[3,4]"]
+    end
     
-    B --> E[Column 0-3]
-    C --> F[Column 0-3]
-    D --> G[Column 0-3]
-    
-    style A fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style B fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
-    style C fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
-    style D fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style R1 fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style R2 fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style R3 fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
 ```
 
-### Visualization of 2D Array
+#### Real Example: Student Test Scores
 
-```
-    Col 0  Col 1  Col 2  Col 3
-Row 0  [10]   [20]   [30]   [40]
-Row 1  [50]   [60]   [70]   [80]
-Row 2  [90]   [100]  [110]  [120]
-```
-
-### C Program: 2D Array Basics
-
-```c
-#include <stdio.h>
-
-int main() {
-    // Declare and initialize 2D array
-    int matrix[3][4] = {
-        {10, 20, 30, 40},
-        {50, 60, 70, 80},
-        {90, 100, 110, 120}
-    };
-    
-    int rows = 3;
-    int cols = 4;
-    
-    // Print the matrix
-    printf("Matrix:\n");
-    for(int i = 0; i < rows; i++) {
-        for(int j = 0; j < cols; j++) {
-            printf("%4d ", matrix[i][j]);
-        }
-        printf("\n");
-    }
-    
-    // Access specific element
-    printf("\nElement at [1][2]: %d\n", matrix[1][2]);
-    
-    // Modify an element
-    matrix[0][0] = 999;
-    printf("After modification, [0][0]: %d\n", matrix[0][0]);
-    
-    return 0;
-}
+```mermaid
+graph TD
+    subgraph "SCORE Array (25 students × 4 tests)"
+        H["Student | Test1 | Test2 | Test3 | Test4"]
+        S1["   1   |   84  |   73  |   88  |   81"]
+        S2["   2   |   95  |  100  |   88  |   96"]
+        S3["   3   |   72  |   66  |   77  |   72"]
+        S4["  ...  |  ...  |  ...  |  ...  |  ..."]
+        S25["  25   |   78  |   82  |   70  |   85"]
+    end
 ```
 
-**Output:**
-```
-Matrix:
-  10   20   30   40
-  50   60   70   80
-  90  100  110  120
+- SCORE[2, 3] = Student 2's score on Test 3 = 88
+- A row contains all tests for one student
+- A column contains all students' scores for one test
 
-Element at [1][2]: 70
-After modification, [0][0]: 999
-```
+### How 2D Arrays are Stored in Memory
 
-### Real-World Example: Student Test Scores
-
-```c
-#include <stdio.h>
-
-int main() {
-    // 4 students, 3 tests each
-    int scores[4][3] = {
-        {85, 90, 78},  // Student 0
-        {92, 88, 95},  // Student 1
-        {76, 82, 80},  // Student 2
-        {88, 85, 90}   // Student 3
-    };
-    
-    int students = 4;
-    int tests = 3;
-    
-    // Print all scores
-    printf("Student Test Scores:\n");
-    printf("Student\tTest1\tTest2\tTest3\tAverage\n");
-    printf("---------------------------------------\n");
-    
-    for(int i = 0; i < students; i++) {
-        printf("%d\t", i);
-        int sum = 0;
-        
-        for(int j = 0; j < tests; j++) {
-            printf("%d\t", scores[i][j]);
-            sum += scores[i][j];
-        }
-        
-        float avg = (float)sum / tests;
-        printf("%.2f\n", avg);
-    }
-    
-    // Find highest score in each test
-    printf("\nHighest score in each test:\n");
-    for(int j = 0; j < tests; j++) {
-        int max = scores[0][j];
-        for(int i = 1; i < students; i++) {
-            if(scores[i][j] > max) {
-                max = scores[i][j];
-            }
-        }
-        printf("Test %d: %d\n", j+1, max);
-    }
-    
-    return 0;
-}
-```
-
-**Output:**
-```
-Student Test Scores:
-Student	Test1	Test2	Test3	Average
----------------------------------------
-0	85	90	78	84.33
-1	92	88	95	91.67
-2	76	82	80	79.33
-3	88	85	90	87.67
-
-Highest score in each test:
-Test 1: 92
-Test 2: 90
-Test 3: 95
-```
-
-### Memory Representation
-
-2D arrays can be stored in memory in two ways:
-
-**Row-Major Order** (used by C):
-```
-[Row 0 elements] [Row 1 elements] [Row 2 elements] ...
-```
-
-**Column-Major Order** (used by Fortran):
-```
-[Column 0 elements] [Column 1 elements] [Column 2 elements] ...
-```
+Memory is one-dimensional (a long line of cells). So a 2D array must be "flattened":
 
 ```mermaid
 graph LR
-    A["2D Array 2x3"] --> B["Row-Major: a00,a01,a02,a10,a11,a12"]
-    A --> C["Column-Major: a00,a10,a01,a11,a02,a12"]
+    subgraph "Column-Major Order"
+        C["A[1,1] A[2,1] A[3,1] | A[1,2] A[2,2] A[3,2] | ..."]
+    end
     
-    style A fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
-    style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    subgraph "Row-Major Order"  
+        R["A[1,1] A[1,2] A[1,3] A[1,4] | A[2,1] A[2,2] A[2,3] A[2,4] | ..."]
+    end
+    
     style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style R fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
+
+- **Column-major**: Store column by column (used by FORTRAN)
+- **Row-major**: Store row by row (used by C, Pascal)
+
+#### Address Formulas
+
+**Row-Major Order:**
+```
+LOC(A[J, K]) = Base(A) + w × [N × (J - 1) + (K - 1)]
+```
+
+**Column-Major Order:**
+```
+LOC(A[J, K]) = Base(A) + w × [M × (K - 1) + (J - 1)]
+```
+
+Where:
+- M = number of rows
+- N = number of columns
+- w = bytes per element
+
+### Three-Dimensional Arrays
+
+A 3D array has three subscripts, like a book with pages, rows, and columns.
+
+```mermaid
+graph TD
+    subgraph "3D Array B (2×4×3)"
+        P1["Page 1:<br/>2×4 table"]
+        P2["Page 2:<br/>2×4 table"]
+        P3["Page 3:<br/>2×4 table"]
+    end
+    
+    E["B[row, column, page]"]
+    E --> P1
+    E --> P2
+    E --> P3
+```
+
+Total elements = 2 × 4 × 3 = 24
 
 ---
 
@@ -1459,116 +1049,74 @@ graph LR
 
 ### What is a Pointer?
 
-**In Simple Terms:** A pointer is like a signpost that points to a location. Instead of storing data directly, it stores the address where the data is located.
+A **pointer** is a variable that stores an address - it "points to" where some data is located.
 
 ```mermaid
 graph LR
-    A["Variable x | Value: 42 | Address: 1000"] 
-    B["Pointer p | Value: 1000 | Points to x"]
+    subgraph "Pointer P points to element in DATA"
+        P["Pointer P<br/>Value: 1005"]
+        D["DATA Array"]
+        E["Element at<br/>address 1005"]
+    end
     
-    B -.->|"Points to"| A
+    P -.->|"points to"| E
+    D --- E
     
-    style A fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style B fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style P fill:#e74c3c,stroke:#c0392b,color:#fff
+    style E fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
 
-### C Program: Pointer Basics
+### Pointer Arrays for Efficient Storage
 
-```c
-#include <stdio.h>
+**Problem:** Store groups of different sizes efficiently.
 
-int main() {
-    int x = 42;
-    int *ptr;  // Declare a pointer to int
+**Bad solution:** A 2D array wastes space when groups have different sizes.
+
+```mermaid
+graph TD
+    subgraph "Jagged Array - Wasted Space"
+        R1["Group 1: ★ ★ ★ ★ ○ ○ ○ ○ ○"]
+        R2["Group 2: ★ ★ ★ ★ ★ ★ ★ ★ ★"]
+        R3["Group 3: ★ ★ ○ ○ ○ ○ ○ ○ ○"]
+        R4["Group 4: ★ ★ ★ ★ ★ ★ ○ ○ ○"]
+    end
     
-    ptr = &x;  // Store address of x in ptr
-    
-    printf("Value of x: %d\n", x);
-    printf("Address of x: %p\n", (void*)&x);
-    printf("Value of ptr: %p\n", (void*)ptr);
-    printf("Value pointed to by ptr: %d\n", *ptr);
-    
-    // Modify x through pointer
-    *ptr = 100;
-    printf("\nAfter *ptr = 100:\n");
-    printf("Value of x: %d\n", x);
-    
-    return 0;
-}
+    L["★ = data, ○ = wasted space"]
 ```
 
-**Output:**
-```
-Value of x: 42
-Address of x: 0x7ffd5c8e4a20
-Value of ptr: 0x7ffd5c8e4a20
-Value pointed to by ptr: 42
+**Good solution:** Use a pointer array that tells where each group starts!
 
-After *ptr = 100:
-Value of x: 100
-```
-
-### Pointer Arrays
-
-**In Simple Terms:** A pointer array is an array where each element is a pointer. This is useful for managing groups of data efficiently.
-
-### C Program: Array of Pointers
-
-```c
-#include <stdio.h>
-#include <string.h>
-
-int main() {
-    // Array of string pointers
-    char *names[] = {
-        "Alice",
-        "Bob",
-        "Charlie",
-        "Diana"
-    };
+```mermaid
+graph LR
+    subgraph "Pointer Array GROUP"
+        G1["GROUP[1] = 1"]
+        G2["GROUP[2] = 5"]
+        G3["GROUP[3] = 14"]
+        G4["GROUP[4] = 16"]
+        G5["GROUP[5] = 22"]
+    end
     
-    int count = 4;
+    subgraph "Data Array MEMBER"
+        M1["1-4: Group 1 names"]
+        M2["5-13: Group 2 names"]
+        M3["14-15: Group 3 names"]
+        M4["16-21: Group 4 names"]
+    end
     
-    printf("Names:\n");
-    for(int i = 0; i < count; i++) {
-        printf("%d. %s\n", i+1, names[i]);
-    }
+    G1 -->|"start"| M1
+    G2 -->|"start"| M2
+    G3 -->|"start"| M3
+    G4 -->|"start"| M4
     
-    // Sort names (bubble sort)
-    for(int i = 0; i < count-1; i++) {
-        for(int j = 0; j < count-i-1; j++) {
-            if(strcmp(names[j], names[j+1]) > 0) {
-                // Swap pointers
-                char *temp = names[j];
-                names[j] = names[j+1];
-                names[j+1] = temp;
-            }
-        }
-    }
-    
-    printf("\nSorted names:\n");
-    for(int i = 0; i < count; i++) {
-        printf("%d. %s\n", i+1, names[i]);
-    }
-    
-    return 0;
-}
+    style G1 fill:#e74c3c,stroke:#c0392b,color:#fff
+    style G2 fill:#e74c3c,stroke:#c0392b,color:#fff
+    style G3 fill:#e74c3c,stroke:#c0392b,color:#fff
+    style G4 fill:#e74c3c,stroke:#c0392b,color:#fff
 ```
 
-**Output:**
-```
-Names:
-1. Alice
-2. Bob
-3. Charlie
-4. Diana
-
-Sorted names:
-1. Alice
-2. Bob
-3. Charlie
-4. Diana
-```
+To find Group L:
+- First element: MEMBER[GROUP[L]]
+- Last element: MEMBER[GROUP[L+1] - 1]
 
 ---
 
@@ -1576,185 +1124,133 @@ Sorted names:
 
 ### What is a Record?
 
-**In Simple Terms:** A record (called a "struct" in C) is like a folder that holds different types of related information. For example, a student record might contain name (text), age (number), and grade (letter).
+A **record** is a collection of related data items (called **fields**). Unlike arrays, fields can have different types!
 
 ```mermaid
 graph TD
-    A[Student Record] --> B[Name: String]
-    A --> C[Age: Integer]
-    A --> D[Grade: Character]
-    A --> E[GPA: Float]
+    subgraph "Newborn Baby Record"
+        R["Record: Newborn"]
+        N["Name: string"]
+        S["Sex: character"]
+        B["Birthday"]
+        F["Father"]
+        M["Mother"]
+        
+        B --> BD["Day: integer"]
+        B --> BM["Month: integer"]  
+        B --> BY["Year: integer"]
+        
+        F --> FN["Name: string"]
+        F --> FA["Age: integer"]
+        
+        M --> MN["Name: string"]
+        M --> MA["Age: integer"]
+    end
     
-    style A fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
-    style B fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style D fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    R --> N
+    R --> S
+    R --> B
+    R --> F
+    R --> M
+    
+    style R fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style F fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+    style M fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
+```
+
+### Record Structure with Level Numbers
+
+```
+1 Newborn
+    2 Name
+    2 Sex
+    2 Birthday
+        3 Month
+        3 Day
+        3 Year
+    2 Father
+        3 Name
+        3 Age
+    2 Mother
+        3 Name
+        3 Age
+```
+
+- Level 1 is the whole record
+- Level 2 items are direct parts of the record
+- Level 3 items are parts of level 2 items
+
+### Difference Between Arrays and Records
+
+| Feature | Array | Record |
+|---------|-------|--------|
+| Data types | All same type | Can mix types |
+| Access | By index number | By field name |
+| Order | Natural ordering | No natural order |
+
+### Accessing Record Fields
+
+When the same field name appears multiple times (like "Name" and "Age"), we use **qualifiers**:
+
+- `Father.Age` - Age of the father
+- `Mother.Age` - Age of the mother
+- `Newborn.Father.Name` - Fully qualified name
+
+### Storing Records: Parallel Arrays
+
+When a language doesn't support records, we can use **parallel arrays** - separate arrays where the same index refers to the same entity.
+
+```mermaid
+graph TD
+    subgraph "Parallel Arrays for Membership"
+        N["NAME[K]"]
+        A["AGE[K]"]
+        S["SEX[K]"]
+        P["PHONE[K]"]
+    end
+    
+    E["All refer to member K"]
+    
+    N --> E
+    A --> E
+    S --> E
+    P --> E
+    
     style E fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-```
-
-### C Program: Basic Structure
-
-```c
-#include <stdio.h>
-#include <string.h>
-
-// Define a structure for student
-struct Student {
-    char name[50];
-    int age;
-    char grade;
-    float gpa;
-};
-
-int main() {
-    // Create a student record
-    struct Student s1;
-    
-    // Assign values
-    strcpy(s1.name, "John Smith");
-    s1.age = 20;
-    s1.grade = 'A';
-    s1.gpa = 3.8;
-    
-    // Print student information
-    printf("Student Information:\n");
-    printf("-------------------\n");
-    printf("Name: %s\n", s1.name);
-    printf("Age: %d\n", s1.age);
-    printf("Grade: %c\n", s1.grade);
-    printf("GPA: %.2f\n", s1.gpa);
-    
-    return 0;
-}
-```
-
-**Output:**
-```
-Student Information:
--------------------
-Name: John Smith
-Age: 20
-Grade: A
-GPA: 3.80
-```
-
-### Array of Structures
-
-```c
-#include <stdio.h>
-#include <string.h>
-
-struct Student {
-    char name[50];
-    int rollNo;
-    float marks;
-};
-
-int main() {
-    struct Student class[3];
-    
-    // Input student data
-    for(int i = 0; i < 3; i++) {
-        printf("Enter details for student %d:\n", i+1);
-        printf("Name: ");
-        scanf("%s", class[i].name);
-        printf("Roll No: ");
-        scanf("%d", &class[i].rollNo);
-        printf("Marks: ");
-        scanf("%f", &class[i].marks);
-        printf("\n");
-    }
-    
-    // Display all students
-    printf("\nStudent Records:\n");
-    printf("%-20s %-10s %-10s\n", "Name", "Roll No", "Marks");
-    printf("----------------------------------------\n");
-    
-    for(int i = 0; i < 3; i++) {
-        printf("%-20s %-10d %-10.2f\n", 
-               class[i].name, 
-               class[i].rollNo, 
-               class[i].marks);
-    }
-    
-    // Find student with highest marks
-    int topIndex = 0;
-    for(int i = 1; i < 3; i++) {
-        if(class[i].marks > class[topIndex].marks) {
-            topIndex = i;
-        }
-    }
-    
-    printf("\nTop student: %s with %.2f marks\n", 
-           class[topIndex].name, 
-           class[topIndex].marks);
-    
-    return 0;
-}
-```
-
-### Nested Structures
-
-```c
-#include <stdio.h>
-#include <string.h>
-
-struct Date {
-    int day;
-    int month;
-    int year;
-};
-
-struct Employee {
-    char name[50];
-    int id;
-    struct Date joinDate;
-    float salary;
-};
-
-int main() {
-    struct Employee emp;
-    
-    strcpy(emp.name, "Alice Johnson");
-    emp.id = 1001;
-    emp.joinDate.day = 15;
-    emp.joinDate.month = 6;
-    emp.joinDate.year = 2020;
-    emp.salary = 50000.00;
-    
-    printf("Employee Information:\n");
-    printf("--------------------\n");
-    printf("Name: %s\n", emp.name);
-    printf("ID: %d\n", emp.id);
-    printf("Join Date: %02d/%02d/%d\n", 
-           emp.joinDate.day, 
-           emp.joinDate.month, 
-           emp.joinDate.year);
-    printf("Salary: $%.2f\n", emp.salary);
-    
-    return 0;
-}
 ```
 
 ---
 
 ## Matrices
 
+### What is a Matrix?
+
+A **matrix** is a mathematical term for a 2D array of numbers arranged in rows and columns.
+
+- A **vector** is like a 1D array (a list of numbers)
+- A **scalar** is a single number
+
 ### Matrix Operations
 
-**In Simple Terms:** Matrices are 2D arrays of numbers that we can add, subtract, and multiply using special rules.
+#### Matrix Addition
+Add corresponding elements:
+```
+C[i,j] = A[i,j] + B[i,j]
+```
 
-```mermaid
-graph LR
-    A["Matrix A (2x2)"] --> C["Operations"]
-    B["Matrix B (2x2)"] --> C
-    C --> D["Addition"]
-    C --> E["Subtraction"]
-    C --> F["Multiplication"]
-    
-    style A fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
-    style B fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
-    style C fill:#F5E663,stroke:#333,stroke-width:2px,color:#000
+#### Scalar Multiplication
+Multiply every element by a number:
+```
+C[i,j] = k × A[i,j]
+```
+
+#### Matrix Multiplication
+
+The product of two matrices A (m×p) and B (p×n) is matrix C (m×n) where:
+
+```
+C[i,j] = A[i,1]×B[1,j] + A[i,2]×B[2,j] + ... + A[i,p]×B[p,j]
 ```
 
 ---
@@ -1763,7 +1259,7 @@ graph LR
 
 > **Purpose:** Multiply matrix A (M×P) by matrix B (P×N) to produce matrix C (M×N).
 
-#### Pseudocode (from textbook)
+#### Pseudocode
 
 ```
 Algorithm 4.7: MATMUL(A, B, C, M, P, N)
@@ -1783,17 +1279,6 @@ C = Result matrix (M × N)
 5. Exit
 ```
 
-#### 🔍 Understanding Matrix Multiplication
-
-**The Rule:** Each element C[i,j] is the **dot product** of:
-- Row i of matrix A
-- Column j of matrix B
-
-```
-C[i,j] = A[i,1]×B[1,j] + A[i,2]×B[2,j] + ... + A[i,P]×B[P,j]
-       = Σ(k=1 to P) A[i,k] × B[k,j]
-```
-
 #### 🎯 Visual Flowchart
 
 ```mermaid
@@ -1810,7 +1295,7 @@ flowchart TD
     K_INIT --> K_CHECK{"K ≤ P?"}
     K_CHECK -->|❌ No| J_INC["J = J + 1"]
     J_INC --> J_CHECK
-    K_CHECK -->|✅ Yes| CALC["C[I,J] = C[I,J] + A[I,K] × B[K,J]"]
+    K_CHECK -->|✅ Yes| CALC["C[I,J] += A[I,K] × B[K,J]"]
     CALC --> K_INC["K = K + 1"]
     K_INC --> K_CHECK
     
@@ -1819,223 +1304,17 @@ flowchart TD
     style CALC fill:#3498db,stroke:#2980b9,color:#fff
 ```
 
-#### 📊 Example: Multiply 2×3 by 3×2 matrices
-
-```
-    A (2×3)           B (3×2)           C (2×2)
-┌─────────────┐   ┌─────────┐      ┌───────────┐
-│ 1   2   3   │   │  7   8  │      │  58   64  │
-│ 4   5   6   │ × │  9  10  │  =   │ 139  154  │
-└─────────────┘   │ 11  12  │      └───────────┘
-                  └─────────┘
-```
-
-**Calculating C[1,1]:**
-```
-C[1,1] = A[1,1]×B[1,1] + A[1,2]×B[2,1] + A[1,3]×B[3,1]
-       = 1×7 + 2×9 + 3×11
-       = 7 + 18 + 33
-       = 58 ✅
-```
-
-**Calculating C[1,2]:**
-```
-C[1,2] = A[1,1]×B[1,2] + A[1,2]×B[2,2] + A[1,3]×B[3,2]
-       = 1×8 + 2×10 + 3×12
-       = 8 + 20 + 36
-       = 64 ✅
-```
-
 #### ⏱️ Time Complexity
 
-**Counting Multiplications:**
-- Outer loop runs M times
-- Middle loop runs N times  
-- Inner loop runs P times
-- Each iteration does 1 multiplication
+**Total multiplications = M × N × P = O(n³)** for n×n matrices
 
-**Total:** $M \times N \times P$ multiplications = **O(n³)** for n×n matrices
+#### ⚠️ Important Rules for Matrix Multiplication
 
-#### 💡 Important Notes
-
-| Requirement | Rule |
-|-------------|------|
-| **Dimension Match** | Columns of A must equal rows of B (A is M×**P**, B is **P**×N) |
-| **Result Size** | C has M rows (from A) and N columns (from B) |
-| **Not Commutative** | A×B ≠ B×A in general! |
-
----
-
-### C Program: Matrix Addition
-
-```c
-#include <stdio.h>
-
-#define ROWS 3
-#define COLS 3
-
-void printMatrix(int mat[][COLS], int rows) {
-    for(int i = 0; i < rows; i++) {
-        for(int j = 0; j < COLS; j++) {
-            printf("%4d ", mat[i][j]);
-        }
-        printf("\n");
-    }
-}
-
-void addMatrices(int a[][COLS], int b[][COLS], int result[][COLS], int rows) {
-    for(int i = 0; i < rows; i++) {
-        for(int j = 0; j < COLS; j++) {
-            result[i][j] = a[i][j] + b[i][j];
-        }
-    }
-}
-
-int main() {
-    int A[ROWS][COLS] = {
-        {1, 2, 3},
-        {4, 5, 6},
-        {7, 8, 9}
-    };
-    
-    int B[ROWS][COLS] = {
-        {9, 8, 7},
-        {6, 5, 4},
-        {3, 2, 1}
-    };
-    
-    int C[ROWS][COLS];
-    
-    printf("Matrix A:\n");
-    printMatrix(A, ROWS);
-    
-    printf("\nMatrix B:\n");
-    printMatrix(B, ROWS);
-    
-    addMatrices(A, B, C, ROWS);
-    
-    printf("\nMatrix C (A + B):\n");
-    printMatrix(C, ROWS);
-    
-    return 0;
-}
-```
-
-**Output:**
-```
-Matrix A:
-   1    2    3
-   4    5    6
-   7    8    9
-
-Matrix B:
-   9    8    7
-   6    5    4
-   3    2    1
-
-Matrix C (A + B):
-  10   10   10
-  10   10   10
-  10   10   10
-```
-
-### C Program: Matrix Multiplication
-
-```c
-#include <stdio.h>
-
-#define R1 2
-#define C1 3
-#define R2 3
-#define C2 2
-
-void multiplyMatrices(int a[][C1], int b[][C2], int result[][C2]) {
-    // Initialize result matrix to 0
-    for(int i = 0; i < R1; i++) {
-        for(int j = 0; j < C2; j++) {
-            result[i][j] = 0;
-        }
-    }
-    
-    // Multiply matrices
-    for(int i = 0; i < R1; i++) {
-        for(int j = 0; j < C2; j++) {
-            for(int k = 0; k < C1; k++) {
-                result[i][j] += a[i][k] * b[k][j];
-            }
-        }
-    }
-}
-
-void printMatrix(int mat[][C2], int rows) {
-    for(int i = 0; i < rows; i++) {
-        for(int j = 0; j < C2; j++) {
-            printf("%4d ", mat[i][j]);
-        }
-        printf("\n");
-    }
-}
-
-int main() {
-    int A[R1][C1] = {
-        {1, 2, 3},
-        {4, 5, 6}
-    };
-    
-    int B[R2][C2] = {
-        {7, 8},
-        {9, 10},
-        {11, 12}
-    };
-    
-    int C[R1][C2];
-    
-    printf("Matrix A (2x3):\n");
-    for(int i = 0; i < R1; i++) {
-        for(int j = 0; j < C1; j++) {
-            printf("%4d ", A[i][j]);
-        }
-        printf("\n");
-    }
-    
-    printf("\nMatrix B (3x2):\n");
-    for(int i = 0; i < R2; i++) {
-        for(int j = 0; j < C2; j++) {
-            printf("%4d ", B[i][j]);
-        }
-        printf("\n");
-    }
-    
-    multiplyMatrices(A, B, C);
-    
-    printf("\nMatrix C (A × B) (2x2):\n");
-    printMatrix(C, R1);
-    
-    return 0;
-}
-```
-
-**Output:**
-```
-Matrix A (2x3):
-   1    2    3
-   4    5    6
-
-Matrix B (3x2):
-   7    8
-   9   10
-  11   12
-
-Matrix C (A × B) (2x2):
-  58   64
- 139  154
-```
-
-**Calculation:**
-- C[0][0] = 1×7 + 2×9 + 3×11 = 7 + 18 + 33 = 58
-- C[0][1] = 1×8 + 2×10 + 3×12 = 8 + 20 + 36 = 64
-- C[1][0] = 4×7 + 5×9 + 6×11 = 28 + 45 + 66 = 139
-- C[1][1] = 4×8 + 5×10 + 6×12 = 32 + 50 + 72 = 154
+| Rule | Explanation |
+|------|-------------|
+| **Dimensions must match** | Columns of A must equal rows of B |
+| **Result size** | M rows (from A) × N columns (from B) |
+| **Order matters** | A×B ≠ B×A in general |
 
 ---
 
@@ -2043,416 +1322,49 @@ Matrix C (A × B) (2x2):
 
 ### What is a Sparse Matrix?
 
-**In Simple Terms:** A sparse matrix is a matrix where most elements are zero. Instead of storing all the zeros (which wastes space), we only store the non-zero elements.
-
-**Example:**
-```
-Regular Matrix (5x5):
-0  0  3  0  0
-0  0  5  7  0
-0  0  0  0  0
-0  2  6  0  0
-0  0  0  0  0
-
-Only 5 non-zero elements out of 25!
-```
+A **sparse matrix** is one where most elements are zero. Storing all those zeros wastes memory!
 
 ```mermaid
 graph TD
-    A["Sparse Matrix 5x5"] --> B["Total elements: 25"]
-    B --> C["Non-zero: 5"]
-    B --> D["Zero: 20"]
-    C --> E["Storage: Only store 5 values + their positions"]
+    subgraph "Types of Sparse Matrices"
+        T["Triangular Matrix<br/>Non-zero only on/below diagonal"]
+        D["Tridiagonal Matrix<br/>Non-zero only on 3 diagonals"]
+    end
     
-    style A fill:#FFB84D,stroke:#333,stroke-width:2px,color:#000
-    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#000
-    style D fill:#E94B3C,stroke:#333,stroke-width:2px,color:#fff
+    style T fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#50C878,stroke:#333,stroke-width:2px,color:#000
 ```
 
-### Efficient Storage: Triplet Representation
+### Efficient Storage: Triangular Matrix
 
-Store only: (row, column, value) for non-zero elements
+For a **lower triangular matrix** (zeros above diagonal), we only store elements on or below the diagonal.
 
-```c
-#include <stdio.h>
-
-#define MAX 100
-
-struct Element {
-    int row;
-    int col;
-    int value;
-};
-
-struct SparseMatrix {
-    int rows;
-    int cols;
-    int numNonZero;
-    struct Element data[MAX];
-};
-
-void createSparseMatrix(int mat[][5], int r, int c, struct SparseMatrix *sparse) {
-    sparse->rows = r;
-    sparse->cols = c;
-    sparse->numNonZero = 0;
+```mermaid
+graph TD
+    subgraph "Lower Triangular Matrix"
+        R1["a₁₁"]
+        R2["a₂₁  a₂₂"]
+        R3["a₃₁  a₃₂  a₃₃"]
+        R4["a₄₁  a₄₂  a₄₃  a₄₄"]
+    end
     
-    // Store only non-zero elements
-    for(int i = 0; i < r; i++) {
-        for(int j = 0; j < c; j++) {
-            if(mat[i][j] != 0) {
-                sparse->data[sparse->numNonZero].row = i;
-                sparse->data[sparse->numNonZero].col = j;
-                sparse->data[sparse->numNonZero].value = mat[i][j];
-                sparse->numNonZero++;
-            }
-        }
-    }
-}
-
-void printSparseMatrix(struct SparseMatrix *sparse) {
-    printf("Sparse Matrix (%dx%d) with %d non-zero elements:\n", 
-           sparse->rows, sparse->cols, sparse->numNonZero);
-    printf("Row\tCol\tValue\n");
-    printf("---\t---\t-----\n");
-    
-    for(int i = 0; i < sparse->numNonZero; i++) {
-        printf("%d\t%d\t%d\n", 
-               sparse->data[i].row, 
-               sparse->data[i].col, 
-               sparse->data[i].value);
-    }
-}
-
-int main() {
-    int matrix[5][5] = {
-        {0, 0, 3, 0, 0},
-        {0, 0, 5, 7, 0},
-        {0, 0, 0, 0, 0},
-        {0, 2, 6, 0, 0},
-        {0, 0, 0, 0, 0}
-    };
-    
-    struct SparseMatrix sparse;
-    
-    printf("Original Matrix:\n");
-    for(int i = 0; i < 5; i++) {
-        for(int j = 0; j < 5; j++) {
-            printf("%3d ", matrix[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-    
-    createSparseMatrix(matrix, 5, 5, &sparse);
-    printSparseMatrix(&sparse);
-    
-    printf("\nSpace saved:\n");
-    printf("Normal storage: %d elements\n", 5*5);
-    printf("Sparse storage: %d elements\n", sparse.numNonZero * 3);
-    printf("Savings: %.1f%%\n", 
-           (1.0 - (sparse.numNonZero * 3.0) / (5.0 * 5.0)) * 100);
-    
-    return 0;
-}
+    subgraph "Stored in Linear Array B"
+        B["B[1]=a₁₁, B[2]=a₂₁, B[3]=a₂₂, B[4]=a₃₁, ..."]
+    end
 ```
 
-**Output:**
+**Space saved:**
+- Full n×n array: n² elements
+- Triangular storage: n(n+1)/2 elements ≈ half the space!
+
+**To find element A[J,K]:**
 ```
-Original Matrix:
-  0   0   3   0   0
-  0   0   5   7   0
-  0   0   0   0   0
-  0   2   6   0   0
-  0   0   0   0   0
-
-Sparse Matrix (5x5) with 5 non-zero elements:
-Row	Col	Value
----	---	-----
-0	2	3
-1	2	5
-1	3	7
-3	1	2
-3	2	6
-
-Space saved:
-Normal storage: 25 elements
-Sparse storage: 15 elements
-Savings: 40.0%
+Position in B = J(J-1)/2 + K
 ```
 
----
-
-## Practice Exercises
-
-### Exercise 1: Array Basics
-**Problem:** Write a program to find the second largest element in an array.
-
-**Hint:** Keep track of the largest and second largest as you traverse the array.
-
-<details>
-<summary>Click to see solution</summary>
-
-```c
-#include <stdio.h>
-#include <limits.h>
-
-int findSecondLargest(int arr[], int n) {
-    if(n < 2) return -1;
-    
-    int first = INT_MIN, second = INT_MIN;
-    
-    for(int i = 0; i < n; i++) {
-        if(arr[i] > first) {
-            second = first;
-            first = arr[i];
-        } else if(arr[i] > second && arr[i] != first) {
-            second = arr[i];
-        }
-    }
-    
-    return (second == INT_MIN) ? -1 : second;
-}
-
-int main() {
-    int arr[] = {12, 35, 1, 10, 34, 1};
-    int n = sizeof(arr)/sizeof(arr[0]);
-    
-    int result = findSecondLargest(arr, n);
-    if(result != -1)
-        printf("Second largest: %d\n", result);
-    else
-        printf("No second largest element\n");
-    
-    return 0;
-}
-```
-</details>
-
-### Exercise 2: Array Rotation
-**Problem:** Rotate an array to the right by k positions.
-
-**Example:** `[1,2,3,4,5]` rotated by 2 becomes `[4,5,1,2,3]`
-
-**Hint:** Use a temporary array or reverse parts of the array.
-
-<details>
-<summary>Click to see solution</summary>
-
-```c
-#include <stdio.h>
-
-void reverse(int arr[], int start, int end) {
-    while(start < end) {
-        int temp = arr[start];
-        arr[start] = arr[end];
-        arr[end] = temp;
-        start++;
-        end--;
-    }
-}
-
-void rotateRight(int arr[], int n, int k) {
-    k = k % n;  // Handle k > n
-    
-    // Reverse entire array
-    reverse(arr, 0, n-1);
-    // Reverse first k elements
-    reverse(arr, 0, k-1);
-    // Reverse remaining elements
-    reverse(arr, k, n-1);
-}
-
-void printArray(int arr[], int n) {
-    for(int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-}
-
-int main() {
-    int arr[] = {1, 2, 3, 4, 5};
-    int n = 5;
-    int k = 2;
-    
-    printf("Original: ");
-    printArray(arr, n);
-    
-    rotateRight(arr, n, k);
-    
-    printf("Rotated by %d: ", k);
-    printArray(arr, n);
-    
-    return 0;
-}
-```
-</details>
-
-### Exercise 3: Matrix Transpose
-**Problem:** Write a program to find the transpose of a matrix.
-
-**Hint:** Transpose means swapping rows with columns: `result[j][i] = original[i][j]`
-
-<details>
-<summary>Click to see solution</summary>
-
-```c
-#include <stdio.h>
-
-#define ROWS 3
-#define COLS 4
-
-void transpose(int mat[][COLS], int result[][ROWS], int r, int c) {
-    for(int i = 0; i < r; i++) {
-        for(int j = 0; j < c; j++) {
-            result[j][i] = mat[i][j];
-        }
-    }
-}
-
-void printMatrix(int mat[][COLS], int r, int c) {
-    for(int i = 0; i < r; i++) {
-        for(int j = 0; j < c; j++) {
-            printf("%3d ", mat[i][j]);
-        }
-        printf("\n");
-    }
-}
-
-int main() {
-    int mat[ROWS][COLS] = {
-        {1, 2, 3, 4},
-        {5, 6, 7, 8},
-        {9, 10, 11, 12}
-    };
-    
-    int result[COLS][ROWS];
-    
-    printf("Original Matrix (3x4):\n");
-    printMatrix(mat, ROWS, COLS);
-    
-    transpose(mat, result, ROWS, COLS);
-    
-    printf("\nTransposed Matrix (4x3):\n");
-    for(int i = 0; i < COLS; i++) {
-        for(int j = 0; j < ROWS; j++) {
-            printf("%3d ", result[i][j]);
-        }
-        printf("\n");
-    }
-    
-    return 0;
-}
-```
-</details>
-
-### Exercise 4: Merge Sorted Arrays
-**Problem:** Merge two sorted arrays into one sorted array.
-
-**Hint:** Use two pointers, one for each array, and compare elements.
-
-<details>
-<summary>Click to see solution</summary>
-
-```c
-#include <stdio.h>
-
-void mergeSortedArrays(int arr1[], int n1, int arr2[], int n2, int result[]) {
-    int i = 0, j = 0, k = 0;
-    
-    while(i < n1 && j < n2) {
-        if(arr1[i] <= arr2[j]) {
-            result[k++] = arr1[i++];
-        } else {
-            result[k++] = arr2[j++];
-        }
-    }
-    
-    // Copy remaining elements
-    while(i < n1) {
-        result[k++] = arr1[i++];
-    }
-    
-    while(j < n2) {
-        result[k++] = arr2[j++];
-    }
-}
-
-void printArray(int arr[], int n) {
-    for(int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-}
-
-int main() {
-    int arr1[] = {1, 3, 5, 7};
-    int arr2[] = {2, 4, 6, 8, 10};
-    int n1 = 4, n2 = 5;
-    int result[9];
-    
-    printf("Array 1: ");
-    printArray(arr1, n1);
-    printf("Array 2: ");
-    printArray(arr2, n2);
-    
-    mergeSortedArrays(arr1, n1, arr2, n2, result);
-    
-    printf("Merged: ");
-    printArray(result, n1 + n2);
-    
-    return 0;
-}
-```
-</details>
-
-### Exercise 5: Remove Duplicates
-**Problem:** Remove duplicate elements from a sorted array in-place.
-
-**Hint:** Use two pointers - one for reading, one for writing unique elements.
-
-<details>
-<summary>Click to see solution</summary>
-
-```c
-#include <stdio.h>
-
-int removeDuplicates(int arr[], int n) {
-    if(n == 0) return 0;
-    
-    int writeIndex = 1;
-    
-    for(int i = 1; i < n; i++) {
-        if(arr[i] != arr[i-1]) {
-            arr[writeIndex++] = arr[i];
-        }
-    }
-    
-    return writeIndex;
-}
-
-void printArray(int arr[], int n) {
-    for(int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-}
-
-int main() {
-    int arr[] = {1, 1, 2, 2, 2, 3, 4, 4, 5};
-    int n = 9;
-    
-    printf("Original: ");
-    printArray(arr, n);
-    
-    int newLength = removeDuplicates(arr, n);
-    
-    printf("After removing duplicates: ");
-    printArray(arr, newLength);
-    
-    return 0;
-}
-```
-</details>
+This works because:
+- Rows 1 through (J-1) contain 1+2+3+...+(J-1) = J(J-1)/2 elements
+- Row J has K elements up to position K
 
 ---
 
@@ -2460,57 +1372,47 @@ int main() {
 
 ### Key Concepts Covered
 
-✅ **Linear Arrays**: One-dimensional data structures with indexed elements  
-✅ **Memory Representation**: How arrays are stored and accessed in memory  
-✅ **Array Operations**: Traversal, insertion, deletion  
-✅ **Searching**: Linear search (O(n)) and Binary search (O(log n))  
-✅ **Sorting**: Bubble sort algorithm (O(n²))  
-✅ **Multidimensional Arrays**: 2D and 3D arrays, row-major vs column-major  
-✅ **Pointers**: Memory addresses and pointer arrays  
-✅ **Records**: Structures for heterogeneous data  
-✅ **Matrices**: Matrix operations and algorithms  
-✅ **Sparse Matrices**: Efficient storage for matrices with many zeros  
+✅ **Linear vs Nonlinear Structures**: Arrays and linked lists vs trees and graphs
 
-### Time Complexity Comparison
+✅ **Linear Arrays**: Indexed collection of same-type elements in consecutive memory
 
-| Operation | Array | Sorted Array |
-|-----------|-------|--------------|
-| Access by index | O(1) | O(1) |
-| Search | O(n) | O(log n) |
-| Insert at end | O(1) | O(n) |
-| Insert in middle | O(n) | O(n) |
-| Delete | O(n) | O(n) |
+✅ **Memory Representation**: Base address + formula for any element's location
 
-### When to Use Arrays
+✅ **Array Operations**: Traversal, insertion, deletion with their algorithms
 
-**✅ Use arrays when:**
-- You know the size in advance
-- You need fast random access
-- Memory is contiguous
-- Data is homogeneous
+✅ **Searching**: 
+- Linear search O(n) - check one by one
+- Binary search O(log n) - divide and conquer (sorted arrays only)
 
-**❌ Avoid arrays when:**
-- Size changes frequently
-- Many insertions/deletions in middle
-- Memory is fragmented
-- Need dynamic sizing
+✅ **Sorting**: Bubble sort O(n²) - compare adjacent elements, swap if needed
 
----
+✅ **Multidimensional Arrays**: Tables (2D), cubes (3D), row-major vs column-major storage
 
-## Additional Resources
+✅ **Pointers**: Variables that store addresses, pointer arrays for efficient group storage
 
-### Practice Problems
-1. Find the kth largest element in an unsorted array
-2. Implement selection sort and insertion sort
-3. Find all pairs in an array that sum to a target value
-4. Rotate a matrix 90 degrees clockwise
-5. Implement sparse matrix addition
+✅ **Records**: Collections of related fields with different types, level numbers
 
-### Further Reading
-- Algorithm complexity and Big-O notation
-- Dynamic arrays and vectors
-- Cache-friendly data structures
-- Memory alignment and padding
+✅ **Matrices**: Mathematical 2D arrays with addition, scalar multiplication, matrix multiplication
+
+✅ **Sparse Matrices**: Efficient storage when most elements are zero
+
+### When to Use What
+
+```mermaid
+graph TD
+    A["Choose Data Structure"] --> B{"Data size<br/>changes often?"}
+    B -->|Yes| C["Consider Linked List"]
+    B -->|No| D{"Need fast<br/>random access?"}
+    D -->|Yes| E["Use Array"]
+    D -->|No| C
+    E --> F{"Data sorted?"}
+    F -->|Yes| G["Binary Search OK"]
+    F -->|No| H["Linear Search<br/>or Sort First"]
+    
+    style E fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+    style C fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style G fill:#50C878,stroke:#333,stroke-width:2px,color:#000
+```
 
 ---
 
