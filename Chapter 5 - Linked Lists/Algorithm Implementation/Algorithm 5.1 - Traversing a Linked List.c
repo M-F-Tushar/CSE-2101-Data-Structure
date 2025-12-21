@@ -30,9 +30,10 @@ int main()
 
     while (PTR != NULL)
     {
-        printf("%d\n", PTR->info);
-        PTR = PTR->link;
+        printf("%d\n", PTR->INFO);
+        PTR = PTR->LINK;
     }
 
     return 0;
 }
+
