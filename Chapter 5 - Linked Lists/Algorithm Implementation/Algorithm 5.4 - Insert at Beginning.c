@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+
 struct Node
 {
     int INFO;
@@ -52,6 +53,7 @@ int main()
         PTR = PTR->LINK;
     }
     return 0;
+
 
 
 
