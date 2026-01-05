@@ -442,17 +442,17 @@ graph LR
 
 ```mermaid
 flowchart TD
-    START([🟢 Start]) --> ADD["Add ')' sentinel at end of P"]
+    START([🟢 Start]) --> ADD["Add sentinel at end of P"]
     ADD --> SCAN["Scan P from left to right"]
     SCAN --> CHECK{"Element type?"}
     CHECK -->|Operand| PUSH["Push onto STACK"]
-    CHECK -->|Operator| POP["Pop A (top)<br/>Pop B (next)"]
-    POP --> EVAL["Compute B ⊕ A"]
+    CHECK -->|Operator| POP["Pop A - top<br/>Pop B - next"]
+    POP --> EVAL["Compute B op A"]
     EVAL --> PUSHRES["Push result onto STACK"]
     PUSH --> NEXT{"More elements?"}
     PUSHRES --> NEXT
     NEXT -->|Yes| SCAN
-    CHECK -->|Sentinel ')'| RESULT["VALUE = top of STACK"]
+    CHECK -->|Sentinel| RESULT["VALUE = top of STACK"]
     NEXT -->|No| RESULT
     RESULT --> EXIT([🔴 Exit])
     
@@ -524,17 +524,17 @@ graph TD
 
 ```mermaid
 flowchart TD
-    START([🟢 Start]) --> INIT["Push '(' onto STACK<br/>Add ')' to end of Q"]
+    START([🟢 Start]) --> INIT["Push LEFT-PAREN onto STACK<br/>Add RIGHT-PAREN to end of Q"]
     INIT --> SCAN["Scan Q from left to right"]
     SCAN --> TYPE{"Element type?"}
     
     TYPE -->|Operand| ADDP["Add to P"]
-    TYPE -->|'('| PUSHL["Push '(' onto STACK"]
-    TYPE -->|Operator ⊕| COMPARE["While top of STACK has<br/>≥ precedence than ⊕"]
+    TYPE -->|Left Paren| PUSHL["Push LEFT-PAREN onto STACK"]
+    TYPE -->|Operator| COMPARE["While top of STACK has<br/>higher or equal precedence"]
     COMPARE --> POPHIGH["Pop and add to P"]
-    POPHIGH --> PUSHOP["Push ⊕ onto STACK"]
-    TYPE -->|')'| POPR["Pop and add to P<br/>until '(' found"]
-    POPR --> REMOVEL["Remove '(' from STACK"]
+    POPHIGH --> PUSHOP["Push operator onto STACK"]
+    TYPE -->|Right Paren| POPR["Pop and add to P<br/>until LEFT-PAREN found"]
+    POPR --> REMOVEL["Remove LEFT-PAREN from STACK"]
     
     ADDP --> NEXT{"STACK empty?"}
     PUSHL --> NEXT
@@ -579,9 +579,9 @@ Algorithm 6.6: POLISH(Q, P) - Convert Infix to Postfix
 graph LR
     subgraph "Key Observations"
         O1["Operands go directly to P"]
-        O2["'(' gets pushed onto STACK"]
-        O3["Operators 'sink' to their precedence level"]
-        O4["')' pops operators until matching '('"]
+        O2["Left-paren gets pushed onto STACK"]
+        O3["Operators sink to their precedence level"]
+        O4["Right-paren pops operators until matching left-paren"]
     end
 ```
 
