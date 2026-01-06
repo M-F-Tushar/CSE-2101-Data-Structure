@@ -1,5 +1,4 @@
 # CSE 2101: Data Structures
-
 <div align="center">
 
 **A comprehensive repository for the university course on Data Structures**
