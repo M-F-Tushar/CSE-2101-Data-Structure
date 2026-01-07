@@ -392,7 +392,7 @@ Contributions are welcome! Here's how you can help:
 - [x] Chapter 3: String Processing
 - [x] Chapter 4: Arrays, Records and Pointers
 - [x] Chapter 5: Linked Lists
-- [ ] Chapter 6: Stacks, Queues, Recursion
+- [x] Chapter 6: Stacks, Queues, Recursion
 - [ ] Chapter 7: Trees
 - [ ] Chapter 8: Graphs and Their Applications
 - [ ] Chapter 9: Sorting and Searching
