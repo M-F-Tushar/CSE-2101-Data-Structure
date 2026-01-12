@@ -1,4 +1,5 @@
 # Chapter 5: Linked Lists
+<img width="2752" height="1536" alt="LInked list" src="https://github.com/user-attachments/assets/fe178698-a057-4205-aadf-2d4615d8d0c7" />
 
 ## Table of Contents
 
