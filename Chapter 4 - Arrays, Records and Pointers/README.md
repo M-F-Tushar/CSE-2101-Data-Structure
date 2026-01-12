@@ -1,4 +1,5 @@
 # Chapter 4: Arrays, Records and Pointers
+<img width="2752" height="1536" alt="Array" src="https://github.com/user-attachments/assets/9867af03-336e-4f84-b380-129ebf5c3e79" />
 
 ## Table of Contents
 
