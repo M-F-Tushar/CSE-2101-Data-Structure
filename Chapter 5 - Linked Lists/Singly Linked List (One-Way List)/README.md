@@ -1,5 +1,4 @@
 # Singly Linked List (One-Way List)
-
 A comprehensive guide to singly linked list operations and algorithms based on Seymour Lipschutz's Data Structures textbook.
 
 ## Table of Contents
