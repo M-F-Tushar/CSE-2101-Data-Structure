@@ -2727,19 +2727,3 @@ Calculate balance factors for each node and determine if rotations are needed.
 Trace heapsort algorithm on: **[4, 10, 3, 5, 1]**
 
 ---
-
-## Additional Resources
-
-### Visualization Tools
-- [VisuAlgo](https://visualgo.net/en/bst) - Interactive BST visualizer
-- [Binary Search Tree Visualizer](https://www.cs.usfca.edu/~galles/visualization/BST.html)
-- [AVL Tree Visualizer](https://www.cs.usfca.edu/~galles/visualization/AVLtree.html)
-
-### Video Tutorials
-- MIT OpenCourseWare: Binary Trees
-- Abdul Bari: Tree Data Structures
-- mycodeschool: Binary Search Trees
-
----
-
-**Happy Learning! 🌳**
