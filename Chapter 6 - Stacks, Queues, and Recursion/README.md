@@ -2,7 +2,6 @@
 <img width="2752" height="1536" alt="Stack" src="https://github.com/user-attachments/assets/18ecf098-f4e9-4419-859d-0672b2c5bf57" />
 
 ## Table of Contents
-
 1. [Introduction](#introduction)
 2. [Stacks](#stacks)
    - [Stack Basics](#stack-basics)
