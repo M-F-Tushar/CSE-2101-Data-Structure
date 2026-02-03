@@ -122,7 +122,10 @@ graph TD
 | :---: |
 | Chairman, Department of Computer Science and Engineering |
 | Chandpur Science and Technology University |
-
+| **Prince Mahmud** |
+| :---: |
+| Lecturer, Department of Computer Science and Engineering |
+| Chandpur Science and Technology University |
 </div>
 
 ---
