@@ -1,5 +1,5 @@
 # Chapter 7: Trees
-<img width="2752" height="1536" alt="unnamed" src="https://github.com/user-attachments/assets/885ebd52-33f7-4b86-aa36-fc10bf573b0c" />
+
 <img width="2752" height="1536" alt="unnamed (1)" src="https://github.com/user-attachments/assets/8981056d-a856-45a3-acc2-376e7125ae3f" />
 
 ## Table of Contents
@@ -16,7 +16,7 @@
 10. [General Trees](#general-trees)
 
 ---
-
+<img width="2752" height="1536" alt="unnamed" src="https://github.com/user-attachments/assets/885ebd52-33f7-4b86-aa36-fc10bf573b0c" />
 ## Introduction
 
 ### What is a Tree?
