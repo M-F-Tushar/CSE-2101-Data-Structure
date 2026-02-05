@@ -1,4 +1,7 @@
-# Chapter 7: Trees
+<img width="2752" height="1536" alt="unnamed (1)" src="https://github.com/user-attachments/assets/c06354e9-4cee-4851-b3a9-41d7ad0f992c" /># Chapter 7: Trees
+![Uploading unnamed.png…]()
+![Uploading unnamed (1).png…]()
+
 
 ## Table of Contents
 
