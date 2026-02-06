@@ -17,6 +17,7 @@
 
 ---
 <img width="2752" height="1536" alt="unnamed" src="https://github.com/user-attachments/assets/885ebd52-33f7-4b86-aa36-fc10bf573b0c" />
+
 ## Introduction
 
 ### What is a Tree?
