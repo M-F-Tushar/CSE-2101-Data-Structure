@@ -41,7 +41,8 @@ int main()
     ROOT->right->right = createNode(30);
 
     printf("Preorder Traversal: ");
-    Preorder(ROOT);
-
+    Preorder(ROOT); 
+    
     return 0;
+
 }
