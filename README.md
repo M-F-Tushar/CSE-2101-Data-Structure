@@ -399,7 +399,7 @@ Contributions are welcome! Here's how you can help:
 - [ ] Chapter 8: Graphs and Their Applications
 - [ ] Chapter 9: Sorting and Searching
 
-*Note: Currently, 4 chapters have been completed. The repository will be updated as the course progresses.*
+*Note: Currently, 7 chapters have been completed. The repository will be updated as the course progresses.*
 
 ---
 
