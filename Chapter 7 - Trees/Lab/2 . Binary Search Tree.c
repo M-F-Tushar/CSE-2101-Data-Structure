@@ -38,29 +38,6 @@ struct Node* insert(struct Node* root, int value)
     return root;
 }
 
-
-int search(struct Node* root, int value)
-{
-    if(root == NULL)
-    {
-        return 0;
-    }
-    
-    if(value == root->info)
-    {
-        return 1;
-    }
-    else if(value < root->info)
-    {
-        return search(root->left, value);
-    }
-    else
-    {
-        return search(root->right, value);
-    }
-}
-
-
 struct Node* findMin(struct Node* root)
 {
     while(root->left != NULL)
@@ -211,6 +188,7 @@ int main()
     postorder(root);
 
     return 0;
+
 
 
 
