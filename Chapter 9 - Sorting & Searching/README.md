@@ -1,4 +1,4 @@
-# Chapter 9: Sorting and Searching  
+# Chapter 9: Sorting and Searching   
 
 ## Table of Contents
 
