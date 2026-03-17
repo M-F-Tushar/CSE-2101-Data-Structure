@@ -1,4 +1,5 @@
 # Chapter 9: Sorting and Searching    
+<img width="2752" height="1536" alt="Searching and Sorting" src="https://github.com/user-attachments/assets/04396ca7-9e2d-4785-84b6-c60f1e499ecb" />
 
 ## Table of Contents
 
