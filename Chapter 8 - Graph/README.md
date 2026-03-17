@@ -1,4 +1,5 @@
 # Chapter 8: Graphs and Their Applications
+<img width="2752" height="1536" alt="Graph" src="https://github.com/user-attachments/assets/fd8b726d-b24b-4be6-9650-7e29305704ff" />
 
 ## Table of Contents
 
