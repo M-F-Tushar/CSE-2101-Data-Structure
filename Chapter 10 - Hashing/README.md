@@ -1,4 +1,5 @@
 # Chapter 10: Hashing
+<img width="2752" height="1536" alt="Hashing" src="https://github.com/user-attachments/assets/8921c91f-0bd9-47a7-a297-2f9040a3b250" />
 
 ## Table of Contents
 
