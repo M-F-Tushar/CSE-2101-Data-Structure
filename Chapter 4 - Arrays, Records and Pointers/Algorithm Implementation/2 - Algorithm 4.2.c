@@ -1,29 +1,30 @@
-// Insert an Element into an Array
+// Algorithm 4.2: Inserting into a Linear Array
 #include <stdio.h>
+
 int main()
 {
-    int LA[10] = {10, 20, 30, 40, 50};
-    int N = 5; // Number of elements
-    int ITEM = 25; // Element to insert
-    int K = 3; // Position to insert
-
+    int arr[10] = {10, 20, 30, 40, 50};
+    int N = 5;
+    int K = 2;
+    int ITEM = 99;
+    
     int J = N - 1;
-
-    while(J >= K -1)
+    
+    while(J >= K)
     {
-        LA[J + 1] = LA[J];
-        J--;
+        arr[J + 1] = arr[J];
+        J = J - 1;
     }
-    LA[K - 1] = ITEM;
-
-    N++;
-
-    printf("Array after insertion:\n");
+    
+    arr[K] = ITEM;
+    
+    N = N + 1;
+    
+    printf("Updated Array:\n");
     for(int i = 0; i < N; i++)
     {
-        printf("%d ", LA[i]);
-
+        printf("%d\n", arr[i]);
     }
-    printf("\n");
-
+    
+    return 0;
 }
