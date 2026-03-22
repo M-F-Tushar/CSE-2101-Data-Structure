@@ -7,9 +7,9 @@ int main()
     int K = 3;// Position to delete
     int ITEM;//Store deleted value
 
-    ITEM = LA[K -1];
+    ITEM = LA[K];
 
-    for(int J = K - 1; J < N; J++)
+    for(int J = K - 1; J < N - 1; J++)
     {
         LA[J] = LA[J + 1];
     }
