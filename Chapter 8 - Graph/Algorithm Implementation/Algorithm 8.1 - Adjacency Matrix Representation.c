@@ -1,26 +1,32 @@
 #include <stdio.h>
 
-#define MAX 10   // maximum number of vertices
+#define MAX 10   
 
-int adj[MAX][MAX];  // the adjacency matrix
-int n;              // number of vertices
+int adj[MAX][MAX]; 
+int n;              
 
-// Add an edge between vertex u and vertex v (undirected)
-void addEdge(int u, int v) {
+
+void addEdge(int u, int v) 
+{
     adj[u][v] = 1;
-    adj[v][u] = 1;  // remove this line for directed graph
+    adj[v][u] = 1;  
 }
 
-// Print the adjacency matrix
-void printMatrix() {
+void printMatrix() 
+{
     printf("Adjacency Matrix:\n");
     printf("   ");
-    for (int i = 0; i < n; i++) printf("%d ", i);
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d ", i);
+    }
     printf("\n");
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) 
+    {
         printf("%d: ", i);
-        for (int j = 0; j < n; j++) {
+        for (int j = 0; j < n; j++) 
+        {
             printf("%d ", adj[i][j]);
         }
         printf("\n");
@@ -28,7 +34,7 @@ void printMatrix() {
 }
 
 int main() {
-    n = 5;  // 5 vertices: 0, 1, 2, 3, 4
+    n = 5;  
 
     addEdge(0, 1);
     addEdge(0, 4);
