@@ -9,7 +9,6 @@ int main()
     int ITEM;
 
     TOP = TOP + 1;
-
     STACK[TOP] = 50;
 
     if (TOP < 0)
@@ -19,11 +18,9 @@ int main()
     }
 
     ITEM = STACK[TOP];
-
     TOP = TOP - 1;
 
     printf("Popped Item: %d\n", ITEM);
 
     return 0;
-    
 }
