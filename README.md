@@ -13,7 +13,7 @@
 ---
  
 ## 📚 Course Overview
-
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/M-F-Tushar/CSE-2101-Data-Structure)
 **Course Code:** CSE 2101  
 **Course Title:** Data Structures  
 **Credit Hours:** 3.00 (3 hours per week)  
@@ -21,7 +21,6 @@
 
 This repository contains comprehensive materials, implementations, and resources for the Data Structures course. The course provides an in-depth study of fundamental and advanced data structures, their operations, and algorithmic analysis.
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/M-F-Tushar/CSE-2101-Data-Structure)
 ### 🗺️ Course Roadmap
 
 ```mermaid
