@@ -7,25 +7,28 @@ int adj[MAX][MAXEDGE];  // adj[i] stores neighbors of vertex i
 int count[MAX];         // count[i] = number of neighbors of vertex i
 int n;                  // number of vertices
 
-// Add an undirected edge
-void addEdge(int u, int v) {
+void addEdge(int u, int v) 
+{
     adj[u][count[u]++] = v;
     adj[v][count[v]++] = u;  // remove for directed graph
 }
 
-// Print adjacency list
-void printList() {
+void printList() 
+{
     printf("Adjacency List:\n");
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) 
+    {
         printf("Vertex %d: ", i);
-        for (int j = 0; j < count[i]; j++) {
+        for (int j = 0; j < count[i]; j++) 
+        {
             printf("%d ", adj[i][j]);
         }
         printf("\n");
     }
 }
 
-int main() {
+int main() 
+{
     n = 5;
 
     addEdge(0, 1);
