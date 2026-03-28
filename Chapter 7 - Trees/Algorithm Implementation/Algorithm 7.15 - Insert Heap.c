@@ -1,36 +1,36 @@
 #include <stdio.h>
 
-int heap[100];
+#define MAX 100
+
+int heap[MAX];
 int n = 0;
 
-void insert(int item)
+void insertHeap(int item)
 {
+    int ptr, par; // Current, Parent position
+    
     n = n + 1;
-    heap[n] = item;
-
-    int ptr = n;
-
-    while (ptr > 1)
+    
+    ptr = n;
+    
+    while(ptr > 1) // index 1(start) 
     {
-        int parent = ptr / 2;
-
-        if (heap[ptr] > heap[parent])
-        {
-            // Swap
-            int temp = heap[ptr];
-            heap[ptr] = heap[parent];
-            heap[parent] = temp;
-
-            ptr = parent;
-        }
-        else
+        par = ptr / 2;
+        
+        if(item <= heap[par])
         {
             break;
         }
+        else
+        {
+        heap[ptr] = heap[par];
+        ptr = par;
+        }
     }
+    heap[ptr] = item;
 }
 
-void printHeap()
+void display()
 {
     printf("Heap: ");
     for (int i = 1; i <= n; i++)
@@ -39,16 +39,15 @@ void printHeap()
     }
     printf("\n");
 }
-
-int main()
+int main() 
 {
-    insert(10);
-    insert(20);
-    insert(15);
-    insert(40);
-    insert(50);
-
-    printHeap();
-
+    insertHeap(50);
+    insertHeap(30);
+    insertHeap(40);
+    insertHeap(10);
+    insertHeap(70);
+    
+    display();
+    
     return 0;
 }
