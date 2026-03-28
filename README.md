@@ -49,7 +49,7 @@ graph TB
     subgraph P3 [Phase 3: Advanced Structures]
         direction TB
         C7[Trees & Heaps]:::topic --> C8[Graphs]:::topic
-        C8 --> C9[Sorting & Searching]:::topic
+        C8 --> C9[Sorting & Searching]:::topic --> C10[Hashing]:::topic
     end
     
     End([🎓 Mastery Achieved]):::endNode
@@ -397,10 +397,10 @@ Contributions are welcome! Here's how you can help:
 - [x] Chapter 5: Linked Lists
 - [x] Chapter 6: Stacks, Queues, Recursion
 - [x] Chapter 7: Trees
-- [ ] Chapter 8: Graphs and Their Applications
-- [ ] Chapter 9: Sorting and Searching
+- [x] Chapter 8: Graphs and Their Applications
+- [x] Chapter 9: Sorting and Searching
 
-*Note: Currently, 7 chapters have been completed. The repository will be updated as the course progresses.*
+*Note: Currently, 9 chapters have been completed. The repository will be updated as the course progresses.*
 
 ---
 
