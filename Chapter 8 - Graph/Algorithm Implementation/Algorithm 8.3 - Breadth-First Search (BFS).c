@@ -2,25 +2,35 @@
 
 #define MAX 10
 
-int adj[MAX][MAX];  // adjacency matrix
-int visited[MAX];   // 0=ready, 1=visited
-int queue[MAX];     // simple queue
-int front, rear;    // queue pointers
-int n;              // number of vertices
+int adj[MAX][MAX];  
+int visited[MAX];   
+int queue[MAX];    
+int front, rear;    
+int n;             
 
 // Queue operations
-void enqueue(int v) { queue[rear++] = v; }
-int  dequeue()      { return queue[front++]; }
-int  isEmpty()      { return front == rear; }
+void enqueue(int v) 
+{ 
+    queue[rear++] = v; 
+}
+int dequeue()      
+{ 
+    return queue[front++]; 
+}
+int isEmpty()      
+{ 
+    return front == rear; 
+}
 
 // Add undirected edge
-void addEdge(int u, int v) {
+void addEdge(int u, int v) 
+{
     adj[u][v] = 1;
     adj[v][u] = 1;
 }
 
-// BFS starting from vertex start
-void BFS(int start) {
+void BFS(int start) 
+ {
     front = rear = 0;
 
     // Visit starting node
@@ -28,13 +38,15 @@ void BFS(int start) {
     enqueue(start);
     printf("BFS Traversal: ");
 
-    while (!isEmpty()) {
-        int node = dequeue();        // remove from front
+    while (!isEmpty()) 
+    {
+        int node = dequeue();       
         printf("%d ", node);
 
-        // Add all unvisited neighbors to queue
-        for (int i = 0; i < n; i++) {
-            if (adj[node][i] == 1 && visited[i] == 0) {
+        for (int i = 0; i < n; i++) 
+        {
+            if (adj[node][i] == 1 && visited[i] == 0) 
+            {
                 visited[i] = 1;
                 enqueue(i);
             }
