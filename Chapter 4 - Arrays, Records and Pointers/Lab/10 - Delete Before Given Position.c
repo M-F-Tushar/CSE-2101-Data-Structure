@@ -4,17 +4,15 @@ int main() {
     int arr[10] = {10, 20, 30, 40, 50};
     int n = 5;
     int pos = 3;     
-    int item = 99;
 
-    for (int i = n; i > pos; i--)
+    for (int i = pos - 1; i < n - 1; i++)
       {
-        arr[i] = arr[i-1];
+        arr[i] = arr[i+1];
       }
 
-    arr[pos] = item;
-    n++;
+    n--;
 
-    printf("After Insert BEFORE position %d:\n", pos);
+    printf("Delete BEFORE given position %d:\n", pos);
     for (int i = 0; i < n; i++)
       {
         printf("%d ", arr[i]);
