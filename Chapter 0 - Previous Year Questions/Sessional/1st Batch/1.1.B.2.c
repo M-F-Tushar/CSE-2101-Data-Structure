@@ -1,3 +1,8 @@
+/*
+Write a program to implement a STACK containing operations PUSH(STACK, ITEM), 
+and POP(STACK, ITEM) based on the usual meaning. (60)
+*/  
+
 #include<stdio.h>
 
 #define MAX 50
