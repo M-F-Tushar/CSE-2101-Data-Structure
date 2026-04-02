@@ -121,10 +121,10 @@ graph TD
 
 | **Md. Jahidul Islam** |
 | :---: |
-| Chairman, Department of Computer Science and Engineering |
+| Chairman, Assistant Professor, Department of Computer Science and Engineering |
 | Chandpur Science and Technology University |
 | **Prince Mahmud** |
-| Lecturer, Department of Computer Science and Engineering |
+| Assistant Professor, Department of Computer Science and Engineering |
 | Chandpur Science and Technology University |
 </div>
 
