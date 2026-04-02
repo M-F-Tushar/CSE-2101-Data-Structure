@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void heapify(int A[], int size, int root)
+void heapify(int A[], int size, int root)  //This function makes sure root should be bigger than both children
 {
     int largest, left, right, temp;
 
