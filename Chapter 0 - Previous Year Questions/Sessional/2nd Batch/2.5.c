@@ -1,3 +1,7 @@
+/*
+Q.5. Implement the QUICK_SORT(A, LOW, HIGH) algorithm to sort an array A[ ] of n elements in ascending order using the divide-and-conquer approach. Here, LOW and HIGH represent the starting and ending indices of the array segment to be sorted. Use the PARTITION(A, LOW, HIGH) subroutine to 
+select a pivot element, rearrange the elements such that all elements less than the pivot come before it and all greater elements come after, and then recursively apply QUICK_SORT to the left and right subarrays. Write the complete C/C++ implementation and test it with user-input data, displaying the array before and after sorting. Clearly highlight recursive calls in your implementation. (40)
+*/
 #include<stdio.h>
 
 void swap(int *a, int *b)
