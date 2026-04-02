@@ -1,3 +1,8 @@
+/*
+Write a program which removes the first elements of a linked list (i.e., LIST(INFO, LINK, START)) and adds it to the end of the linked list without changing any values in INFO.
+Only START and LINK may be changed. (60)
+*/
+
 #include<stdio.h>
 #include<stdlib.h>
 
