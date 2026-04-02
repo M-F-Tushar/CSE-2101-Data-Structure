@@ -1,3 +1,8 @@
+/*
+Write a program which takes a Graph, G as input using Adjacency Matrix and output the
+value of total number of length 2 paths in G. (60)
+*/    
+
 #include <stdio.h>
 
 #define Max 10
