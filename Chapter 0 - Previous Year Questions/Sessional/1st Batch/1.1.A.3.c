@@ -1,3 +1,7 @@
+/*
+   Write a program which insert elements into a binary tree, T, 
+   and prints the nodes of T in (a) preorder, (b) inorder, and (c) postorder. (60) 
+*/
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -83,6 +87,51 @@ int main()
 
     printf("\n\nPreorder Traversal: ");
     preorder(root);
+
+
+
+
+    /*
+
+// Insert in Binary Tree (Level Order)
+struct Node* insert(struct Node* root, int val)
+{
+    if(root == NULL)
+        return newNode(val);
+
+    struct Node* queue[100];
+    int front = 0, rear = 0;
+
+    queue[rear++] = root;
+
+    while(front < rear)
+    {
+        struct Node* temp = queue[front++];
+
+        if(temp->left == NULL)
+        {
+            temp->left = newNode(val);
+            return root;
+        }
+        else
+        {
+            queue[rear++] = temp->left;
+        }
+
+        if(temp->right == NULL)
+        {
+            temp->right = newNode(val);
+            return root;
+        }
+        else
+        {
+            queue[rear++] = temp->right;
+        }
+    }
+
+    return root;
+}
+    */
 
     printf("\nInorder Traversal: ");
     inorder(root);
