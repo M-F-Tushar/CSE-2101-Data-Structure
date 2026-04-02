@@ -8,16 +8,16 @@ int main()
 
     for (int j = 1; j < n; j++)
     {
-        key_value = A[j];
-        i = j - 1;
+        key_value = A[j]; // current element
+        i = j - 1; // index of the last sorted element
 
-        while (i >= 0 && A[i] > key_value)
-        {
+        while (i >= 0 && A[i] > key_value) // index is valid and  left element is bigger than key
+    {
             A[i + 1] = A[i];
-            i = i - 1;
+            i = i - 1; //Move one step left to continue checking previous elements.
         }
 
-        A[i + 1] = key_value;
+        A[i + 1] = key_value; //After shifting all larger elements to the right, insert key_value into the empty correct place.
     }
 
     printf("Sorted Array:\n");
