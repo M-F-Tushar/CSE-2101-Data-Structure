@@ -9,18 +9,29 @@ int top;             // stack pointer
 int n;               // number of vertices
 
 // Stack operations
-void push(int v)  { stack[top++] = v; }
-int  pop()        { return stack[--top]; }
-int  isEmptyStack() { return top == 0; }
+void push(int v)  
+{ 
+    stack[top++] = v; 
+}
+int pop()        
+{ 
+    return stack[--top]; 
+}
+int isEmptyStack() 
+{ 
+    return top == 0; 
+}
 
 // Add undirected edge
-void addEdge(int u, int v) {
+void addEdge(int u, int v) 
+{
     adj[u][v] = 1;
     adj[v][u] = 1;
 }
 
 // DFS starting from vertex start
-void DFS(int start) {
+void DFS(int start) 
+{
     top = 0;
 
     // Push the starting node
@@ -43,7 +54,8 @@ void DFS(int start) {
     printf("\n");
 }
 
-int main() {
+int main() 
+{
     n = 8;  // same graph as BFS example
 
     addEdge(0, 1); // A-W
