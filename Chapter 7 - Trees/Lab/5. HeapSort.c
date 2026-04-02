@@ -75,3 +75,4 @@ int main()
 
     return 0;
 }
+//heapify = fix the heap and heapsort = use heapify to sort the array
