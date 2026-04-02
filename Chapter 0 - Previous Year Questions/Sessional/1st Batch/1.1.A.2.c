@@ -1,3 +1,8 @@
+/*
+Write a program to implement a QUEUE containing operations ENQUEUE(QUEUE, ITEM), 
+and DEQUEUE(QUEEU, ITEM) based on the usual meaning. (60)
+*/    
+
 #include <stdio.h>
 
 #define MAX 5
