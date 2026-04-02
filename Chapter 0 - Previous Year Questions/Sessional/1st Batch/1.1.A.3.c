@@ -88,9 +88,14 @@ int main()
     printf("\n\nPreorder Traversal: ");
     preorder(root);
 
+    printf("\nInorder Traversal: ");
+    inorder(root);
 
+    printf("\nPostorder Traversal: ");
+    postorder(root);
 
-
+    return 0;
+}
     /*
 
 // Insert in Binary Tree (Level Order)
@@ -133,11 +138,4 @@ struct Node* insert(struct Node* root, int val)
 }
     */
 
-    printf("\nInorder Traversal: ");
-    inorder(root);
 
-    printf("\nPostorder Traversal: ");
-    postorder(root);
-
-    return 0;
-}
