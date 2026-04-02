@@ -1,3 +1,7 @@
+/*
+Write a program which reverse the elements of a linked list, LIST(INFO, LINK, START). (60)
+*/
+
 #include<stdio.h>
 #include<stdlib.h>
 
