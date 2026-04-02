@@ -1,3 +1,7 @@
+/*
+  Write a program to translate merge sort into a subprogram 
+  MERGESORT(A, N) for a N-elements array A. (60)  
+*/
 #include<stdio.h>
 
 void Merge(int A[], int first, int mid, int last)
