@@ -1,3 +1,8 @@
+/*
+Q.4. Implement a stack using an array with basic operations: PUSH, POP, and DISPLAY in C/C++. Write the algorithms PUSH(STACK, TOP, MAX, ITEM) to insert an element ITEM into the stack, POP(STACK, TOP) to remove the top element, and DISPLAY(STACK, TOP) to show all elements
+from top to bottom. Here, STACK is the array representing the stack, TOP is an integer indicating the current top index, and MAX is the maximum size of the stack. Ensure proper overflow and underflow condition checks. (40)
+*/
+
 #include <stdio.h>
 
 #define MAX 50
