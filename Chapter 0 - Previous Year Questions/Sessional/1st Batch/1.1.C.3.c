@@ -1,3 +1,7 @@
+/*
+Write a program to translate quick sort into a subprogram QUICKSORT(A, N) for a N-elements array A. (60)
+*/ 
+
 #include<stdio.h>
 
 void swap(int *a, int *b)
