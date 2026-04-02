@@ -1,3 +1,8 @@
+/*
+Q.1. Implement the INSERTION and DELETION algorithms for a linear array A[0...n-1] in C/C++, where n is the maximum size of the array. First, write the algorithm INSERT(A, N, POS, VAL) to insert a new element VAL at a specified
+valid position POS (0 ≤ POS ≤ N), shifting elements as needed. Then implement the algorithm DELETE(A, N, POS) to delete the element from position POS (0 ≤ POS < N), shifting remaining elements to maintain continuity. (40)
+*/
+
 #include <stdio.h>
 #define MAX 20
 
