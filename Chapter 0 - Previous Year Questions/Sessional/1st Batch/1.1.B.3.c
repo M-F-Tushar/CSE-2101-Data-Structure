@@ -31,7 +31,7 @@ void Merge(int A[], int first, int mid, int last)
         T[k++] = A[j++];
     }
 
-    for(int i = first; i <= last; i++)
+    for(int i = first; i <= last; i++) // Copy element form T to A
     {
         A[i] = T[i];
     }
