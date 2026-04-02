@@ -7,14 +7,13 @@ and the list should maintain both next and prev links properly. Ensure that all 
 #include <stdio.h>
 #include <stdlib.h>
 
-// Node structure for doubly linked list
-struct Node {
+struct Node 
+{
     int info;
     struct Node *prev;
     struct Node *next;
 };
 
-// Create a new node
 struct Node* newNode(int val) 
 {
     struct Node* n = malloc(sizeof(struct Node));
