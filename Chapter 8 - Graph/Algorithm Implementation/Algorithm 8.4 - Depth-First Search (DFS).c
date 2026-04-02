@@ -39,7 +39,8 @@ void DFS(int start)
     visited[start] = 1;
     printf("DFS Traversal: ");
 
-    while (!isEmptyStack()) {
+    while (!isEmptyStack()) 
+    {
         int node = pop();          // take from top
         printf("%d ", node);
 
