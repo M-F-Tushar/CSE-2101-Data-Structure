@@ -40,7 +40,7 @@ void Merge(int A[], int first, int mid, int last)
 
 void Mergesort(int A[], int first, int last)
 {
-    if(first >= last)
+    if(first >= last) // Stop when the part has only one element or no element.
     {
         return;
     }
