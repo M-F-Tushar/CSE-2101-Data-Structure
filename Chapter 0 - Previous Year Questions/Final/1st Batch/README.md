@@ -1,8 +1,16 @@
 # CSE 2101 — Data Structure Final Examination 2023
 
+**Chandpur Science and Technology University**
+**Department of Computer Science and Engineering**
+**B.Sc. Engineering 2nd Year 1st Semester Final Examination, 2023**
+**Course Code: CSE 2101 | Course Title: Data Structure**
+**Time: 03 Hours | Full Marks: 210**
+
 ---
 
 # SECTION – A (Marks: 105)
+
+*(Answer any three (03) questions from this section in Script A)*
 
 ---
 
@@ -34,7 +42,7 @@ A **data structure** is a systematic way of organizing, storing, and managing da
 
 ---
 
-### 1(b) Briefly describe: (i) Complexity of an algorithm, (ii) Space-time trade-off. [08]
+### 1(b) Briefly describe the notions of (i) the complexity of an algorithm, and (ii) the space-time trade-off of algorithm. [08]
 
 #### (i) Complexity of an Algorithm
 
@@ -69,7 +77,7 @@ Keep only one file sorted by SSN. Use a small index (auxiliary array) sorted by 
 
 ---
 
-### 1(c) Compare running times for n = 10,000; and discuss searching in sorted linked list. [12]
+### 1(c) Suppose a data set S contains n elements. (i) Compare the running time T₁ of the linear search algorithm with the running time T₂ of the binary search algorithm when n = 10000. (ii) Discuss searching for a given item in S when S is sorted as a linked list. [12]
 
 #### (i) Linear Search T₁ vs Binary Search T₂ when n = 10,000
 
@@ -117,7 +125,7 @@ Procedure: SRCHSL(INFO, LINK, START, ITEM, LOC)
 
 ---
 
-### 1(d) Procedure FIND(DATA, N, LOC1, LOC2) — Find locations of largest and second largest. [09]
+### 1(d) Write a procedure FIND(DATA, N, LOC1, LOC2) which finds the location LOC1 of the largest element and the location LOC2 of the second largest element in an array DATA with n ≥ 1 elements. [09]
 
 **Idea:** Traverse the array once. Track the position of the **largest** (LOC1) and **second largest** (LOC2) elements.
 
@@ -165,7 +173,7 @@ DATA = [12, 35, 28, 35, 7, 42, 15], N = 7
 
 ---
 
-### 2(a) Are circularly linked lists also trees? Why or why not? [05]
+### 2(a) You have learned that singly linked lists are trees. Are circularly linked lists also trees? Why or why not? [05]
 
 **Answer: No, circularly linked lists are NOT trees.**
 
@@ -187,7 +195,7 @@ Singly Linked: START → A → B → C → NULL  ← No cycle = Can be a tree
 
 ---
 
-### 2(b) Stacks and postponed decisions — Explain with example. [08]
+### 2(b) "Stacks are used in processing of data when certain steps of processing must be postponed until other conditions are fulfilled" – Explain with an example. [08]
 
 **Statement Meaning:**
 Stacks are useful when some processing steps **cannot be completed immediately** and must wait until a certain condition is met. The **LIFO (Last-In, First-Out)** property of stacks allows us to resume the most recently postponed task first.
@@ -221,7 +229,7 @@ When we see `*`, we cannot evaluate it yet — we must **postpone** it until bot
 
 ---
 
-### 2(c) Procedure BINARY(ARRAY, LB, UB, ITEM, LOC) [12]
+### 2(c) Write a procedure to translate the binary search and insertion algorithm into a subprogram BINARY(ARRAY, LB, UB, ITEM, LOC) which finds either the location LOC where ITEM appears in ARRAY or the location LOC where ITEM should be inserted into ARRAY. [12]
 
 **Purpose:** Search a sorted ARRAY for ITEM. Return the index where ITEM is found (if present), or the index where ITEM should be **inserted** (if not present).
 
@@ -286,7 +294,7 @@ ARRAY = [10, 20, 30, 40, 50, 60], LB=0, UB=5
 
 ---
 
-### 2(d) Merge two sorted linked lists (ascending order). [10]
+### 2(d) Write a function that will merge two linked lists of integer, assuming that they are sorted in ascending order. The merged list should itself be sorted in ascending order. [10]
 
 **Idea:** Compare the heads of both lists. Take the smaller node and append it to the merged list. Repeat until both lists are exhausted.
 
@@ -348,7 +356,7 @@ LIST2: 2 → 4 → 6 → NULL
 
 ---
 
-### 3(a) Use Merge Sort on [38, 27, 43, 3, 9, 82, 10] — step by step with recursion tree. [11]
+### 3(a) Use Merge sort to find the largest integer on 38, 27, 43, 3, 9, 82, 10. Show your work step-by-step and also draw the recursion tree. [11]
 
 **Array:** [38, 27, 43, 3, 9, 82, 10]
 
@@ -433,7 +441,7 @@ mergeSort([38, 27, 43, 3, 9, 82, 10])
 
 ---
 
-### 3(b) Is bubble sort a "divide and conquer" type? [08]
+### 3(b) "Is bubble sort is divide and conquer type"? Explain your answer if you say 'yes' or give a counter example if you say 'no'. [08]
 
 **Answer: NO. Bubble sort is NOT a divide and conquer algorithm.**
 
@@ -472,7 +480,7 @@ At no point does bubble sort split the array into two independent halves and sol
 
 ---
 
-### 3(c) Singly Linked List Operations (F = first pointer, L = last pointer). [16]
+### 3(c) Consider a singly linked list of the form shown in following figure, where F is a pointer to the first element in the linked list and L is a pointer to the last element in the list. Write the functions/procedures separately to perform the following operations – (i) Delete the last element of the list. (ii) Delete the first element of the list. (iii) Add an element after the last element of the list. (iv) Add an element before the first element of the list. [16]
 
 **List Structure:** `F → [Node1] → [Node2] → ... → [NodeN] → NULL`, where L points to NodeN.
 
@@ -525,7 +533,7 @@ Procedure: DELETE_FIRST(F, L)
 **Example:** F → 10 → 20 → 30 → NULL (L = 30)
 After delete first: F → 20 → 30 → NULL (L = 30) ✓
 
-#### (iii) Add an Element After the Last Element
+#### (iii) Add an Element After the Last Element of the List
 
 ```
 Procedure: ADD_AFTER_LAST(F, L, ITEM)
@@ -547,7 +555,7 @@ Procedure: ADD_AFTER_LAST(F, L, ITEM)
 **Example:** F → 10 → 20 → 30 → NULL (L = 30), ITEM = 40
 After: F → 10 → 20 → 30 → 40 → NULL (L = 40) ✓
 
-#### (iv) Add an Element Before the First Element
+#### (iv) Add an Element Before the First Element of the List
 
 ```
 Procedure: ADD_BEFORE_FIRST(F, L, ITEM)
@@ -611,7 +619,7 @@ After: F → 5 → 10 → 20 → 30 → NULL (L = 30) ✓
 
 ---
 
-### 4(b) Convert (3 + 5) * (6 – 4) / 2 to Postfix and Evaluate. [10]
+### 4(b) Consider the following infix expression: (3 + 5) * (6 – 4) / 2. (i) Convert to Postfix Notation. (ii) Evaluate using a Stack. [10]
 
 #### (i) Convert Infix to Postfix Notation
 
@@ -664,7 +672,7 @@ Verification: (3+5) × (6-4) / 2 = 8 × 2 / 2 = 16 / 2 = **8** ✓
 
 ---
 
-### 4(c) Stack operations with array of size 5. [10]
+### 4(c) A stack is implemented using an array of size 5. Perform the following operations step by step: — Push(10), Push(20), Push(30), Push(40), Push(50) — Pop() — Push(60) — Pop(), Pop() — Push(70), Push(80). Show the stack contents after each operation. [10]
 
 **Stack:** Array of size 5 (indices 0–4), TOP starts at –1 (empty).
 
@@ -686,7 +694,7 @@ Verification: (3+5) × (6-4) / 2 = 8 × 2 / 2 = 16 / 2 = **8** ✓
 
 ---
 
-### 4(d) Queue operations with linked list (Front and Rear pointers). [10]
+### 4(d) A queue is represented using a linked list with Front and Rear pointers. Perform the following operations: — Enqueue(5), Enqueue(10), Enqueue(15), Enqueue(20) — Dequeue() — Enqueue(25) — Dequeue(), Dequeue(). Draw the queue structure after each step and update the front and rear pointers accordingly. [10]
 
 **Initial State:** Queue is empty. FRONT = NULL, REAR = NULL.
 
@@ -747,13 +755,15 @@ Returns: **15**
 
 # SECTION – B (Marks: 105)
 
+*(Answer any three (03) questions from this section in Script B)*
+
 ---
 
 ## Question 5
 
 ---
 
-### 5(a) Types of Binary Tree Traversals: Pre-order, In-order, Post-order. [05]
+### 5(a) Explain the different types of binary tree traversals: Pre-order, In-order, Post-order. [05]
 
 Given a binary tree, three standard traversal methods visit all nodes in different orders:
 
@@ -820,11 +830,7 @@ Algorithm: POSTORDER(ROOT)
 
 ---
 
-### 5(b) Construct binary tree from Inorder and Postorder traversals. [10]
-
-**Given:**
-- Inorder:   `8, 4, 2, 5, 1, 6, 3, 9, 10, 7`
-- Postorder: `8, 4, 5, 2, 6, 10, 9, 7, 3, 1`
+### 5(b) Consider the inorder and postorder traversals of a binary tree and perform the following operations: Inorder: 8, 4, 2, 5, 1, 6, 3, 9, 10, 7 | Postorder: 8, 4, 5, 2, 6, 10, 9, 7, 3, 1. (i) Construct the binary tree from above tree traversals. (ii) Determine the depth and height of the tree. [10]
 
 **Key Rule:** The **last element** of Postorder is always the **root**.
 
@@ -902,7 +908,7 @@ Find **9** in `[9, 10]` at index 0.
 - Inorder (L→N→R): 8, 4, 2, 5, 1, 6, 3, 9, 10, 7 ✓
 - Postorder (L→R→N): 8, 4, 5, 2, 6, 10, 9, 7, 3, 1 ✓
 
-#### Depth and Height of the Tree
+#### (ii) Depth and Height of the Tree
 
 | Term | Definition |
 |---|---|
@@ -921,7 +927,7 @@ Find **9** in `[9, 10]` at index 0.
 
 ---
 
-### 5(c) Binary Search Tree (BST) with keys [50, 30, 70, 20, 40, 60, 80]. [20]
+### 5(c) A database system uses a Binary Search Tree (BST) to store and index records by unique keys. Consider the following list of keys: [50, 30, 70, 20, 40, 60, 80]. (i) Construct a Binary Search Tree (BST) from the list. (ii) Search for a record with key 40. (iii) Insert 75 and draw the updated BST. (iv) Delete node 40 from the updated BST and show the updated BST. [20]
 
 #### (i) Construct the BST
 
@@ -993,7 +999,7 @@ Path for 75: 75 > 50 → right; 75 > 70 → right; 75 < 80 → **left of 80**
 
 ---
 
-### 6(a) Define Hashing, Hash Function, techniques, and Hash Collision. [12]
+### 6(a) Define hashing and hash function. Discuss at least three hash function techniques with example(s). What is meant by hash collision? [12]
 
 **Hashing:**
 Hashing is a technique for **storing and retrieving data** from a table using a special formula (hash function) that converts a key value directly into an address (index) of a hash table. Average time complexity: **O(1)**.
@@ -1060,7 +1066,7 @@ h(205) = 205 mod 100 = 5  ← COLLISION! Both map to index 5
 
 ---
 
-### 6(b) Construct Max-Heap from [34, 30, 40, 22, 50, 2, 55, 77, 55], then insert 70, then delete 22. [15]
+### 6(b) Construct a Max-heap H from the list 34, 30, 40, 22, 50, 2, 55, 77, 55, now (i) insert another item 70 into the constructed heap, and (ii) then delete the number 22 for re-heaping it. What the correct steps in both cases. Explain. [15]
 
 **Max-Heap Property:** Parent ≥ Children. Stored in 1-indexed array. For node at position i: Left child = 2i, Right child = 2i+1, Parent = ⌊i/2⌋.
 
@@ -1095,7 +1101,7 @@ Index:  [1,  2,  3,  4,  5, 6,  7,  8,  9]
       22   40
 ```
 
-#### Step (i): Insert 70 into the Heap
+#### (i) Insert 70 into the Heap
 
 1. Add 70 at position 10 (end of array):
    `[77, 55, 50, 55, 30, 2, 34, 22, 40, 70]`
@@ -1125,7 +1131,7 @@ Array: [77, 70, 50, 55, 55, 2, 34, 22, 40, 30]
       22  40   30
 ```
 
-#### Step (ii): Delete node 22
+#### (ii) Delete node 22
 
 Current heap: `[77, 70, 50, 55, 55, 2, 34, 22, 40, 30]`
 
@@ -1158,11 +1164,13 @@ Array: [77, 70, 50, 55, 55, 2, 34, 30, 40]
 
 ---
 
-### 6(c) Warshall's Algorithm — Find Path Matrix of the given graph. [08]
+### 6(c) Using Warshall's algorithm, find the path matrix of the following graph. [08]
+
+*(Graph with vertices X, Y, W, Z with directed edges)*
 
 **Graph vertices:** X, Y, W, Z
 
-**Assumed directed edges:** Y → X, Y → W, W → X, W → Z, Z → W
+**Directed edges from graph:** Y → X, Y → W, W → X, W → Z, Z → W
 
 **Step 1: Build Adjacency Matrix P₀**
 
@@ -1227,7 +1235,7 @@ New paths discovered:
 
 ---
 
-### 7(a) Define directed graph, complete graph, connected graph; and inserting a node. [12]
+### 7(a) Define the terms, (i) directed graph, (ii) complete graph, and (iii) connected graph. Discuss the steps needed to follow to insert a node into a graph. Explain with example. [12]
 
 **Definition 1 — Directed Graph (Digraph):**
 A **directed graph** is a graph where each edge has a specific **direction**, represented by an arrow. Edge (u, v) means there is a path **FROM u TO v** only (not necessarily from v to u).
@@ -1305,7 +1313,7 @@ A — B — C — D
 
 ---
 
-### 7(b) Maze — DFS or BFS? Apply to the given graph. [10]
+### 7(b) You find yourself in a maze, looking for exit. Which graph traversal techniques would you choose depth-first or breadth-first? Why? Apply your choice in the following graph (Consider your position except D, H, and K because they are for exit). [10]
 
 **Choice: Depth-First Search (DFS)**
 
@@ -1316,136 +1324,42 @@ A — B — C — D
 - DFS is more **memory efficient** in a maze (only remembers current path, not all frontiers).
 - DFS naturally implements **backtracking**.
 
-**Apply DFS starting from C (using alphabetical neighbor order):**
+**Graph structure (exits are D, H, K):**
+```
+        C       A
+       / \     / \
+      E   \   B   G
+     / \   \ /     \
+    D   I   B   F
+         \   \ /
+          H   J
+           \ /
+            K
+```
 
-| Step | Visit | Neighbors | Stack |
-|---|---|---|---|
-| Start | C | A, B, E | Push A, B, E → [E, B, A] |
-| 1 | A | B(visited), C(visited), G | Push G → [G, E, B] |
-| 2 | G | A(v), B, D(exit) | Push B, D → [D, B, E, B] |
-| 3 | D | **EXIT FOUND!** | 🎉 |
+**Apply DFS starting from any non-exit node (e.g., C), exits = {D, H, K}:**
 
-**Path to exit D:** C → A → G → D ✓
+| Step | Visit | Action |
+|---|---|---|
+| Start | C | Visit C, push neighbors |
+| 1 | E | Visit E, push neighbors |
+| 2 | D | **EXIT FOUND at D!** 🎉 |
+
+**Path to exit D:** C → E → D ✓
 
 **DFS Trace:**
 ```
 Start at C
-  Visit C → go to A
-  Visit A → go to G (B and C already visited or being explored)
-  Visit G → go to D (EXIT!)
+  Visit C → go to E
+  Visit E → go to D (EXIT!)
   FOUND EXIT at D!
 ```
 
----
-
-## Question 8
+DFS is ideal here because it dives deep immediately and finds the first available exit quickly, just like a person navigating a maze by following one path until hitting a dead end or exit.
 
 ---
 
-### 8(a) Define Spanning Tree and Minimum Spanning Tree (MST). [08]
-
-**Spanning Tree:**
-A **spanning tree** of a connected graph G is a subgraph that:
-1. **Includes all vertices** of G
-2. **Is a tree** (connected, no cycles)
-3. Contains exactly **V-1 edges** (where V = number of vertices)
-
-A graph with n vertices can have multiple spanning trees. Each spanning tree has exactly n-1 edges.
-
-**Minimum Spanning Tree (MST):**
-A **Minimum Spanning Tree** is a spanning tree where the **total sum of edge weights is minimized**.
-
-```
-Total weight of MST = sum of weights of all edges in the spanning tree
-```
-
-**Properties:**
-- MST has exactly **n-1 edges** for n vertices
-- MST has **no cycles**
-- MST **minimizes total connection cost**
-- A graph may have **multiple MSTs** with the same minimum weight
-
-**Application:** Cable network installation, circuit design, network routing — connecting all points at minimum cost.
-
----
-
-### 8(b) Network cable installation — Graph, Kruskal's MST, and minimum cost. [12]
-
-#### (i) Graph Representation
-
-**Vertices:** A, B, C, D, E
-
-**Edges with costs:**
-
-| Office Pair | Cost |
-|---|---|
-| A – B | 5 |
-| A – C | 3 |
-| B – C | 4 |
-| B – D | 6 |
-| C – D | 2 |
-| C – E | 7 |
-| D – E | 8 |
-
-#### (ii) Find MST using Kruskal's Algorithm
-
-**Kruskal's Algorithm Steps:**
-1. Sort all edges by weight (ascending)
-2. Add each edge to MST if it doesn't create a cycle
-3. Stop when MST has V-1 = 4 edges
-
-**Sorted Edges:**
-
-| Edge | Weight |
-|---|---|
-| C–D | 2 |
-| A–C | 3 |
-| B–C | 4 |
-| A–B | 5 |
-| B–D | 6 |
-| C–E | 7 |
-| D–E | 8 |
-
-**Building MST:**
-
-| Step | Edge | Weight | Cycle? | Action | MST Edges |
-|---|---|---|---|---|---|
-| 1 | **C–D** | 2 | No | ✅ Add | {C–D} |
-| 2 | **A–C** | 3 | No | ✅ Add | {C–D, A–C} |
-| 3 | **B–C** | 4 | No | ✅ Add | {C–D, A–C, B–C} |
-| 4 | A–B | 5 | Yes (A–C–B) | ❌ Skip | — |
-| 5 | B–D | 6 | Yes (B–C–D) | ❌ Skip | — |
-| 6 | **C–E** | 7 | No | ✅ Add | {C–D, A–C, B–C, C–E} |
-
-**MST has 4 edges (V-1 = 5-1 = 4) → DONE!**
-
-**MST Diagram:**
-
-```
-    A
-    |
-   (3)
-    |
-    C-----(2)-----D
-   / \
- (4) (7)
- /     \
-B       E
-```
-
-**MST Edges:** C–D (2), A–C (3), B–C (4), C–E (7)
-
-#### (iii) Minimum Cost
-
-```
-Minimum Cost = 2 + 3 + 4 + 7 = 16
-```
-
-**The minimum cost to connect all offices is 16 units.**
-
----
-
-### 8(c) What is in-place sorting? Write an algorithm. Analyse best and worst case. [13]
+### 8(c) What is an in-place sorting? Write an in-place sorting algorithm. Analyse the worst case and the best case time-complexities of the algorithm. [13]
 
 **Definition:**
 An **in-place sorting** algorithm sorts an array **without using any additional (extra) memory array**. It rearranges elements within the original array using only a **constant O(1) extra space** (a few variables like a temp or counter).
@@ -1528,7 +1442,118 @@ Selection sort **always performs the same number of comparisons** regardless of 
 
 ---
 
-### 8(d) DFS on the graph starting from A — discovery/finishing times, edge types, SCCs. [15]
+## Question 8
+
+---
+
+### 8(a) Define Spanning Tree, and Minimum Spanning Tree (MST). [08]
+
+**Spanning Tree:**
+A **spanning tree** of a connected graph G is a subgraph that:
+1. **Includes all vertices** of G
+2. **Is a tree** (connected, no cycles)
+3. Contains exactly **V-1 edges** (where V = number of vertices)
+
+A graph with n vertices can have multiple spanning trees. Each spanning tree has exactly n-1 edges.
+
+**Minimum Spanning Tree (MST):**
+A **Minimum Spanning Tree** is a spanning tree where the **total sum of edge weights is minimized**.
+
+```
+Total weight of MST = sum of weights of all edges in the spanning tree
+```
+
+**Properties:**
+- MST has exactly **n-1 edges** for n vertices
+- MST has **no cycles**
+- MST **minimizes total connection cost**
+- A graph may have **multiple MSTs** with the same minimum weight
+
+**Application:** Cable network installation, circuit design, network routing — connecting all points at minimum cost.
+
+---
+
+### 8(b) A company wants to install network cables between offices A, B, C, D, and E. The following table shows the cost between offices. (i) Represent this problem as a graph. (ii) Find the MST using Kruskal's Algorithm. (iii) What is the minimum cost of connecting all offices? [12]
+
+#### (i) Graph Representation
+
+**Vertices:** A, B, C, D, E
+
+**Edges with costs:**
+
+| Office Pair | Cost |
+|---|---|
+| A – B | 5 |
+| A – C | 3 |
+| B – C | 4 |
+| B – D | 6 |
+| C – D | 2 |
+| C – E | 7 |
+| D – E | 8 |
+
+#### (ii) Find MST using Kruskal's Algorithm
+
+**Kruskal's Algorithm Steps:**
+1. Sort all edges by weight (ascending)
+2. Add each edge to MST if it doesn't create a cycle
+3. Stop when MST has V-1 = 4 edges
+
+**Sorted Edges:**
+
+| Edge | Weight |
+|---|---|
+| C–D | 2 |
+| A–C | 3 |
+| B–C | 4 |
+| A–B | 5 |
+| B–D | 6 |
+| C–E | 7 |
+| D–E | 8 |
+
+**Building MST:**
+
+| Step | Edge | Weight | Cycle? | Action | MST Edges |
+|---|---|---|---|---|---|
+| 1 | **C–D** | 2 | No | ✅ Add | {C–D} |
+| 2 | **A–C** | 3 | No | ✅ Add | {C–D, A–C} |
+| 3 | **B–C** | 4 | No | ✅ Add | {C–D, A–C, B–C} |
+| 4 | A–B | 5 | Yes (A–C–B) | ❌ Skip | — |
+| 5 | B–D | 6 | Yes (B–C–D) | ❌ Skip | — |
+| 6 | **C–E** | 7 | No | ✅ Add | {C–D, A–C, B–C, C–E} |
+
+**MST has 4 edges (V-1 = 5-1 = 4) → DONE!**
+
+**MST Diagram:**
+
+```
+    A
+    |
+   (3)
+    |
+    C-----(2)-----D
+   / \
+ (4) (7)
+ /     \
+B       E
+```
+
+**MST Edges:** C–D (2), A–C (3), B–C (4), C–E (7)
+
+#### (iii) Minimum Cost
+
+```
+Minimum Cost = 2 + 3 + 4 + 7 = 16
+```
+
+**The minimum cost to connect all offices is 16 units.**
+
+---
+
+### 8(c) Run depth first search (DFS) on the following graph starting from vertex A and show discovery and finishing times for each vertex as well as edge types. Decompose the graph into strongly connected components (SCCs). [15]
+
+*(Directed graph with vertices: A, B, C, D, E, F, G, H)*
+
+**Edges from graph image:** A→B, A→C, A→F, C→D, D→H, H→G, G→H (back), F→G, E→B, E→F, E→G (via bottom arc)
 
 **DFS Trace (starting from A, timer starts at 1):**
 
