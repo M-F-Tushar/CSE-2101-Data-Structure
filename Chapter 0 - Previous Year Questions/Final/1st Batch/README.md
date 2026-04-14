@@ -1625,16 +1625,6 @@ Let discovery time be denoted by `d[v]` and finishing time by `f[v]`.
 * Back to `C` → `f[C]=15`
 * Back to `A` → `f[A]=16`
 
---------|----------------------|----------------------|
-| A | 1 | 16 |
-| B | 2 | 11 |
-| E | 3 | 10 |
-| F | 4 | 7 |
-| G | 5 | 6 |
-| H | 8 | 9 |
-| C | 12 | 15 |
-| D | 13 | 14 |
-
 ---
 
 ### 4. Edge classification
