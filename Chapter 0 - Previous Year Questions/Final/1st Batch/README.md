@@ -1359,7 +1359,7 @@ DFS is ideal here because it dives deep immediately and finds the first availabl
 
 ---
 
-### 8(c) What is an in-place sorting? Write an in-place sorting algorithm. Analyse the worst case and the best case time-complexities of the algorithm. [13]
+### 7(c) What is an in-place sorting? Write an in-place sorting algorithm. Analyse the worst case and the best case time-complexities of the algorithm. [13]
 
 **Definition:**
 An **in-place sorting** algorithm sorts an array **without using any additional (extra) memory array**. It rearranges elements within the original array using only a **constant O(1) extra space** (a few variables like a temp or counter).
