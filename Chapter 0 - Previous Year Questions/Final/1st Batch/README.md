@@ -1549,83 +1549,127 @@ Minimum Cost = 2 + 3 + 4 + 7 = 16
 
 ---
 
-### 8(c) Run depth first search (DFS) on the following graph starting from vertex A and show discovery and finishing times for each vertex as well as edge types. Decompose the graph into strongly connected components (SCCs). [15]
+## 8(c) Run depth first search (DFS) on the following graph starting from vertex **A** and show discovery and finishing times for each vertex as well as edge types. Decompose the graph into strongly connected components (SCCs). **[15]**
 
-*(Directed graph with vertices: A, B, C, D, E, F, G, H)*
+### Answer
 
-**Edges from graph image:** A→B, A→C, A→F, C→D, D→H, H→G, G→H (back), F→G, E→B, E→F, E→G (via bottom arc)
+Assume that adjacent vertices are visited in **alphabetical order**.
 
-**DFS Trace (starting from A, timer starts at 1):**
+---
 
+### 1. Directed edges of the graph
+
+The graph contains the following directed edges:
+
+* `A → B`
+* `A → C`
+* `A → F`
+* `B → E`
+* `E → F`
+* `F → B`
+* `E → G`
+* `F → G`
+* `E → H`
+* `C → D`
+* `D → A`
+* `D → H`
+* `H → G`
+
+---
+
+### 2. DFS traversal starting from `A`
+
+Starting DFS from vertex `A`, the traversal order is:
+
+```text
+A → B → E → F → G → H → C → D
 ```
-Visit A [d=1]
-  Visit B [d=2]  (no unvisited neighbors)
-  B finishes [f=3]
 
-  Visit C [d=4]
-    Visit D [d=5]
-      Visit H [d=6]
-        Visit G [d=7]
-          H is a neighbor of G → H already visited (BACK EDGE)
-        G finishes [f=8]
-      H finishes [f=9]
-    D finishes [f=10]
-  C finishes [f=11]
+---
 
-  Visit F [d=12]
-    F→G: G already finished (CROSS EDGE)
-  F finishes [f=13]
+### 3. Discovery and finishing times
 
-A finishes [f=14]
+Let discovery time be denoted by `d[v]` and finishing time by `f[v]`.
 
-[E is not reachable from A — start new DFS from E]
-Visit E [d=15]
-  E→B: B already finished (CROSS EDGE)
-  E→F: F already finished (CROSS EDGE)
-E finishes [f=16]
-```
+| Vertex | Discovery Time `d` | Finishing Time `f` |
+| ------ | ------------------ | ------------------ |
+| A      | 1                  | 16                 |
+| B      | 2                  | 11                 |
+| E      | 3                  | 10                 |
+| F      | 4                  | 7                  |
+| G      | 5                  | 6                  |
+| H      | 8                  | 9                  |
+| C      | 12                 | 15                 |
+| D      | 13                 | 14                 |
 
-**Discovery and Finishing Times:**
+---
 
-| Vertex | Discovery (d) | Finishing (f) |
-|---|---|---|
-| A | 1 | 14 |
-| B | 2 | 3 |
-| C | 4 | 11 |
-| D | 5 | 10 |
-| H | 6 | 9 |
-| G | 7 | 8 |
-| F | 12 | 13 |
-| E | 15 | 16 |
+### 4. Edge classification
 
-**Edge Types:**
+#### Tree edges
 
-| Edge | Type | Reason |
-|---|---|---|
-| A→B | Tree Edge | B discovered via A |
-| A→C | Tree Edge | C discovered via A |
-| A→F | Tree Edge | F discovered via A |
-| C→D | Tree Edge | D discovered via C |
-| D→H | Tree Edge | H discovered via D |
-| H→G | Tree Edge | G discovered via H |
-| G→H | **Back Edge** | H is ancestor of G → indicates a **cycle** |
-| F→G | **Cross Edge** | G already finished before F reached it |
-| E→B | **Cross Edge** | B already finished before E started |
-| E→F | **Cross Edge** | F already finished before E started |
+These are the edges through which a new vertex is first discovered:
 
-**Strongly Connected Components (SCCs):**
+* `A → B`
+* `B → E`
+* `E → F`
+* `F → G`
+* `E → H`
+* `A → C`
+* `C → D`
 
-| SCC | Members | Reason |
-|---|---|---|
-| SCC 1 | {G, H} | G→H→G cycle exists |
-| SCC 2 | {A} | Single vertex |
-| SCC 3 | {B} | Single vertex |
-| SCC 4 | {C} | Single vertex |
-| SCC 5 | {D} | Single vertex |
-| SCC 6 | {E} | Single vertex |
-| SCC 7 | {F} | Single vertex |
+#### Back edges
 
-The only non-trivial SCC is **{G, H}** because G→H→G (a cycle exists between them).
+These connect a vertex to one of its ancestors in the DFS tree:
+
+* `F → B`
+* `D → A`
+
+#### Forward edges
+
+These connect a vertex to one of its descendants, but are not tree edges:
+
+* `E → G`
+* `A → F`
+
+#### Cross edges
+
+These connect vertices belonging to different DFS branches:
+
+* `H → G`
+* `D → H`
+
+---
+
+### 5. Strongly Connected Components (SCCs)
+
+The graph can be decomposed into the following SCCs:
+
+* `{A, C, D}`
+* `{B, E, F}`
+* `{H}`
+* `{G}`
+
+---
+
+### 6. Final result
+
+Therefore,
+
+* **DFS traversal:** `A → B → E → F → G → H → C → D`
+* **Discovery/finishing times:**
+
+  * `A(1,16)`
+  * `B(2,11)`
+  * `E(3,10)`
+  * `F(4,7)`
+  * `G(5,6)`
+  * `H(8,9)`
+  * `C(12,15)`
+  * `D(13,14)`
+* **SCCs:** `{A,C,D}`, `{B,E,F}`, `{H}`, `{G}`
+
+> **Note:** If a different adjacent-vertex visiting order is used, the DFS order and times may change, but the SCCs remain the same.
 
 ---
 
