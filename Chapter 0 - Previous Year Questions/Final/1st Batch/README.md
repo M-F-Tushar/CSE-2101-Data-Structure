@@ -125,27 +125,30 @@ Procedure: SRCHSL(INFO, LINK, START, ITEM, LOC)
 
 ---
 
-### 1(d) Write a procedure FIND(DATA, N, LOC1, LOC2) which finds the location LOC1 of the largest element and the location LOC2 of the second largest element in an array DATA with n ≥ 1 elements. [09]
+### 1(d) Write a procedure FIND(DATA, N, LOC1, LOC2) which finds the location LOC1 of the largest element and the location LOC2 of the second largest element in an array DATA with n > 1 elements. [09]
 
-**Idea:** Traverse the array once. Track the position of the **largest** (LOC1) and **second largest** (LOC2) elements.
+**Idea:** Since `n > 1`, first compare the first two elements to initialize the **largest** and **second largest** positions safely. Then scan the rest of the array once.
 
 **Pseudocode:**
 
 ```
 Procedure: FIND(DATA, N, LOC1, LOC2)
 ──────────────────────────────────────
-1. Set LOC1 := 1  [Assume first element is largest]
-   Set LOC2 := NULL  [No second largest yet]
+1. If DATA[1] > DATA[2], then:
+       Set LOC1 := 1
+       Set LOC2 := 2
+   Else:
+       Set LOC1 := 2
+       Set LOC2 := 1
 
-2. Repeat for K := 2 to N:
+2. Repeat for K := 3 to N:
 
      If DATA[K] > DATA[LOC1], then:
-         LOC2 := LOC1        [Old largest becomes second]
+         LOC2 := LOC1        [Old largest becomes second largest]
          LOC1 := K           [K is the new largest]
 
-     Else If DATA[K] > DATA[LOC2] OR LOC2 = NULL, then:
-         If DATA[K] ≠ DATA[LOC1], then:
-             LOC2 := K       [K is the new second largest]
+     Else If DATA[K] > DATA[LOC2] AND DATA[K] ≠ DATA[LOC1], then:
+         LOC2 := K           [K becomes the new second largest]
 
    [End of loop]
 
@@ -155,15 +158,14 @@ Procedure: FIND(DATA, N, LOC1, LOC2)
 **Step-by-step Example:**
 DATA = [12, 35, 28, 35, 7, 42, 15], N = 7
 
-| K | DATA[K] | LOC1 (largest) | LOC2 (2nd largest) | Action |
+| Step | DATA[K] | LOC1 (largest) | LOC2 (2nd largest) | Action |
 |---|---|---|---|---|
-| Start | — | 1 (val=12) | NULL | Initialize |
-| 2 | 35 | 2 (val=35) | 1 (val=12) | 35 > 12, update |
-| 3 | 28 | 2 (val=35) | 3 (val=28) | 28 < 35 but 28 > 12 |
-| 4 | 35 | 2 (val=35) | 3 (val=28) | 35 = 35, skip |
-| 5 | 7 | 2 (val=35) | 3 (val=28) | 7 < 28, no change |
-| 6 | 42 | 6 (val=42) | 2 (val=35) | 42 > 35, update |
-| 7 | 15 | 6 (val=42) | 2 (val=35) | 15 < 35, no change |
+| Initialize | 12, 35 | 2 (val=35) | 1 (val=12) | Compare first two |
+| K = 3 | 28 | 2 (val=35) | 3 (val=28) | 28 > 12, so update LOC2 |
+| K = 4 | 35 | 2 (val=35) | 3 (val=28) | Equal to largest, no change |
+| K = 5 | 7 | 2 (val=35) | 3 (val=28) | 7 is smaller, no change |
+| K = 6 | 42 | 6 (val=42) | 2 (val=35) | New largest found |
+| K = 7 | 15 | 6 (val=42) | 2 (val=35) | No change |
 
 **Result:** LOC1 = 6 (value = 42), LOC2 = 2 (value = 35) ✓
 
@@ -404,12 +406,14 @@ Each single element is already sorted.
 | 27 vs 3 | 3 | [3] |
 | 27 vs 9 | 9 | [3, 9] |
 | 27 vs 10 | 10 | [3, 9, 10] |
-| 27 vs 27 | 27 | [3, 9, 10, 27] |
-| 38 vs 38 | 38 | [3, 9, 10, 27, 38] |
-| 43 vs 43 | 43 | [3, 9, 10, 27, 38, 43] |
+| 27 vs 82 | 27 | [3, 9, 10, 27] |
+| 38 vs 82 | 38 | [3, 9, 10, 27, 38] |
+| 43 vs 82 | 43 | [3, 9, 10, 27, 38, 43] |
 | Remaining: [82] | 82 | [3, 9, 10, 27, 38, 43, 82] |
 
 **Final Sorted Array:** [3, 9, 10, 27, 38, 43, 82]
+
+Since merge sort gives the numbers in ascending order, the **largest integer is the last element**.
 
 **Largest Integer = 82**
 
@@ -585,35 +589,48 @@ After: F → 5 → 10 → 20 → 30 → NULL (L = 30) ✓
 
 ### 4(a) Explain how Stack is used in Depth-First Search (DFS). [05]
 
-**DFS uses a Stack** to implement its "explore as deep as possible, then backtrack" strategy.
+**DFS uses a Stack** to implement its “go deep first, then backtrack” strategy.
 
 **How it works:**
 
-1. **Push** the starting vertex onto the stack. Mark it as visited.
-2. **Pop** a vertex from the stack. Visit it.
-3. **Push** all unvisited neighbors of that vertex onto the stack. Mark them as visited.
-4. Repeat steps 2–3 until the stack is empty.
+1. **Push** the starting vertex onto the stack and mark it visited.
+2. **Pop** the top vertex and process it.
+3. From that vertex, **push an unvisited adjacent vertex** onto the stack.
+4. Continue this process until no more unvisited adjacent vertices remain.
+5. When a vertex has no unvisited neighbor, DFS **backtracks** to the previous vertex using the stack.
 
-**Why Stack?** Because DFS explores depth-first — it goes as deep as possible before backtracking. The stack's **LIFO (Last-In, First-Out)** property ensures we always continue from the most recently discovered vertex.
+**Why Stack is used:**
+The stack follows **LIFO (Last-In, First-Out)**. So the most recently discovered vertex is explored first. That is exactly why DFS goes deeply along one path before returning.
 
-**Example:** Graph: A–B, A–C, B–D, C–E
+**Example:** Graph edges are `A–B, A–C, B–D, C–E`
 
-| Step | Stack (top→bottom) | Visited | Action |
+Suppose we start from `A` and push neighbors so that `B` is explored before `C`.
+
+| Step | Stack (top→bottom) | Visited / Output | Action |
 |---|---|---|---|
-| Start | [A] | {A} | Push A |
-| 1 | [C, B] | {A, B, C} | Pop A, Push B and C |
-| 2 | [E, C] | {A, B, C, E} | Pop B, Push D... Continue |
-| ... | ... | ... | Continue until stack empty |
+| Start | [A] | — | Push A |
+| 1 | [ ] | A | Pop A, visit A |
+| 2 | [B, C] | A | Push C, then B |
+| 3 | [C] | A, B | Pop B, visit B |
+| 4 | [D, C] | A, B | Push D |
+| 5 | [C] | A, B, D | Pop D, visit D |
+| 6 | [ ] | A, B, D, C | Pop C, visit C |
+| 7 | [E] | A, B, D, C | Push E |
+| 8 | [ ] | A, B, D, C, E | Pop E, visit E |
+
+**DFS order:** `A → B → D → C → E`
 
 **DFS Algorithm using Stack:**
 
 ```
-1. Initialize all nodes STATUS = 1 (Ready)
-2. Push starting node, set STATUS = 2 (Waiting)
+1. Initialize all nodes as unvisited
+2. Push the starting node onto STACK
 3. While STACK is not empty:
-     Pop node N, process it, STATUS[N] = 3 (Processed)
-     For each neighbor M of N where STATUS[M] = 1:
-         Push M, STATUS[M] = 2
+     Pop node N
+     If N is not visited, then:
+         Visit N
+         Mark N as visited
+         Push unvisited adjacent vertices of N onto STACK
 4. Exit
 ```
 
@@ -1166,68 +1183,72 @@ Array: [77, 70, 50, 55, 55, 2, 34, 30, 40]
 
 ### 6(c) Using Warshall's algorithm, find the path matrix of the following graph. [08]
 
-*(Graph with vertices X, Y, W, Z with directed edges)*
+**Vertices:** `X, Y, W, Z`
 
-**Graph vertices:** X, Y, W, Z
+From the graph, the directed edges are:
+- `Y → X`
+- `X → W`
+- `Y → Z`
+- `Z → W`
+- `Y → W`
+- `Z → X`
 
-**Directed edges from graph:** Y → X, Y → W, W → X, W → Z, Z → W
+We use the order: **X, Y, W, Z**
 
-**Step 1: Build Adjacency Matrix P₀**
-
-Using order: X=1, Y=2, W=3, Z=4
-
-|   | X | Y | W | Z |
-|---|---|---|---|---|
-| **X** | 0 | 0 | 0 | 0 |
-| **Y** | 1 | 0 | 1 | 0 |
-| **W** | 1 | 0 | 0 | 1 |
-| **Z** | 0 | 0 | 1 | 0 |
-
-**Step 2: Apply Warshall's Algorithm**
-
-**Rule:** `P_k[i,j] = P_{k-1}[i,j] OR (P_{k-1}[i,k] AND P_{k-1}[k,j])`
-
-**P₁ — Using X as intermediate:**
-Row X = [0, 0, 0, 0] (X has no outgoing edges) → **No changes. P₁ = P₀**
-
-**P₂ — Using Y as intermediate:**
-Column Y = [0, 0, 0, 0] (nobody points to Y) → **No changes. P₂ = P₁**
-
-**P₃ — Using W as intermediate:**
-New paths discovered:
-- `P₃[Y,Z]` = 0 OR (1 AND 1) = **1** ← NEW
-- `P₃[Z,X]` = 0 OR (1 AND 1) = **1** ← NEW
-- `P₃[Z,Z]` = 0 OR (1 AND 1) = **1** ← NEW
-
-**P₃:**
+#### Step 1: Initial adjacency matrix `P₀`
 
 |   | X | Y | W | Z |
 |---|---|---|---|---|
-| **X** | 0 | 0 | 0 | 0 |
-| **Y** | 1 | 0 | 1 | **1** |
-| **W** | 1 | 0 | 0 | 1 |
-| **Z** | **1** | 0 | 1 | **1** |
-
-**P₄ — Using Z as intermediate:**
-
-New paths discovered:
-- `P₄[W,W]` = 0 OR (1 AND 1) = **1** ← NEW (W reaches itself via Z)
-
-**P₄ = Final Path Matrix P:**
-
-|   | X | Y | W | Z |
-|---|---|---|---|---|
-| **X** | 0 | 0 | 0 | 0 |
+| **X** | 0 | 0 | 1 | 0 |
 | **Y** | 1 | 0 | 1 | 1 |
-| **W** | 1 | 0 | **1** | 1 |
-| **Z** | 1 | 0 | 1 | 1 |
+| **W** | 0 | 0 | 0 | 0 |
+| **Z** | 1 | 0 | 1 | 0 |
+
+#### Step 2: Apply Warshall’s algorithm
+
+Warshall’s rule is:
+
+```text
+P_k[i,j] = P_{k-1}[i,j] OR (P_{k-1}[i,k] AND P_{k-1}[k,j])
+```
+
+#### `P₁` — using `X` as intermediate
+Since `X` reaches only `W`, no new reachability is created.
+So,
+
+|   | X | Y | W | Z |
+|---|---|---|---|---|
+| **X** | 0 | 0 | 1 | 0 |
+| **Y** | 1 | 0 | 1 | 1 |
+| **W** | 0 | 0 | 0 | 0 |
+| **Z** | 1 | 0 | 1 | 0 |
+
+#### `P₂` — using `Y` as intermediate
+No vertex reaches `Y`, so again no new path is added.
+Thus `P₂ = P₁`.
+
+#### `P₃` — using `W` as intermediate
+`W` has no outgoing edge, so no new path is added.
+Thus `P₃ = P₂`.
+
+#### `P₄` — using `Z` as intermediate
+Any vertex reaching `Z` can go from `Z` to `X` or `W`. But `Y` already reaches both `X` and `W`, so no new path is added.
+Thus `P₄ = P₃`.
+
+### Final Path Matrix
+
+|   | X | Y | W | Z |
+|---|---|---|---|---|
+| **X** | 0 | 0 | 1 | 0 |
+| **Y** | 1 | 0 | 1 | 1 |
+| **W** | 0 | 0 | 0 | 0 |
+| **Z** | 1 | 0 | 1 | 0 |
 
 **Interpretation:**
-- X cannot reach any node (no outgoing edges)
-- Y can reach X, W, Z
-- W can reach X, W (itself via Z cycle), Z
-- Z can reach X, W, Z (itself)
-- No one can reach Y
+- `X` can reach only `W`
+- `Y` can reach `X`, `W`, and `Z`
+- `W` cannot reach any other vertex
+- `Z` can reach `X` and `W`
 
 ---
 
@@ -1315,47 +1336,62 @@ A — B — C — D
 
 ### 7(b) You find yourself in a maze, looking for exit. Which graph traversal techniques would you choose depth-first or breadth-first? Why? Apply your choice in the following graph (Consider your position except D, H, and K because they are for exit). [10]
 
-**Choice: Depth-First Search (DFS)**
+**Choice: Breadth-First Search (BFS)**
 
 **Reason:**
-- In a maze, we want to **follow one path as far as possible** until we reach the exit or a dead end, then backtrack.
-- This is exactly what DFS does — it goes deep first using a stack.
-- BFS would explore all paths level-by-level, using more memory.
-- DFS is more **memory efficient** in a maze (only remembers current path, not all frontiers).
-- DFS naturally implements **backtracking**.
+- In a maze, if the goal is to find the **nearest exit**, BFS is the better choice.
+- BFS explores nodes **level by level**.
+- So the first exit found by BFS is guaranteed to be the exit with the **minimum number of edges** from the starting position.
+- DFS may find an exit, but it may go deep into a longer path first and miss a nearer exit.
 
-**Graph structure (exits are D, H, K):**
+**Exits:** `D, H, K`
+
+Since the starting position is not explicitly given in the question, assume we start from **A** (which is not an exit).
+
+#### Graph connections used
+- `A` is connected to `B` and `G`
+- `B` is connected to `A`, `C`, `F`
+- `C` is connected to `B`, `E`
+- `G` is connected to `A`, `F`
+- `F` is connected to `B`, `G`, `J`
+- `E` is connected to `C`, `D`, `I`
+- `J` is connected to `F`, `I`
+- `I` is connected to `E`, `J`, `H`, `K`
+
+#### Apply BFS from `A`
+
+**Level-wise traversal:**
+- Level 0: `A`
+- Level 1: `B, G`
+- Level 2: `C, F`
+- Level 3: `E, J`
+- Level 4: `D, I`
+
+At **Level 4**, we first reach **D**, which is an exit.
+
+#### BFS Queue Trace
+
+| Step | Queue | Visited | Action |
+|---|---|---|---|
+| Start | [A] | A | Start from A |
+| 1 | [B, G] | A, B, G | Visit A, enqueue B, G |
+| 2 | [G, C, F] | A, B, G, C, F | Visit B, enqueue C, F |
+| 3 | [C, F] | A, B, G, C, F | Visit G, no new node |
+| 4 | [F, E] | A, B, G, C, F, E | Visit C, enqueue E |
+| 5 | [E, J] | A, B, G, C, F, E, J | Visit F, enqueue J |
+| 6 | [J, D, I] | A, B, G, C, F, E, J, D, I | Visit E, enqueue D and I |
+| 7 | [D, I] | A, B, G, C, F, E, J, D, I | Visit J, no new node |
+| 8 | [I] | A, B, G, C, F, E, J, D, I | Visit **D** → **Exit found** |
+
+#### Shortest path to the exit
+Using BFS parent tracking:
+
+```text
+A → B → C → E → D
 ```
-        C       A
-       / \     / \
-      E   \   B   G
-     / \   \ /     \
-    D   I   B   F
-         \   \ /
-          H   J
-           \ /
-            K
-```
 
-**Apply DFS starting from any non-exit node (e.g., C), exits = {D, H, K}:**
-
-| Step | Visit | Action |
-|---|---|---|
-| Start | C | Visit C, push neighbors |
-| 1 | E | Visit E, push neighbors |
-| 2 | D | **EXIT FOUND at D!** 🎉 |
-
-**Path to exit D:** C → E → D ✓
-
-**DFS Trace:**
-```
-Start at C
-  Visit C → go to E
-  Visit E → go to D (EXIT!)
-  FOUND EXIT at D!
-```
-
-DFS is ideal here because it dives deep immediately and finds the first available exit quickly, just like a person navigating a maze by following one path until hitting a dead end or exit.
+**Conclusion:**
+For a maze-exit problem, **BFS is the better traversal technique** because it finds the **nearest exit first**. In this graph, assuming the start is `A`, the nearest exit found is **D**.
 
 ---
 
