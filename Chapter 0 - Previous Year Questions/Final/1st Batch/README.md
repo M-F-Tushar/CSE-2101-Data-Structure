@@ -1591,6 +1591,13 @@ A → B → E → F → G → H → C → D
 
 Let discovery time be denoted by `d[v]` and finishing time by `f[v]`.
 
+**Explanation:**
+
+* When a vertex is visited for the first time, its **discovery time** is recorded.
+* DFS then explores all possible paths from that vertex.
+* Once all adjacent vertices are fully explored, we assign the **finishing time**.
+* A global timer is increased at every discovery and finishing step.
+
 | Vertex | Discovery Time `d` | Finishing Time `f` |
 | ------ | ------------------ | ------------------ |
 | A      | 1                  | 16                 |
@@ -1601,6 +1608,32 @@ Let discovery time be denoted by `d[v]` and finishing time by `f[v]`.
 | H      | 8                  | 9                  |
 | C      | 12                 | 15                 |
 | D      | 13                 | 14                 |
+
+**How these values are obtained (brief steps):**
+
+* Start at `A` → `d[A]=1`
+* Go to `B` → `d[B]=2`
+* Go to `E` → `d[E]=3`
+* Go to `F` → `d[F]=4`
+* Go to `G` → `d[G]=5`, no child → `f[G]=6`
+* Back to `F` → `f[F]=7`
+* Visit `H` → `d[H]=8`, no new child → `f[H]=9`
+* Back to `E` → `f[E]=10`
+* Back to `B` → `f[B]=11`
+* Visit `C` → `d[C]=12`
+* Visit `D` → `d[D]=13`, no new child → `f[D]=14`
+* Back to `C` → `f[C]=15`
+* Back to `A` → `f[A]=16`
+
+--------|----------------------|----------------------|
+| A | 1 | 16 |
+| B | 2 | 11 |
+| E | 3 | 10 |
+| F | 4 | 7 |
+| G | 5 | 6 |
+| H | 8 | 9 |
+| C | 12 | 15 |
+| D | 13 | 14 |
 
 ---
 
