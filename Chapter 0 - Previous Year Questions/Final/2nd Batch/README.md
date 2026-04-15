@@ -592,20 +592,23 @@ A B + C * D E - F G + ↑ -
 **Algorithm:**
 
 ```
-MOVE_FIRST_TO_END(INFO, LINK, START):
-  IF START == NULL OR LINK[START] == NULL:
-    RETURN                         // empty or single-node list
+MOVE_FIRST_TO_END(START):
 
-  FIRST = START                    // save first node
-  START = LINK[START]              // move START to second node
+1. If START == NULL OR LINK[START] == NULL:
+       RETURN
 
-  LAST = START
-  WHILE LINK[LAST] != NULL:        // find last node
-    LAST = LINK[LAST]
+2. FIRST = START
+   START = LINK[START]
 
-  LINK[LAST] = FIRST               // attach old first at end
-  LINK[FIRST] = NULL               // it is now the last node
-  RETURN
+3. PTR = START
+
+4. WHILE LINK[PTR] != NULL:
+       PTR = LINK[PTR]
+
+5. LINK[PTR] = FIRST
+   LINK[FIRST] = NULL
+
+6. RETURN
 ```
 
 **Example Trace:**
