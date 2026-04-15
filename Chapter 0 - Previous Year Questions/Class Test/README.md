@@ -1206,32 +1206,21 @@ A ─(2)─ B ─(2)─ C
 
 ```
 Algorithm: FIX_ARRAY(LA, N)
-───────────────────────────
 
-Step 1: [Start from second element]
-   Set i := 2
+1. Set i := 2
 
-Step 2: [Scan the array]
-   Repeat while i <= N:
+2. While i <= N do
+      If LA[i] > LA[i-1] then
+            i := i + 1
+      Else
+            For j := i to N-1 do
+                  LA[j] := LA[j+1]
+            End For
+            N := N - 1
+            // do not increment i
 
-      If LA[i] <= LA[i-1], then:
-         [Current element is misplaced — remove it]
-
-         Repeat for j := i to N-1:
-            Set LA[j] := LA[j+1]   [Shift elements left]
-         [End inner loop]
-
-         Set N := N - 1    [Reduce size by 1]
-         [Do NOT increment i — recheck same position]
-
-      Else:
-         Set i := i + 1    [Element is in order, move on]
-
-   [End outer loop]
-
-Step 3: Output updated LA[1...N]
-
-Step 4: Exit
+3. Output LA[1...N]
+4. Exit
 ```
 
 **Trace Example:**
