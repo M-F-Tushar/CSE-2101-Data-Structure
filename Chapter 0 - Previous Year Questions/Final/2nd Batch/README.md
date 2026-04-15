@@ -728,30 +728,37 @@ POP     → returns 30, TOP=1
 
 ```
 PARTITION(A, LOW, HIGH):
-  pivot = A[LOW]           // first element as pivot
-  p = LOW + 1
-  q = HIGH
 
-  WHILE p <= q:
-    WHILE p <= HIGH AND A[p] <= pivot:
-      p = p + 1
-    WHILE q >= LOW AND A[q] > pivot:
-      q = q - 1
-    IF p < q:
-      SWAP(A[p], A[q])
+1. Set PIVOT = A[LOW]
+2. Set LEFT = LOW + 1
+3. Set RIGHT = HIGH
 
-  SWAP(A[LOW], A[q])       // place pivot in correct position
-  RETURN q                 // return pivot index
+4. Repeat while LEFT <= RIGHT:
+
+      while LEFT <= HIGH and A[LEFT] <= PIVOT:
+            LEFT = LEFT + 1
+
+      while RIGHT >= LOW and A[RIGHT] > PIVOT:
+            RIGHT = RIGHT - 1
+
+      if LEFT < RIGHT:
+            swap A[LEFT] and A[RIGHT]
+
+5. Swap A[LOW] and A[RIGHT]
+
+6. Return RIGHT
 ```
 
 **QUICK_SORT Algorithm:**
 
 ```
 QUICK_SORT(A, LOW, HIGH):
-  IF LOW < HIGH:
-    pivotIndex = PARTITION(A, LOW, HIGH)
-    QUICK_SORT(A, LOW, pivotIndex - 1)
-    QUICK_SORT(A, pivotIndex + 1, HIGH)
+
+1. If LOW < HIGH, then:
+      PIVOT_POS = PARTITION(A, LOW, HIGH)
+
+      QUICK_SORT(A, LOW, PIVOT_POS - 1)
+      QUICK_SORT(A, PIVOT_POS + 1, HIGH)
 ```
 
 **Example Trace:**
