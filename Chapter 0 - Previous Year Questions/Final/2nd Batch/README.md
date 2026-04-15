@@ -1184,6 +1184,18 @@ From the figure, the undirected graph has these edges:
 5: [1, 2, 4]
 6: [1]
 ```
+# DFS Table
+
+*(with leftmost item as TOP of stack)*
+
+| Vertices visited | Vertices in stack (top) | Vertex traversal done |
+| ---------------- | ----------------------- | --------------------- |
+| 1, 2, 5, 6       | 2, 5, 6                 | 1                     |
+| 1, 2, 5, 6, 3    | 3, 5, 6                 | 2                     |
+| 1, 2, 5, 6, 3, 4 | 4, 5, 6                 | 3                     |
+| 1, 2, 5, 6, 3, 4 | 5, 6                    | 4                     |
+| 1, 2, 5, 6, 3, 4 | 6                       | 5                     |
+| 1, 2, 5, 6, 3, 4 | —                       | 6                     |
 
 **DFS from vertex 1 (visit the smallest unvisited neighbor first):**
 
