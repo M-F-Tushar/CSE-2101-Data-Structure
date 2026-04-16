@@ -1402,64 +1402,95 @@ A — B — C — D
 
 ---
 
-### 7(b) You find yourself in a maze, looking for exit. Which graph traversal techniques would you choose depth-first or breadth-first? Why? Apply your choice in the following graph (Consider your position except D, H, and K because they are for exit). [10]
+You’re trying to **force DFS as the answer** — but here’s the reality:
 
-**Choice: Breadth-First Search (BFS)**
+👉 For *exam correctness*, BFS is still the better answer.
+👉 But since you explicitly want a **DFS-based modified Markdown (same structure)**, here it is — clean, corrected, and ready to paste 👇
+
+---
+
+### 7(b) You find yourself in a maze, looking for exit. Which graph traversal techniques would you choose depth-first or breadth-first? Why? Apply your choice in the following graph (Consider your position except `D`, `H`, and `K` because they are for exit). [10]
+
+---
+
+**Choice: Depth-First Search (DFS)**
+
+---
 
 **Reason:**
-- In a maze, if the goal is to find the **nearest exit**, BFS is the better choice.
-- BFS explores nodes **level by level**.
-- So the first exit found by BFS is guaranteed to be the exit with the **minimum number of edges** from the starting position.
-- DFS may find an exit, but it may go deep into a longer path first and miss a nearer exit.
+
+* In a maze, **DFS** follows a **single path deeply** until it reaches the end.
+* If the path does not lead to an exit, it **backtracks** and tries another path.
+* This behavior is similar to how a person explores a maze manually.
+* DFS is useful for **exploring paths**, but it does **not guarantee the nearest exit**.
+* It may find an exit, but that exit may not be the shortest path.
+
+---
 
 **Exits:** `D, H, K`
 
 Since the starting position is not explicitly given in the question, assume we start from **A** (which is not an exit).
 
+---
+
 #### Graph connections used
-- `A` is connected to `B` and `G`
-- `B` is connected to `A`, `C`, `F`
-- `C` is connected to `B`, `E`
-- `G` is connected to `A`, `F`
-- `F` is connected to `B`, `G`, `J`
-- `E` is connected to `C`, `D`, `I`
-- `J` is connected to `F`, `I`
-- `I` is connected to `E`, `J`, `H`, `K`
 
-#### Apply BFS from `A`
+* `A` is connected to `B` and `G`
+* `B` is connected to `A`, `C`, `F`
+* `C` is connected to `B`, `E`
+* `G` is connected to `A`, `F`
+* `F` is connected to `B`, `G`, `J`
+* `E` is connected to `C`, `D`, `I`
+* `J` is connected to `F`, `I`
+* `I` is connected to `E`, `J`, `H`, `K`
 
-**Level-wise traversal:**
-- Level 0: `A`
-- Level 1: `B, G`
-- Level 2: `C, F`
-- Level 3: `E, J`
-- Level 4: `D, I`
+---
 
-At **Level 4**, we first reach **D**, which is an exit.
+#### Apply DFS from `A`
 
-#### BFS Queue Trace
+**Depth-wise traversal:**
 
-| Step | Queue | Visited | Action |
-|---|---|---|---|
-| Start | [A] | A | Start from A |
-| 1 | [B, G] | A, B, G | Visit A, enqueue B, G |
-| 2 | [G, C, F] | A, B, G, C, F | Visit B, enqueue C, F |
-| 3 | [C, F] | A, B, G, C, F | Visit G, no new node |
-| 4 | [F, E] | A, B, G, C, F, E | Visit C, enqueue E |
-| 5 | [E, J] | A, B, G, C, F, E, J | Visit F, enqueue J |
-| 6 | [J, D, I] | A, B, G, C, F, E, J, D, I | Visit E, enqueue D and I |
-| 7 | [D, I] | A, B, G, C, F, E, J, D, I | Visit J, no new node |
-| 8 | [I] | A, B, G, C, F, E, J, D, I | Visit **D** → **Exit found** |
+* Start at `A`
+* Go to `B`
+* Then go to `C`
+* Then go to `E`
+* Then go to `D`
 
-#### Shortest path to the exit
-Using BFS parent tracking:
+At this point, **D is reached**, and it is an **exit**, so the search stops.
+
+---
+
+#### DFS Stack Trace
+
+| Step  | Stack           | Visited       | Action                       |
+| ----- | --------------- | ------------- | ---------------------------- |
+| Start | [A]             | A             | Start from A                 |
+| 1     | [A, B]          | A, B          | Visit A → go to B            |
+| 2     | [A, B, C]       | A, B, C       | Visit B → go to C            |
+| 3     | [A, B, C, E]    | A, B, C, E    | Visit C → go to E            |
+| 4     | [A, B, C, E, D] | A, B, C, E, D | Visit E → go to D            |
+| 5     | [A, B, C, E, D] | A, B, C, E, D | Visit **D** → **Exit found** |
+
+---
+
+#### Path to the exit
 
 ```text
 A → B → C → E → D
 ```
 
+---
+
 **Conclusion:**
-For a maze-exit problem, **BFS is the better traversal technique** because it finds the **nearest exit first**. In this graph, assuming the start is `A`, the nearest exit found is **D**.
+
+For this maze problem, **DFS** is chosen because it explores **one path at a time** and uses **backtracking** if needed. Starting from `A`, DFS reaches the exit **D** by following the path:
+
+```text
+A → B → C → E → D
+```
+
+However, DFS does **not guarantee the nearest exit**, unlike BFS.
+
 
 ---
 
