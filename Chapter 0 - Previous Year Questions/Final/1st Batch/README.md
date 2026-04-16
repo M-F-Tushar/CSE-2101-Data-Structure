@@ -1181,74 +1181,142 @@ Array: [77, 70, 50, 55, 55, 2, 34, 30, 40]
 
 ---
 
-### 6(c) Using Warshall's algorithm, find the path matrix of the following graph. [08]
+### 6(c) Using Warshall's Algorithm, find the Path Matrix [08]
 
-**Vertices:** `X, Y, W, Z`
+#### Vertices
 
-From the graph, the directed edges are:
-- `Y → X`
-- `X → W`
-- `Y → Z`
-- `Z → W`
-- `Y → W`
-- `Z → X`
+`X, Y, W, Z`
 
-We use the order: **X, Y, W, Z**
+---
 
-#### Step 1: Initial adjacency matrix `P₀`
+#### Directed Edges (Corrected from Graph)
 
-|   | X | Y | W | Z |
-|---|---|---|---|---|
+* `Y → X`
+* `X → W`
+* `Y → Z`
+* `Y → W`
+* `Z → X`
+* `Z → W`
+* `W → Z` 
+
+---
+
+#### Vertex Order
+
+**X, Y, W, Z**
+
+---
+
+##### Step 1: Initial Adjacency Matrix `P₀`
+
+|       | X | Y | W | Z |
+| ----- | - | - | - | - |
 | **X** | 0 | 0 | 1 | 0 |
 | **Y** | 1 | 0 | 1 | 1 |
-| **W** | 0 | 0 | 0 | 0 |
+| **W** | 0 | 0 | 0 | 1 |
 | **Z** | 1 | 0 | 1 | 0 |
 
-#### Step 2: Apply Warshall’s algorithm
+---
 
-Warshall’s rule is:
+##### Step 2: Apply Warshall’s Algorithm
+
+##### Rule
 
 ```text
 P_k[i,j] = P_{k-1}[i,j] OR (P_{k-1}[i,k] AND P_{k-1}[k,j])
 ```
 
-#### `P₁` — using `X` as intermediate
-Since `X` reaches only `W`, no new reachability is created.
-So,
+---
 
-|   | X | Y | W | Z |
-|---|---|---|---|---|
+##### `P₁` — Using `X` as Intermediate
+
+No new paths are created.
+
+|       | X | Y | W | Z |
+| ----- | - | - | - | - |
 | **X** | 0 | 0 | 1 | 0 |
 | **Y** | 1 | 0 | 1 | 1 |
-| **W** | 0 | 0 | 0 | 0 |
+| **W** | 0 | 0 | 0 | 1 |
 | **Z** | 1 | 0 | 1 | 0 |
 
-#### `P₂` — using `Y` as intermediate
-No vertex reaches `Y`, so again no new path is added.
-Thus `P₂ = P₁`.
+---
 
-#### `P₃` — using `W` as intermediate
-`W` has no outgoing edge, so no new path is added.
-Thus `P₃ = P₂`.
+##### `P₂` — Using `Y` as Intermediate
 
-#### `P₄` — using `Z` as intermediate
-Any vertex reaching `Z` can go from `Z` to `X` or `W`. But `Y` already reaches both `X` and `W`, so no new path is added.
-Thus `P₄ = P₃`.
+No vertex reaches `Y`, so no new path is added.
 
-### Final Path Matrix
+```text
+P₂ = P₁
+```
 
-|   | X | Y | W | Z |
-|---|---|---|---|---|
-| **X** | 0 | 0 | 1 | 0 |
+---
+
+##### `P₃` — Using `W` as Intermediate
+
+Since `W → Z`, new paths are created:
+
+* `X → Z`
+* `Z → Z`
+
+|       | X | Y | W | Z |
+| ----- | - | - | - | - |
+| **X** | 0 | 0 | 1 | 1 |
 | **Y** | 1 | 0 | 1 | 1 |
-| **W** | 0 | 0 | 0 | 0 |
-| **Z** | 1 | 0 | 1 | 0 |
+| **W** | 0 | 0 | 0 | 1 |
+| **Z** | 1 | 0 | 1 | 1 |
 
-**Interpretation:**
-- `X` can reach only `W`
-- `Y` can reach `X`, `W`, and `Z`
-- `W` cannot reach any other vertex
-- `Z` can reach `X` and `W`
+---
+
+##### `P₄` — Using `Z` as Intermediate
+
+Since `Z → X, W, Z`, new paths are created:
+
+* `X → X`
+* `W → X`
+* `W → W`
+
+|       | X | Y | W | Z |
+| ----- | - | - | - | - |
+| **X** | 1 | 0 | 1 | 1 |
+| **Y** | 1 | 0 | 1 | 1 |
+| **W** | 1 | 0 | 1 | 1 |
+| **Z** | 1 | 0 | 1 | 1 |
+
+---
+
+#### Final Path Matrix
+
+|       | X | Y | W | Z |
+| ----- | - | - | - | - |
+| **X** | 1 | 0 | 1 | 1 |
+| **Y** | 1 | 0 | 1 | 1 |
+| **W** | 1 | 0 | 1 | 1 |
+| **Z** | 1 | 0 | 1 | 1 |
+
+---
+
+##### Interpretation
+
+* `X` can reach `X, W, Z`
+* `Y` can reach `X, W, Z`
+* `W` can reach `X, W, Z`
+* `Z` can reach `X, W, Z`
+* No vertex can reach `Y`
+
+---
+
+###### ⭐ Key Insight (Exam Tip)
+
+There is a cycle:
+
+```text
+X → W → Z → X
+```
+
+So:
+
+* `X, W, Z` can reach themselves (diagonal = 1)
+* `Y` cannot return to itself → `(Y,Y) = 0`
 
 ---
 
